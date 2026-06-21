@@ -40,11 +40,7 @@
       --accent-glowing: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
       
       --emerald: #10b981;
-      --emerald-bg: rgba(16, 185, 129, 0.1);
       --rose: #f43f5e;
-      --rose-bg: rgba(244, 63, 94, 0.1);
-      --amber: #f59e0b;
-      --amber-bg: rgba(245, 158, 11, 0.1);
       --slate-800: #1e293b;
       --font-eng: 'Outfit', 'Inter', sans-serif;
       --font-thai: 'Sarabun', sans-serif;
@@ -63,7 +59,7 @@
       --primary: #10b981;
       --primary-rgb: 16, 185, 129;
       --primary-gradient: linear-gradient(135deg, #34d399 0%, #10b981 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(52, 211, 153, 0.15) 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(52, 211, 153, 0.05) 100%);
       --slate-800: #062f21;
     }
 
@@ -79,7 +75,7 @@
       --primary: #a855f7;
       --primary-rgb: 168, 85, 247;
       --primary-gradient: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(192, 132, 252, 0.15) 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(192, 132, 252, 0.05) 100%);
       --slate-800: #251240;
     }
 
@@ -95,7 +91,7 @@
       --primary: #f97316;
       --primary-rgb: 249, 115, 22;
       --primary-gradient: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(251, 146, 60, 0.15) 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(251, 146, 60, 0.05) 100%);
       --slate-800: #3c1e0e;
     }
 
@@ -111,7 +107,7 @@
       --primary: #06b6d4;
       --primary-rgb: 6, 182, 212;
       --primary-gradient: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(34, 211, 238, 0.15) 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(34, 211, 238, 0.05) 100%);
       --slate-800: #0a2d33;
     }
 
@@ -127,11 +123,76 @@
       --primary: #71717a;
       --primary-rgb: 113, 113, 122;
       --primary-gradient: linear-gradient(135deg, #a1a1aa 0%, #71717a 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(113, 113, 122, 0.1) 0%, rgba(161, 161, 170, 0.1) 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(113, 113, 122, 0.1) 0%, rgba(161, 161, 170, 0.05) 100%);
       --slate-800: #27272a;
     }
 
-    /* Light Theme Settings */
+    /* 4 New Dark Themes (to make 10 dark themes) */
+    html[data-theme="dark-rose"] {
+      --bg: #14050a;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #2b0d18 0%, #14050a 100%);
+      --card-bg: rgba(43, 13, 24, 0.55);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --card-glow: rgba(244, 63, 94, 0.03);
+      --text-main: #fff5f7;
+      --text-muted: #f43f5e;
+      --text-label: #fda4af;
+      --primary: #f43f5e;
+      --primary-rgb: 244, 63, 94;
+      --primary-gradient: linear-gradient(135deg, #fb7185 0%, #f43f5e 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(244, 63, 94, 0.15) 0%, rgba(251, 113, 133, 0.05) 100%);
+      --slate-800: #401020;
+    }
+
+    html[data-theme="dark-indigo"] {
+      --bg: #030514;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #0c0f30 0%, #030514 100%);
+      --card-bg: rgba(12, 15, 48, 0.55);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --card-glow: rgba(59, 130, 246, 0.03);
+      --text-main: #f0f3ff;
+      --text-muted: #3b82f6;
+      --text-label: #93c5fd;
+      --primary: #3b82f6;
+      --primary-rgb: 59, 130, 246;
+      --primary-gradient: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(96, 165, 250, 0.05) 100%);
+      --slate-800: #101540;
+    }
+
+    html[data-theme="dark-forest"] {
+      --bg: #081005;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #15290d 0%, #081005 100%);
+      --card-bg: rgba(21, 41, 13, 0.55);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --card-glow: rgba(132, 204, 22, 0.03);
+      --text-main: #f7fee7;
+      --text-muted: #84cc16;
+      --text-label: #bef264;
+      --primary: #84cc16;
+      --primary-rgb: 132, 204, 22;
+      --primary-gradient: linear-gradient(135deg, #a3e635 0%, #84cc16 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(132, 204, 22, 0.15) 0%, rgba(163, 230, 53, 0.05) 100%);
+      --slate-800: #1d3310;
+    }
+
+    html[data-theme="dark-gold"] {
+      --bg: #100f05;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #29260d 0%, #100f05 100%);
+      --card-bg: rgba(41, 38, 13, 0.55);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --card-glow: rgba(234, 179, 8, 0.03);
+      --text-main: #fefdf0;
+      --text-muted: #eab308;
+      --text-label: #fde047;
+      --primary: #eab308;
+      --primary-rgb: 234, 179, 8;
+      --primary-gradient: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(250, 204, 21, 0.05) 100%);
+      --slate-800: #333010;
+    }
+
+    /* Light Theme Settings (5 themes) */
     html[data-theme="light-slate"] {
       --bg: #e2e8f0;
       --bg-gradient: radial-gradient(circle at 50% 0%, #f1f5f9 0%, #e2e8f0 100%);
@@ -210,22 +271,6 @@
       --primary-gradient: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
       --accent-glowing: linear-gradient(135deg, rgba(249, 115, 22, 0.06) 0%, rgba(253, 186, 116, 0.06) 100%);
       --slate-800: #fffaf5;
-    }
-
-    html[data-theme="light-mint"] {
-      --bg: #e0f2fe;
-      --bg-gradient: radial-gradient(circle at 50% 0%, #f0f9ff 0%, #e0f2fe 100%);
-      --card-bg: rgba(255, 255, 255, 0.8);
-      --card-border: rgba(8, 47, 73, 0.08);
-      --card-glow: rgba(14, 165, 233, 0.02);
-      --text-main: #0c4a6e;
-      --text-muted: #0284c7;
-      --text-label: #0ea5e9;
-      --primary: #0ea5e9;
-      --primary-rgb: 14, 165, 233;
-      --primary-gradient: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(14, 165, 233, 0.06) 0%, rgba(125, 211, 252, 0.06) 100%);
-      --slate-800: #f0f9ff;
     }
 
     * {
@@ -368,11 +413,11 @@
       position: absolute;
       top: 46px;
       right: 0;
-      width: 250px;
+      width: 310px;
       background: var(--slate-800);
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      padding: 12px;
+      padding: 14px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
       display: none;
       z-index: 100;
@@ -931,147 +976,58 @@
       color: rgba(255,255,255,0.1);
     }
 
-    /* PRINT ONLINES */
-    .print-report-header {
+    /* PRINT SECTION (SCREEN HIDDEN, PRINT VISIBLE) */
+    #print-area {
       display: none;
     }
 
-    .print-signature-section {
-      display: none;
-    }
-
-    /* Media Print configurations */
+    /* Media Print A4 configurations */
     @media print {
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
       body {
         background: #fff !important;
         color: #000 !important;
         padding: 0 !important;
-        font-size: 12pt;
+        margin: 0 !important;
+        font-family: 'Sarabun', sans-serif;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
 
       .app-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        gap: 0 !important;
-      }
-
-      .no-print {
         display: none !important;
       }
 
-      .glass-card {
-        background: none !important;
-        border: none !important;
-        box-shadow: none !important;
-        backdrop-filter: none !important;
-        padding: 0 !important;
-        border-radius: 0 !important;
-        overflow: visible !important;
+      #print-area {
+        display: block !important;
+        width: 210mm !important;
+        margin: 0 auto !important;
       }
 
-      /* Printable header */
-      .print-report-header {
+      .print-page {
+        page-break-after: always;
+        break-after: page;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        border-bottom: 2px solid #000;
-        padding-bottom: 12px;
-        margin-bottom: 20px;
-        text-align: center;
-        gap: 8px;
-      }
-
-      .print-logo {
-        height: 60px;
-        width: auto;
-      }
-
-      .print-report-header h2 {
-        font-size: 18pt;
-        font-weight: 700;
-      }
-
-      .print-report-header p {
-        font-size: 11pt;
-        color: #444;
-      }
-
-      .print-meta-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        width: 100%;
-        margin-top: 8px;
-        font-size: 10pt;
-        text-align: left;
-        border: 1px solid #ccc;
-        padding: 8px;
-        background: #fafafa;
-      }
-
-      .table-container {
-        border: 1px solid #000 !important;
-        background: none !important;
-        border-radius: 0 !important;
-        width: 100% !important;
-        overflow: visible !important;
-      }
-
-      .index-table {
-        width: 100% !important;
-        border-collapse: collapse !important;
-        font-size: 10pt !important;
-      }
-
-      .index-table th {
-        background: #e6e6e6 !important;
-        color: #000 !important;
-        border: 1px solid #000 !important;
-        padding: 8px 10px !important;
-        font-weight: bold !important;
-        text-align: center !important;
-      }
-
-      .index-table td {
-        border: 1px solid #000 !important;
-        color: #000 !important;
-        padding: 6px 10px !important;
-      }
-
-      .code-cell {
-        color: #000 !important;
-        font-weight: bold !important;
-      }
-
-      .index-cell {
-        text-align: right !important;
-      }
-
-      .cell-max, .cell-min {
-        background: none !important;
-        color: #000 !important;
-        padding: 0 !important;
-        font-weight: bold !important;
-        text-decoration: underline !important;
-      }
-
-      /* Official signatures */
-      .print-signature-section {
-        display: flex;
         justify-content: space-between;
-        margin-top: 60px;
-        page-break-inside: avoid;
-        width: 100%;
+        box-sizing: border-box;
+        width: 210mm !important;
+        height: 297mm !important;
+        padding: 20mm 15mm;
+        position: relative;
+        background: #fff;
+      }
+      
+      .print-page:last-child {
+        page-break-after: avoid;
+        break-after: avoid;
       }
 
-      .signature-block {
-        text-align: center;
-        width: 45%;
-      }
-
-      .sig-line {
-        border-bottom: 1px dotted #000;
-        margin: 45px auto 10px;
-        width: 80%;
+      .print-page-content {
+        flex-grow: 1;
       }
     }
   </style>
@@ -1079,19 +1035,6 @@
 <body>
 
   <div class="app-container">
-
-    <!-- Official Printable Header -->
-    <div class="print-report-header">
-      <img src="ช้างโลโก้logo-yotathai.PNG" alt="Logo" class="print-logo">
-      <h2>รายงานตารางดัชนีราคาวัสดุก่อสร้าง (ค่า K)</h2>
-      <p>สำนักงานนโยบายและยุทธศาสตร์การค้า (TPSO) กระทรวงพาณิชย์</p>
-      <div class="print-meta-grid">
-        <div><strong>โหมดเวลาที่สืบค้น:</strong> <span id="print-mode-text">-</span></div>
-        <div><strong>ช่วงเวลาดึงข้อมูล:</strong> <span id="print-range-text">-</span></div>
-        <div><strong>ดึงรายงาน ณ วันที่:</strong> <span id="print-date-text">-</span></div>
-        <div><strong>จัดทำโดย:</strong> yotathai.com</div>
-      </div>
-    </div>
 
     <!-- Header Section (no-print) -->
     <header class="app-header no-print">
@@ -1117,9 +1060,9 @@
           </button>
           
           <div class="theme-dropdown" id="theme-dropdown">
-            <div class="theme-dropdown-title">เลือกสีหน้าจอบนทีมของคุณ</div>
+            <div class="theme-dropdown-title">ปรับสไตล์จอภาพของคุณ (15 รูปแบบ)</div>
             
-            <div class="theme-dropdown-title"><i class="fa-solid fa-moon"></i> ธีมมืด (Dark Modes)</div>
+            <div class="theme-dropdown-title"><i class="fa-solid fa-moon"></i> ธีมสีเข้ม (10 Dark Themes)</div>
             <div class="theme-grid">
               <div class="theme-option" onclick="changeTheme('dark-blue')">
                 <div class="theme-color-dot" style="background:#6366f1"></div> Classic Blue
@@ -1139,9 +1082,22 @@
               <div class="theme-option" onclick="changeTheme('dark-charcoal')">
                 <div class="theme-color-dot" style="background:#71717a"></div> Charcoal
               </div>
+              <!-- New dark themes -->
+              <div class="theme-option" onclick="changeTheme('dark-rose')">
+                <div class="theme-color-dot" style="background:#f43f5e"></div> Ruby Rose
+              </div>
+              <div class="theme-option" onclick="changeTheme('dark-indigo')">
+                <div class="theme-color-dot" style="background:#3b82f6"></div> Indigo
+              </div>
+              <div class="theme-option" onclick="changeTheme('dark-forest')">
+                <div class="theme-color-dot" style="background:#84cc16"></div> Forest Olive
+              </div>
+              <div class="theme-option" onclick="changeTheme('dark-gold')">
+                <div class="theme-color-dot" style="background:#eab308"></div> Luxury Gold
+              </div>
             </div>
             
-            <div class="theme-dropdown-title"><i class="fa-solid fa-sun"></i> ธีมสว่าง (Light Modes)</div>
+            <div class="theme-dropdown-title"><i class="fa-solid fa-sun"></i> ธีมสีสว่าง (5 Light Themes)</div>
             <div class="theme-grid">
               <div class="theme-option" onclick="changeTheme('light-slate')">
                 <div class="theme-color-dot" style="background:#4f46e5"></div> Slate Blue
@@ -1156,10 +1112,7 @@
                 <div class="theme-color-dot" style="background:#9333ea"></div> Lavender
               </div>
               <div class="theme-option" onclick="changeTheme('light-peach')">
-                <div class="theme-color-dot" style="background:#f97316"></div> Orange
-              </div>
-              <div class="theme-option" onclick="changeTheme('light-mint')">
-                <div class="theme-color-dot" style="background:#0ea5e9"></div> Light Cyan
+                <div class="theme-color-dot" style="background:#f97316"></div> Peach Orange
               </div>
             </div>
           </div>
@@ -1256,7 +1209,7 @@
         </button>
         
         <button class="btn btn-outline" id="print-btn-view" onclick="window.print()" disabled>
-          <i class="fa-solid fa-print"></i> พิมพ์รายงานดัชนี
+          <i class="fa-solid fa-print"></i> พิมพ์รายงานดัชนี (1 เดือน/1 แผ่น)
         </button>
       </div>
     </section>
@@ -1315,22 +1268,11 @@
       <span class="collaboration">โยธาไทย (yotathai.com) โดยความร่วมมือระหว่าง อภิสิทธิ์ มากสุวรรณ (ช่างถึก) และ AI</span>
     </footer>
 
-    <!-- Official signatures (Print only) -->
-    <div class="print-signature-section">
-      <div class="signature-block">
-        <div style="font-weight:700;">ผู้จัดพิมพ์ข้อมูลดัชนี</div>
-        <div class="sig-line"></div>
-        <div style="font-size:11px; color:#555;">(............................................................)</div>
-        <div style="margin-top:4px; font-size:12px;">ผู้จัดพิมพ์ / พยานข้อมูล</div>
-      </div>
-      <div class="signature-block">
-        <div style="font-weight:700;">ผู้ตรวจสอบข้อมูลดัชนี</div>
-        <div class="sig-line"></div>
-        <div style="font-size:11px; color:#555;">(............................................................)</div>
-        <div style="margin-top:4px; font-size:12px;">วิศวกรผู้ควบคุมงาน / ประธานตรวจรับการจ้าง</div>
-      </div>
-    </div>
+  </div>
 
+  <!-- PRINT AREA (ONLY VISIBLE IN BROWSER PRINT PREVIEW) -->
+  <div id="print-area">
+    <!-- Generated dynamically in JavaScript -->
   </div>
 
   <!-- Clipboard Toast Notification -->
@@ -1353,6 +1295,15 @@
     // Initialize UI on window load
     window.addEventListener('DOMContentLoaded', async () => {
       setupDropdownToggles();
+      
+      // Setup reactive updates when checkboxes change
+      document.getElementById('commodities-grid').addEventListener('change', () => {
+        if (currentFetchedPeriods.length > 0) {
+          renderDataView();
+          generatePrintAreaPages(getCheckedCommodityCodes());
+        }
+      });
+
       await initializeMasterData();
     });
 
@@ -1434,19 +1385,74 @@
       }
     }
 
-    // Load master data configuration from backend proxy
+    // Load master data configuration from backend proxy or fallback directly
     async function initializeMasterData() {
       toggleLoader(true, "กำลังโหลดรายชื่อวัสดุและข้อมูลดัชนีตั้งต้น...");
+      let success = false;
       try {
-        // Fetch from proxy server endpoint
-        const response = await fetch('/api/master-data');
-        if (!response.ok) throw new Error("ดึงข้อมูลหลักล้มเหลว");
-        const masterData = await response.json();
+        let masterData;
+        try {
+          // Attempt to fetch from proxy server endpoint
+          const response = await fetch('/api/master-data');
+          if (response.ok) {
+            masterData = await response.json();
+          }
+        } catch (e) {
+          console.warn("Proxy fetch failed, trying direct API call...", e);
+        }
+
+        // Attempt direct API call if proxy failed
+        if (!masterData) {
+          try {
+            const response = await fetch('https://index-api.tpso.go.th/OpenApi/K/Month/MasterData');
+            if (response.ok) {
+              masterData = await response.json();
+            }
+          } catch (e) {
+            console.warn("Direct API fetch failed...", e);
+          }
+        }
+
+        if (masterData && masterData.length > 0) {
+          const config = masterData[0];
+          commodities = config.commodities;
+          availableRange = config.dataAvailablePeriods[0];
+          setConnectionStatus(true);
+          success = true;
+        } else {
+          throw new Error("Could not fetch masterdata from any online endpoint");
+        }
+      } catch (err) {
+        console.error("Initialization failed, using static fallback masterdata:", err);
         
-        const config = masterData[0];
-        commodities = config.commodities;
-        availableRange = config.dataAvailablePeriods[0];
+        // Static fallback master data
+        commodities = [
+          {"code":"PE","name":"ดัชนีราคาท่อ HYDENSITY POLYETHYLENE"},
+          {"code":"I","name":"ดัชนีราคาผู้บริโภคของประเทศ"},
+          {"code":"PVC","name":"ดัชนีราคาท่อ PVC"},
+          {"code":"G","name":"ดัชนีราคาเหล็กแผ่นเรียบ"},
+          {"code":"AC","name":"ดัชนีราคาท่อซีเมนต์ใยหิน"},
+          {"code":"S","name":"ดัชนีราคาเหล็ก"},
+          {"code":"E","name":"ดัชนีราคาเครื่องจักรกลและบริภัณฑ์"},
+          {"code":"W","name":"ดัชนีราคาสายไฟฟ้า"},
+          {"code":"A","name":"ดัชนีราคาแอสฟัลท์"},
+          {"code":"C","name":"ดัชนีราคาซีเมนต์"},
+          {"code":"M","name":"ดัชนีราคาสินค้าวัสดุก่อสร้าง (ไม่รวมเหล็กและซีเมนต์)"},
+          {"code":"GIP","name":"ดัชนีราคาท่อเหล็กอาบสังกะสี"},
+          {"code":"F","name":"ดัชนีราคาน้ำมันดีเซลหมุนเร็ว"}
+        ];
         
+        availableRange = {
+          "periodType": "month",
+          "yearBase": 2530,
+          "startPeriod": 6,
+          "startYear": 2545,
+          "endPeriod": 5,
+          "endYear": 2569
+        };
+        
+        setConnectionStatus(false);
+      } finally {
         // Render checkboxes
         renderCommoditiesGrid();
         
@@ -1458,14 +1464,7 @@
 
         // Pre-populate 4 custom date row selectors
         initializeCustomDateRows();
-        
-        // Update connection status
-        setConnectionStatus(true);
-      } catch (err) {
-        console.error("Initialization failed:", err);
-        setConnectionStatus(false);
-        alert("ไม่สามารถเชื่อมต่อดึงข้อมูล MasterData จาก API ของกระทรวงพาณิชย์ได้\nกรุณาลองใหม่อีกครั้ง หรือตรวจสอบเซิร์ฟเวอร์");
-      } finally {
+
         toggleLoader(false);
       }
     }
@@ -1642,6 +1641,12 @@
     function toggleAllCheckboxes(checked) {
       const boxes = document.querySelectorAll('#commodities-grid input[type="checkbox"]');
       boxes.forEach(box => box.checked = checked);
+      
+      // Manually trigger updates if data is loaded
+      if (currentFetchedPeriods.length > 0) {
+        renderDataView();
+        generatePrintAreaPages(getCheckedCommodityCodes());
+      }
     }
 
     // Run parallel fetch for chosen periods
@@ -1678,20 +1683,50 @@
           if (monthlyCache[cacheKey]) return; // Skip cache hits
 
           // Execute POST request to TPSO month endpoint proxy
-          const res = await fetch('/api/month', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              yearBase: 2530,
-              year: year,
-              month: month,
-              type: "K",
-              commodities: [] // Fetch all indices for easy local caching
-            })
-          });
+          let res;
+          let monthData;
+          try {
+            res = await fetch('/api/month', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                yearBase: 2530,
+                year: year,
+                month: month,
+                type: "K",
+                commodities: [] // Fetch all indices for easy local caching
+              })
+            });
+            if (res.ok) {
+              monthData = await res.json();
+            }
+          } catch (e) {
+            console.warn("Proxy fetch failed, trying direct API...", e);
+          }
 
-          if (!res.ok) throw new Error(`ล้มเหลวขณะดึงข้อมูลเดือน ${month}/${year}`);
-          const monthData = await res.json();
+          // Fallback to direct TPSO API post
+          if (!monthData) {
+            try {
+              res = await fetch('https://index-api.tpso.go.th/OpenApi/K/Month', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  yearBase: 2530,
+                  year: year,
+                  month: month,
+                  type: "K",
+                  commodities: []
+                })
+              });
+              if (res.ok) {
+                monthData = await res.json();
+              }
+            } catch (e) {
+              console.error("Direct API fetch failed too...", e);
+            }
+          }
+
+          if (!monthData) throw new Error(`ล้มเหลวขณะดึงข้อมูลเดือน ${month}/${year}`);
           monthlyCache[cacheKey] = monthData;
         });
 
@@ -1705,8 +1740,8 @@
         document.getElementById('download-btn').disabled = false;
         document.getElementById('print-btn-view').disabled = false;
 
-        // Set metadata on print version
-        setPrintReportMetadata();
+        // Generate print area: 1 A4 page per month
+        generatePrintAreaPages(checkedCommodities);
 
       } catch (err) {
         console.error(err);
@@ -1768,33 +1803,92 @@
       return checked;
     }
 
-    // Set printable values
-    function setPrintReportMetadata() {
-      let modeText = "ช่วงเวลารายเดือน";
-      let rangeText = "";
-      
-      if (searchMode === 'range') {
-        modeText = "ช่วงเวลารายเดือนต่อเนื่อง";
-        const sm = parseInt(document.getElementById('start-month').value);
-        const sy = document.getElementById('start-year').value;
-        const em = parseInt(document.getElementById('end-month').value);
-        const ey = document.getElementById('end-year').value;
-        rangeText = `${TH_MONTHS[sm-1]} ${sy} - ${TH_MONTHS[em-1]} ${ey}`;
-      } else if (searchMode === 'year') {
-        modeText = "ข้อมูลรายปี 12 เดือนเต็ม";
-        const y = document.getElementById('year-only').value;
-        rangeText = `ตลอดปี พ.ศ. ${y}`;
-      } else if (searchMode === 'custom') {
-        modeText = "ระบุเดือนแยกอิสระ (Custom Months)";
-        const textParts = currentFetchedPeriods.map(p => `${TH_MONTHS_SHORT[p.month-1]} ${p.year.toString().slice(-2)}`);
-        rangeText = textParts.join(', ');
-      }
-
-      document.getElementById('print-mode-text').innerText = modeText;
-      document.getElementById('print-range-text').innerText = rangeText;
+    // Generate print pages container (1 page per month)
+    function generatePrintAreaPages(selectedCodes) {
+      const printArea = document.getElementById('print-area');
+      printArea.innerHTML = '';
       
       const now = new Date();
-      document.getElementById('print-date-text').innerText = `${now.getDate()} ${TH_MONTHS[now.getMonth()]} ${now.getFullYear() + 543} เวลา ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} น.`;
+      const timestamp = `${now.getDate()} ${TH_MONTHS[now.getMonth()]} ${now.getFullYear() + 543} เวลา ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')} น.`;
+
+      let printHTML = '';
+
+      currentFetchedPeriods.forEach(p => {
+        const monthName = TH_MONTHS[p.month - 1];
+        const yearBE = p.year;
+
+        printHTML += `
+          <div class="print-page">
+            <div class="print-page-content">
+              <!-- Header -->
+              <div style="display:flex; flex-direction:column; align-items:center; border-bottom:2px solid #000; padding-bottom:12px; margin-bottom:20px; text-align:center; gap:8px;">
+                <img src="ช้างโลโก้logo-yotathai.PNG" alt="Logo" style="height:60px; width:auto; margin-bottom:4px;">
+                <h2 style="font-size:16pt; font-weight:700; margin:0;">รายงานตารางดัชนีราคาวัสดุก่อสร้าง (ค่า K)</h2>
+                <h3 style="font-size:12pt; font-weight:700; margin:0; color:#333;">ประจำเดือน ${monthName} พ.ศ. ${yearBE}</h3>
+                <p style="font-size:9.5pt; color:#444; margin:0;">สำนักงานนโยบายและยุทธศาสตร์การค้า (TPSO) กระทรวงพาณิชย์ (ฐาน พ.ศ. 2530 = 100)</p>
+              </div>
+
+              <!-- Meta specs -->
+              <div style="display:grid; grid-template-columns: 1fr 1fr; border:1px solid #ccc; background:#f9f9f9; padding:8px; font-size:9.5pt; margin-bottom:16px;">
+                <div><strong>ดึงข้อมูลวันที่พิมพ์:</strong> ${timestamp}</div>
+                <div style="text-align:right;"><strong>จัดทำข้อมูลโดย:</strong> yotathai.com</div>
+              </div>
+              
+              <!-- Table -->
+              <table style="width:100%; border-collapse:collapse; font-size:10pt;">
+                <thead>
+                  <tr>
+                    <th style="background:#e6e6e6; color:#000; border:1px solid #000; padding:8px 10px; font-weight:bold; text-align:center; width:80px;">รหัส</th>
+                    <th style="background:#e6e6e6; color:#000; border:1px solid #000; padding:8px 10px; font-weight:bold; text-align:left;">รายการดัชนีวัสดุก่อสร้าง</th>
+                    <th style="background:#e6e6e6; color:#000; border:1px solid #000; padding:8px 10px; font-weight:bold; text-align:right; width:120px;">ดัชนีราคา</th>
+                  </tr>
+                </thead>
+                <tbody>
+        `;
+
+        selectedCodes.forEach(code => {
+          const comm = commodities.find(c => c.code === code);
+          const name = comm ? comm.name : 'ไม่ระบุ';
+          
+          const cacheKey = `${p.year}-${p.month}`;
+          const list = monthlyCache[cacheKey] || [];
+          const item = list.find(d => d.commodityCode === code);
+          const indexVal = item ? item.index.toFixed(1) : '-';
+
+          printHTML += `
+            <tr>
+              <td style="border:1px solid #000; padding:6px 10px; text-align:center; font-weight:bold; font-family:'Outfit';">[${code}]</td>
+              <td style="border:1px solid #000; padding:6px 10px; text-align:left;">${name}</td>
+              <td style="border:1px solid #000; padding:6px 10px; text-align:right; font-weight:bold; font-family:'Outfit';">${indexVal}</td>
+            </tr>
+          `;
+        });
+
+        printHTML += `
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Signatures pushed to bottom -->
+            <div style="display:flex; justify-content:space-between; margin-top:40px; width:100%; border-top:1px solid #ddd; padding-top:16px;">
+              <div style="text-align:center; width:45%;">
+                <div style="font-weight:700; font-size:10pt;">ผู้พิมพ์ข้อมูลดัชนี</div>
+                <div style="border-bottom:1px dotted #000; margin:35px auto 8px; width:80%;"></div>
+                <div style="font-size:9pt; color:#555;">(............................................................)</div>
+                <div style="margin-top:4px; font-size:9.5pt;">ผู้สืบค้น / พยานข้อมูล</div>
+              </div>
+              <div style="text-align:center; width:45%;">
+                <div style="font-weight:700; font-size:10pt;">ผู้ตรวจสอบข้อมูลดัชนี</div>
+                <div style="border-bottom:1px dotted #000; margin:35px auto 8px; width:80%;"></div>
+                <div style="font-size:9pt; color:#555;">(............................................................)</div>
+                <div style="margin-top:4px; font-size:9.5pt;">วิศวกรผู้ควบคุมงาน / คณะกรรมการตรวจรับ</div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      printArea.innerHTML = printHTML;
     }
 
     // Render table and charts views
