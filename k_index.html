@@ -143,70 +143,7 @@
       --slate-800: #27272a;
     }
 
-    /* 4 New Dark Themes (to make 10 dark themes) */
-    html[data-theme="dark-rose"] {
-      --bg: #14050a;
-      --bg-gradient: radial-gradient(circle at 50% 0%, #2b0d18 0%, #14050a 100%);
-      --card-bg: rgba(43, 13, 24, 0.55);
-      --card-border: rgba(255, 255, 255, 0.05);
-      --card-glow: rgba(244, 63, 94, 0.03);
-      --text-main: #fff5f7;
-      --text-muted: #f43f5e;
-      --text-label: #fda4af;
-      --primary: #f43f5e;
-      --primary-rgb: 244, 63, 94;
-      --primary-gradient: linear-gradient(135deg, #fb7185 0%, #f43f5e 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(244, 63, 94, 0.15) 0%, rgba(251, 113, 133, 0.05) 100%);
-      --slate-800: #401020;
-    }
 
-    html[data-theme="dark-indigo"] {
-      --bg: #030514;
-      --bg-gradient: radial-gradient(circle at 50% 0%, #0c0f30 0%, #030514 100%);
-      --card-bg: rgba(12, 15, 48, 0.55);
-      --card-border: rgba(255, 255, 255, 0.05);
-      --card-glow: rgba(59, 130, 246, 0.03);
-      --text-main: #f0f3ff;
-      --text-muted: #3b82f6;
-      --text-label: #93c5fd;
-      --primary: #3b82f6;
-      --primary-rgb: 59, 130, 246;
-      --primary-gradient: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(96, 165, 250, 0.05) 100%);
-      --slate-800: #101540;
-    }
-
-    html[data-theme="dark-forest"] {
-      --bg: #081005;
-      --bg-gradient: radial-gradient(circle at 50% 0%, #15290d 0%, #081005 100%);
-      --card-bg: rgba(21, 41, 13, 0.55);
-      --card-border: rgba(255, 255, 255, 0.05);
-      --card-glow: rgba(132, 204, 22, 0.03);
-      --text-main: #f7fee7;
-      --text-muted: #84cc16;
-      --text-label: #bef264;
-      --primary: #84cc16;
-      --primary-rgb: 132, 204, 22;
-      --primary-gradient: linear-gradient(135deg, #a3e635 0%, #84cc16 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(132, 204, 22, 0.15) 0%, rgba(163, 230, 53, 0.05) 100%);
-      --slate-800: #1d3310;
-    }
-
-    html[data-theme="dark-gold"] {
-      --bg: #100f05;
-      --bg-gradient: radial-gradient(circle at 50% 0%, #29260d 0%, #100f05 100%);
-      --card-bg: rgba(41, 38, 13, 0.55);
-      --card-border: rgba(255, 255, 255, 0.05);
-      --card-glow: rgba(234, 179, 8, 0.03);
-      --text-main: #fefdf0;
-      --text-muted: #eab308;
-      --text-label: #fde047;
-      --primary: #eab308;
-      --primary-rgb: 234, 179, 8;
-      --primary-gradient: linear-gradient(135deg, #facc15 0%, #eab308 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(250, 204, 21, 0.05) 100%);
-      --slate-800: #333010;
-    }
 
     /* Light Theme Settings (5 themes) */
     /* Cleaned up redundant light-slate since it is default */
@@ -273,6 +210,49 @@
       --primary-gradient: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
       --accent-glowing: linear-gradient(135deg, rgba(249, 115, 22, 0.06) 0%, rgba(253, 186, 116, 0.06) 100%);
       --slate-800: #fffaf5;
+    }
+
+    /* Theme circles row in header */
+    .theme-circles-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      padding: 6px 12px;
+      border-radius: 99px;
+    }
+
+    .theme-label-hint {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-label);
+      user-select: none;
+    }
+
+    .theme-circle {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    /* Light theme outline adjustment */
+    html[data-theme^="light"] .theme-circle {
+      border-color: rgba(0, 0, 0, 0.15);
+    }
+
+    .theme-circle:hover {
+      transform: scale(1.25);
+    }
+
+    .theme-circle.active {
+      transform: scale(1.15);
+      border-color: var(--text-main) !important;
+      box-shadow: 0 0 8px var(--primary);
     }
 
     * {
@@ -1055,69 +1035,21 @@
           <span id="conn-text">ดึงข้อมูล API ได้ปกติ</span>
         </div>
 
-        <!-- Palette Theme Switcher -->
-        <div class="theme-picker-container">
-          <button class="theme-picker-btn" id="theme-toggle-btn" title="เปลี่ยนธีมหน้าเว็บ">
-            <i class="fa-solid fa-palette"></i>
-          </button>
+        <!-- Theme Circles Switcher (5 Dark, 5 Light) -->
+        <div class="theme-circles-container">
+          <span class="theme-label-hint">โทนเข้ม:</span>
+          <div class="theme-circle" onclick="changeTheme('dark-blue')" title="Classic Blue" style="background:#6366f1;" data-theme-id="dark-blue"></div>
+          <div class="theme-circle" onclick="changeTheme('dark-green')" title="Emerald" style="background:#10b981;" data-theme-id="dark-green"></div>
+          <div class="theme-circle" onclick="changeTheme('dark-purple')" title="Purple" style="background:#a855f7;" data-theme-id="dark-purple"></div>
+          <div class="theme-circle" onclick="changeTheme('dark-orange')" title="Amber" style="background:#f97316;" data-theme-id="dark-orange"></div>
+          <div class="theme-circle" onclick="changeTheme('dark-charcoal')" title="Charcoal" style="background:#71717a;" data-theme-id="dark-charcoal"></div>
           
-          <div class="theme-dropdown" id="theme-dropdown">
-            <div class="theme-dropdown-title">ปรับสไตล์จอภาพของคุณ (15 รูปแบบ)</div>
-            
-            <div class="theme-dropdown-title"><i class="fa-solid fa-moon"></i> ธีมสีเข้ม (10 Dark Themes)</div>
-            <div class="theme-grid">
-              <div class="theme-option" onclick="changeTheme('dark-blue')">
-                <div class="theme-color-dot" style="background:#6366f1"></div> Classic Blue
-              </div>
-              <div class="theme-option" onclick="changeTheme('dark-green')">
-                <div class="theme-color-dot" style="background:#10b981"></div> Emerald
-              </div>
-              <div class="theme-option" onclick="changeTheme('dark-purple')">
-                <div class="theme-color-dot" style="background:#a855f7"></div> Purple
-              </div>
-              <div class="theme-option" onclick="changeTheme('dark-orange')">
-                <div class="theme-color-dot" style="background:#f97316"></div> Amber
-              </div>
-              <div class="theme-option" onclick="changeTheme('dark-cyan')">
-                <div class="theme-color-dot" style="background:#06b6d4"></div> Cyan
-              </div>
-              <div class="theme-option" onclick="changeTheme('dark-charcoal')">
-                <div class="theme-color-dot" style="background:#71717a"></div> Charcoal
-              </div>
-              <!-- New dark themes -->
-              <div class="theme-option" onclick="changeTheme('dark-rose')">
-                <div class="theme-color-dot" style="background:#f43f5e"></div> Ruby Rose
-              </div>
-              <div class="theme-option" onclick="changeTheme('dark-indigo')">
-                <div class="theme-color-dot" style="background:#3b82f6"></div> Indigo
-              </div>
-              <div class="theme-option" onclick="changeTheme('dark-forest')">
-                <div class="theme-color-dot" style="background:#84cc16"></div> Forest Olive
-              </div>
-              <div class="theme-option" onclick="changeTheme('dark-gold')">
-                <div class="theme-color-dot" style="background:#eab308"></div> Luxury Gold
-              </div>
-            </div>
-            
-            <div class="theme-dropdown-title"><i class="fa-solid fa-sun"></i> ธีมสีสว่าง (5 Light Themes)</div>
-            <div class="theme-grid">
-              <div class="theme-option" onclick="changeTheme('light-slate')">
-                <div class="theme-color-dot" style="background:#4f46e5"></div> Slate Blue
-              </div>
-              <div class="theme-option" onclick="changeTheme('light-emerald')">
-                <div class="theme-color-dot" style="background:#10b981"></div> Mint Emerald
-              </div>
-              <div class="theme-option" onclick="changeTheme('light-blue')">
-                <div class="theme-color-dot" style="background:#3b82f6"></div> Sky Blue
-              </div>
-              <div class="theme-option" onclick="changeTheme('light-lavender')">
-                <div class="theme-color-dot" style="background:#9333ea"></div> Lavender
-              </div>
-              <div class="theme-option" onclick="changeTheme('light-peach')">
-                <div class="theme-color-dot" style="background:#f97316"></div> Peach Orange
-              </div>
-            </div>
-          </div>
+          <span class="theme-label-hint" style="margin-left:8px;">โทนสว่าง:</span>
+          <div class="theme-circle" onclick="changeTheme('light-slate')" title="Slate Blue" style="background:#4f46e5;" data-theme-id="light-slate"></div>
+          <div class="theme-circle" onclick="changeTheme('light-emerald')" title="Mint Emerald" style="background:#059669;" data-theme-id="light-emerald"></div>
+          <div class="theme-circle" onclick="changeTheme('light-blue')" title="Sky Blue" style="background:#3b82f6;" data-theme-id="light-blue"></div>
+          <div class="theme-circle" onclick="changeTheme('light-lavender')" title="Lavender" style="background:#9333ea;" data-theme-id="light-lavender"></div>
+          <div class="theme-circle" onclick="changeTheme('light-peach')" title="Peach Orange" style="background:#ea580c;" data-theme-id="light-peach"></div>
         </div>
       </div>
     </header>
@@ -1305,7 +1237,13 @@
 
     // Initialize UI on window load
     window.addEventListener('DOMContentLoaded', async () => {
-      setupDropdownToggles();
+      // Highlight active theme circle on load
+      const activeThemeOnLoad = document.documentElement.getAttribute('data-theme') || 'light-slate';
+      document.querySelectorAll('.theme-circle').forEach(c => {
+        if (c.getAttribute('data-theme-id') === activeThemeOnLoad) {
+          c.classList.add('active');
+        }
+      });
       
       // Setup reactive updates when checkboxes change
       document.getElementById('commodities-grid').addEventListener('change', () => {
@@ -1318,30 +1256,20 @@
       await initializeMasterData();
     });
 
-    // Toggle theme palette dropdown
-    function setupDropdownToggles() {
-      const btn = document.getElementById('theme-toggle-btn');
-      const dropdown = document.getElementById('theme-dropdown');
-      
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle('show');
-      });
-
-      document.addEventListener('click', () => {
-        dropdown.classList.remove('show');
-      });
-
-      dropdown.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    }
-
     // Change site theme preset
     function changeTheme(themeName) {
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('tpso-theme', themeName);
-      document.getElementById('theme-dropdown').classList.remove('show');
+      
+      // Update active state in UI circles
+      const circles = document.querySelectorAll('.theme-circle');
+      circles.forEach(c => {
+        if (c.getAttribute('data-theme-id') === themeName) {
+          c.classList.add('active');
+        } else {
+          c.classList.remove('active');
+        }
+      });
       
       // Reactive update for chart if initialized
       if (chartInstance && currentFetchedPeriods.length > 1) {
