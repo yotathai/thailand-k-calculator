@@ -1,0 +1,13 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/api/master-data",
+      "destination": "https://index-api.tpso.go.th/OpenApi/K/Month/MasterData"
+    },
+    {
+      "source": "/api/month",
+      "destination": "https://index-api.tpso.go.th/OpenApi/K/Month"
+    }
+  ]
+}
