@@ -6,8 +6,8 @@
   <title>K-INDEX: เครื่องมือสืบค้น พิมพ์ และดาวน์โหลดดัชนีราคางานก่อสร้าง (ค่า K)</title>
   
   <script>
-    // Immediately apply saved theme to prevent flashing
-    const savedTheme = localStorage.getItem('tpso-theme') || 'dark-blue';
+    // Immediately apply saved theme to prevent flashing (default to light-slate)
+    const savedTheme = localStorage.getItem('tpso-theme') || 'light-slate';
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
   
@@ -23,8 +23,31 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* Premium Glassmorphic Theme Variables */
-    :root, html[data-theme="dark-blue"] {
+    /* Premium Glassmorphic Theme Variables - Default to Light Slate */
+    :root, html[data-theme="light-slate"] {
+      --bg: #e2e8f0;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #f1f5f9 0%, #e2e8f0 100%);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(15, 23, 42, 0.08);
+      --card-glow: rgba(79, 70, 229, 0.02);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-label: #64748b;
+      
+      --primary: #4f46e5;
+      --primary-rgb: 79, 70, 229;
+      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(79, 70, 229, 0.06) 0%, rgba(129, 140, 248, 0.06) 100%);
+      
+      --emerald: #10b981;
+      --rose: #f43f5e;
+      --slate-800: #f8fafc;
+      --font-eng: 'Outfit', 'Inter', sans-serif;
+      --font-thai: 'Sarabun', sans-serif;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html[data-theme="dark-blue"] {
       --bg: #070a13;
       --bg-gradient: radial-gradient(circle at 50% 0%, #0d1527 0%, #070a13 100%);
       --card-bg: rgba(13, 20, 39, 0.55);
@@ -33,18 +56,11 @@
       --text-main: #f8fafc;
       --text-muted: #64748b;
       --text-label: #94a3b8;
-      
       --primary: #6366f1;
       --primary-rgb: 99, 102, 241;
       --primary-gradient: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
       --accent-glowing: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
-      
-      --emerald: #10b981;
-      --rose: #f43f5e;
       --slate-800: #1e293b;
-      --font-eng: 'Outfit', 'Inter', sans-serif;
-      --font-thai: 'Sarabun', sans-serif;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     html[data-theme="dark-green"] {
@@ -193,21 +209,7 @@
     }
 
     /* Light Theme Settings (5 themes) */
-    html[data-theme="light-slate"] {
-      --bg: #e2e8f0;
-      --bg-gradient: radial-gradient(circle at 50% 0%, #f1f5f9 0%, #e2e8f0 100%);
-      --card-bg: rgba(255, 255, 255, 0.75);
-      --card-border: rgba(15, 23, 42, 0.08);
-      --card-glow: rgba(79, 70, 229, 0.02);
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --text-label: #64748b;
-      --primary: #4f46e5;
-      --primary-rgb: 79, 70, 229;
-      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-      --accent-glowing: linear-gradient(135deg, rgba(79, 70, 229, 0.06) 0%, rgba(129, 140, 248, 0.06) 100%);
-      --slate-800: #f8fafc;
-    }
+    /* Cleaned up redundant light-slate since it is default */
 
     html[data-theme="light-emerald"] {
       --bg: #d1fae5;
@@ -1141,8 +1143,17 @@
 
       <!-- Date selector parameters -->
       <div class="input-row">
+        <!-- Single month block -->
+        <div class="input-group" id="group-single-date">
+          <label>เลือกเดือนที่ต้องการสืบค้น</label>
+          <div class="select-pair">
+            <select id="single-month" class="form-select"></select>
+            <select id="single-year" class="form-select"></select>
+          </div>
+        </div>
+
         <!-- Range block: Start date -->
-        <div class="input-group" id="group-range-start">
+        <div class="input-group" id="group-range-start" style="display:none;">
           <label>สืบค้นตั้งแต่เดือน</label>
           <div class="select-pair">
             <select id="start-month" class="form-select"></select>
@@ -1151,7 +1162,7 @@
         </div>
 
         <!-- Range block: End date -->
-        <div class="input-group" id="group-range-end">
+        <div class="input-group" id="group-range-end" style="display:none;">
           <label>จนถึงเดือน</label>
           <div class="select-pair">
             <select id="end-month" class="form-select"></select>
@@ -1285,7 +1296,7 @@
     const TH_MONTHS = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
     const TH_MONTHS_SHORT = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
     
-    let searchMode = 'range'; // 'range', 'year', 'custom'
+    let searchMode = 'single'; // 'single', 'range', 'year', 'custom'
     let commodities = [];     // Master list loaded from TPSO
     let monthlyCache = {};    // Memory caching of fetched indices: {"year-month": [api_data]}
     let availableRange = null;// TPSO API range object
@@ -1331,6 +1342,11 @@
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('tpso-theme', themeName);
       document.getElementById('theme-dropdown').classList.remove('show');
+      
+      // Reactive update for chart if initialized
+      if (chartInstance && currentFetchedPeriods.length > 1) {
+        renderTrendChart();
+      }
     }
 
     // Toggle loader visibility
@@ -1352,7 +1368,7 @@
       searchMode = mode;
       
       // Update UI active state
-      ['range', 'year', 'custom'].forEach(m => {
+      ['single', 'range', 'year', 'custom'].forEach(m => {
         const btn = document.getElementById(`mode-${m}`);
         if (m === mode) {
           btn.classList.add('active');
@@ -1362,27 +1378,17 @@
       });
 
       // Show/Hide input blocks
+      const singleBlock = document.getElementById('group-single-date');
       const rangeStartBlock = document.getElementById('group-range-start');
       const rangeEndBlock = document.getElementById('group-range-end');
       const yearBlock = document.getElementById('group-year-date');
       const customBlock = document.getElementById('group-custom-dates');
 
-      if (mode === 'range') {
-        rangeStartBlock.style.display = 'flex';
-        rangeEndBlock.style.display = 'flex';
-        yearBlock.style.display = 'none';
-        customBlock.style.display = 'none';
-      } else if (mode === 'year') {
-        rangeStartBlock.style.display = 'none';
-        rangeEndBlock.style.display = 'none';
-        yearBlock.style.display = 'flex';
-        customBlock.style.display = 'none';
-      } else if (mode === 'custom') {
-        rangeStartBlock.style.display = 'none';
-        rangeEndBlock.style.display = 'none';
-        yearBlock.style.display = 'none';
-        customBlock.style.display = 'flex';
-      }
+      singleBlock.style.display = mode === 'single' ? 'flex' : 'none';
+      rangeStartBlock.style.display = mode === 'range' ? 'flex' : 'none';
+      rangeEndBlock.style.display = mode === 'range' ? 'flex' : 'none';
+      yearBlock.style.display = mode === 'year' ? 'flex' : 'none';
+      customBlock.style.display = mode === 'custom' ? 'flex' : 'none';
     }
 
     // Load master data configuration from backend proxy or fallback directly
@@ -1486,9 +1492,11 @@
       const startYearSel = document.getElementById('start-year');
       const endYearSel = document.getElementById('end-year');
       const yearOnlySel = document.getElementById('year-only');
+      const singleYearSel = document.getElementById('single-year');
 
       const startMonthSel = document.getElementById('start-month');
       const endMonthSel = document.getElementById('end-month');
+      const singleMonthSel = document.getElementById('single-month');
 
       // Helper to clear and fill selector options
       const fillYears = (sel) => {
@@ -1512,13 +1520,15 @@
       };
 
       // Fill all selectors
-      [startYearSel, endYearSel, yearOnlySel].forEach(fillYears);
-      [startMonthSel, endMonthSel].forEach(fillMonths);
+      [startYearSel, endYearSel, yearOnlySel, singleYearSel].forEach(fillYears);
+      [startMonthSel, endMonthSel, singleMonthSel].forEach(fillMonths);
     }
 
     // Default dates setup
     function setDefaultInterval(range) {
       document.getElementById('year-only').value = range.endYear;
+      document.getElementById('single-year').value = range.endYear;
+      document.getElementById('single-month').value = range.endPeriod;
 
       // Start range: 12 months ago
       let startYear = range.endYear;
@@ -1732,6 +1742,9 @@
 
         await Promise.all(fetchPromises);
         
+        // Sort UI rows chronologically if in custom mode
+        sortCustomDateRowsUI();
+
         // Render content
         renderDataView();
         
@@ -1755,7 +1768,11 @@
     function getSelectedPeriods() {
       const list = [];
       
-      if (searchMode === 'range') {
+      if (searchMode === 'single') {
+        const m = parseInt(document.getElementById('single-month').value);
+        const y = parseInt(document.getElementById('single-year').value);
+        list.push({ year: y, month: m });
+      } else if (searchMode === 'range') {
         const sm = parseInt(document.getElementById('start-month').value);
         const sy = parseInt(document.getElementById('start-year').value);
         const em = parseInt(document.getElementById('end-month').value);
@@ -1793,6 +1810,17 @@
         });
       }
       return list;
+    }
+
+    // Sort UI date rows chronologically
+    function sortCustomDateRowsUI() {
+      if (searchMode !== 'custom') return;
+      const list = getSelectedPeriods();
+      const container = document.getElementById('custom-dates-list');
+      container.innerHTML = '';
+      list.forEach(p => {
+        addCustomDateRow(p.month, p.year);
+      });
     }
 
     // Get list of active commodity codes
