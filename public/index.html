@@ -6,8 +6,12 @@
   <title>K-INDEX: เครื่องมือสืบค้น พิมพ์ และดาวน์โหลดดัชนีราคางานก่อสร้าง (ค่า K)</title>
   
   <script>
-    // Immediately apply saved theme to prevent flashing (default to light-slate)
-    const savedTheme = localStorage.getItem('tpso-theme') || 'light-slate';
+    // Immediately apply saved theme (default to light-slate and migrate old dark-blue users)
+    let savedTheme = localStorage.getItem('tpso-theme');
+    if (!savedTheme || savedTheme === 'dark-blue') {
+      savedTheme = 'light-slate';
+      localStorage.setItem('tpso-theme', 'light-slate');
+    }
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
   
