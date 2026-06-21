@@ -553,7 +553,7 @@
     }
 
     .form-select {
-      background: rgba(13, 20, 39, 0.7);
+      background: var(--slate-800);
       border: 1px solid var(--card-border);
       border-radius: 10px;
       color: var(--text-main);
@@ -783,7 +783,7 @@
 
     .search-input {
       width: 100%;
-      background: rgba(0, 0, 0, 0.2);
+      background: var(--slate-800);
       border: 1px solid var(--card-border);
       border-radius: 10px;
       color: var(--text-main);
@@ -1070,9 +1070,9 @@
         <i class="fa-solid fa-sliders"></i> กำหนดเงื่อนไขดึงข้อมูลดัชนีราคาวัสดุก่อสร้าง
       </div>
 
-      <!-- Mode selection -->
       <div class="mode-selector">
-        <button class="mode-tab active" id="mode-range" onclick="setSearchMode('range')">ช่วงเวลาหลายเดือน</button>
+        <button class="mode-tab active" id="mode-single" onclick="setSearchMode('single')">เดือนเดียว</button>
+        <button class="mode-tab" id="mode-range" onclick="setSearchMode('range')">ช่วงเวลาหลายเดือน</button>
         <button class="mode-tab" id="mode-year" onclick="setSearchMode('year')">ดัชนีรายปี (12 เดือน)</button>
         <button class="mode-tab" id="mode-custom" onclick="setSearchMode('custom')">เลือกแยกเดือนอิสระ (เริ่มต้น 4 เดือน)</button>
       </div>
@@ -1510,7 +1510,7 @@
       
       const row = document.createElement('div');
       row.className = 'custom-date-row';
-      row.style.cssText = 'display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.2); border:1px solid var(--card-border); padding:6px 10px; border-radius:10px;';
+      row.style.cssText = 'display:flex; align-items:center; gap:6px; background:var(--slate-800); border:1px solid var(--card-border); padding:6px 10px; border-radius:10px;';
       
       // Create month selector
       const mSel = document.createElement('select');
@@ -1668,8 +1668,12 @@
             }
           }
 
-          if (!monthData) throw new Error(`ล้มเหลวขณะดึงข้อมูลเดือน ${month}/${year}`);
-          monthlyCache[cacheKey] = monthData;
+          if (!monthData) {
+            console.warn(`ล้มเหลวขณะดึงข้อมูลเดือน ${month}/${year} หรือยังไม่มีข้อมูลบริการจากระบบดัชนี`);
+            monthlyCache[cacheKey] = [];
+          } else {
+            monthlyCache[cacheKey] = monthData;
+          }
         });
 
         await Promise.all(fetchPromises);
