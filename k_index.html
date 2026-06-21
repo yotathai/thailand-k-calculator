@@ -1,0 +1,2919 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-INDEX: World-Class K-Factor Calculation Platform</title>
+  
+  <script>
+    // Immediately apply saved theme to prevent flashing
+    const savedTheme = localStorage.getItem('tpso-theme') || 'dark-blue';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+  
+  <!-- Google Fonts: Inter (English UI), Sarabun (Thai Typography), Outfit (Numbers/Ratios) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Premium Glassmorphic Theme Variables */
+    :root, html[data-theme="dark-blue"] {
+      --bg: #070a13;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #0d1527 0%, #070a13 100%);
+      --card-bg: rgba(13, 20, 39, 0.45);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --card-glow: rgba(99, 102, 241, 0.03);
+      --text-main: #f8fafc;
+      --text-muted: #64748b;
+      --text-label: #94a3b8;
+      
+      /* Vibrant Accent Colors */
+      --primary: #6366f1;
+      --primary-rgb: 99, 102, 241;
+      --primary-gradient: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+      
+      --emerald: #10b981;
+      --emerald-bg: rgba(16, 185, 129, 0.1);
+      --rose: #f43f5e;
+      --rose-bg: rgba(244, 63, 94, 0.1);
+      --amber: #f59e0b;
+      --amber-bg: rgba(245, 158, 11, 0.1);
+      --slate-800: #1e293b;
+      
+      --font-eng: 'Outfit', 'Inter', sans-serif;
+      --font-thai: 'Sarabun', sans-serif;
+      
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html[data-theme="dark-green"] {
+      --bg: #04140f;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #0a251b 0%, #04140f 100%);
+      --card-bg: rgba(10, 37, 27, 0.45);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --card-glow: rgba(16, 185, 129, 0.03);
+      --text-main: #f0fdf4;
+      --text-muted: #4ade80;
+      --text-label: #86efac;
+      --primary: #10b981;
+      --primary-rgb: 16, 185, 129;
+      --primary-gradient: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(52, 211, 153, 0.15) 100%);
+      --slate-800: #062f21;
+    }
+
+    html[data-theme="dark-purple"] {
+      --bg: #0a0516;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #170d2b 0%, #0a0516 100%);
+      --card-bg: rgba(23, 13, 43, 0.45);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --card-glow: rgba(168, 85, 247, 0.03);
+      --text-main: #faf5ff;
+      --text-muted: #c084fc;
+      --text-label: #d8b4fe;
+      --primary: #a855f7;
+      --primary-rgb: 168, 85, 247;
+      --primary-gradient: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(192, 132, 252, 0.15) 100%);
+      --slate-800: #251240;
+    }
+
+    html[data-theme="dark-orange"] {
+      --bg: #120904;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #24130a 0%, #120904 100%);
+      --card-bg: rgba(36, 19, 10, 0.45);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --card-glow: rgba(249, 115, 22, 0.03);
+      --text-main: #fff7ed;
+      --text-muted: #fdba74;
+      --text-label: #fed7aa;
+      --primary: #f97316;
+      --primary-rgb: 249, 115, 22;
+      --primary-gradient: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(251, 146, 60, 0.15) 100%);
+      --slate-800: #3c1e0e;
+    }
+
+    html[data-theme="dark-cyan"] {
+      --bg: #040d12;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #0d262b 0%, #040d12 100%);
+      --card-bg: rgba(13, 38, 43, 0.45);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --card-glow: rgba(6, 182, 212, 0.03);
+      --text-main: #f0fdfa;
+      --text-muted: #22d3ee;
+      --text-label: #67e8f9;
+      --primary: #06b6d4;
+      --primary-rgb: 6, 182, 212;
+      --primary-gradient: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(34, 211, 238, 0.15) 100%);
+      --slate-800: #0a2d33;
+    }
+
+    html[data-theme="dark-charcoal"] {
+      --bg: #0a0a0c;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #18181b 0%, #0a0a0c 100%);
+      --card-bg: rgba(24, 24, 27, 0.45);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --card-glow: rgba(156, 163, 175, 0.03);
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --text-label: #d4d4d8;
+      --primary: #71717a;
+      --primary-rgb: 113, 113, 122;
+      --primary-gradient: linear-gradient(135deg, #a1a1aa 0%, #71717a 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(113, 113, 122, 0.1) 0%, rgba(161, 161, 170, 0.1) 100%);
+      --slate-800: #27272a;
+    }
+
+    /* Light Team Themes */
+    html[data-theme="light-slate"] {
+      --bg: #e2e8f0;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #f1f5f9 0%, #e2e8f0 100%);
+      --card-bg: rgba(255, 255, 255, 0.7);
+      --card-border: rgba(15, 23, 42, 0.06);
+      --card-glow: rgba(79, 70, 229, 0.02);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-label: #64748b;
+      --primary: #4f46e5;
+      --primary-rgb: 79, 70, 229;
+      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(79, 70, 229, 0.06) 0%, rgba(129, 140, 248, 0.06) 100%);
+      --slate-800: #f8fafc;
+    }
+
+    html[data-theme="light-emerald"] {
+      --bg: #d1fae5;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #ecfdf5 0%, #d1fae5 100%);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(6, 78, 59, 0.06);
+      --card-glow: rgba(16, 185, 129, 0.02);
+      --text-main: #064e3b;
+      --text-muted: #059669;
+      --text-label: #10b981;
+      --primary: #10b981;
+      --primary-rgb: 16, 185, 129;
+      --primary-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(52, 211, 153, 0.06) 100%);
+      --slate-800: #f0fdf4;
+    }
+
+    html[data-theme="light-blue"] {
+      --bg: #dbeafe;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #eff6ff 0%, #dbeafe 100%);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(30, 58, 138, 0.06);
+      --card-glow: rgba(59, 130, 246, 0.02);
+      --text-main: #1e3a8a;
+      --text-muted: #2563eb;
+      --text-label: #3b82f6;
+      --primary: #3b82f6;
+      --primary-rgb: 59, 130, 246;
+      --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(59, 130, 246, 0.06) 0%, rgba(96, 165, 250, 0.06) 100%);
+      --slate-800: #f0f9ff;
+    }
+
+    html[data-theme="light-lavender"] {
+      --bg: #f3e8ff;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #faf5ff 0%, #f3e8ff 100%);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(88, 28, 135, 0.06);
+      --card-glow: rgba(147, 51, 234, 0.02);
+      --text-main: #581c87;
+      --text-muted: #7e22ce;
+      --text-label: #9333ea;
+      --primary: #9333ea;
+      --primary-rgb: 147, 51, 234;
+      --primary-gradient: linear-gradient(135deg, #9333ea 0%, #6b21a8 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(147, 51, 234, 0.06) 0%, rgba(168, 85, 247, 0.06) 100%);
+      --slate-800: #faf5ff;
+    }
+
+    html[data-theme="light-peach"] {
+      --bg: #ffedd5;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #fff7ed 0%, #ffedd5 100%);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(124, 45, 18, 0.06);
+      --card-glow: rgba(249, 115, 22, 0.02);
+      --text-main: #7c2d12;
+      --text-muted: #c2410c;
+      --text-label: #ea580c;
+      --primary: #ea580c;
+      --primary-rgb: 234, 88, 12;
+      --primary-gradient: linear-gradient(135deg, #ea580c 0%, #9a3412 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(234, 88, 12, 0.06) 0%, rgba(249, 115, 22, 0.06) 100%);
+      --slate-800: #fffaf0;
+    }
+
+    html[data-theme="light-rose"] {
+      --bg: #ffe4e6;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #fff1f2 0%, #ffe4e6 100%);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(136, 19, 55, 0.06);
+      --card-glow: rgba(225, 29, 72, 0.02);
+      --text-main: #881337;
+      --text-muted: #be123c;
+      --text-label: #e11d48;
+      --primary: #e11d48;
+      --primary-rgb: 225, 29, 72;
+      --primary-gradient: linear-gradient(135deg, #e11d48 0%, #9f1239 100%);
+      --accent-glowing: linear-gradient(135deg, rgba(225, 29, 72, 0.06) 0%, rgba(244, 63, 94, 0.06) 100%);
+      --slate-800: #fff5f5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-thai);
+      font-size: 14.5px;
+      line-height: 1.6;
+      transition: var(--transition);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Custom Webkit Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--card-border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Top Nav Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .brand-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-container {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-gradient);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-eng);
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 8px 16px rgba(99, 102, 241, 0.25);
+    }
+
+    .brand-texts {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: var(--font-eng);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--text-main) 30%, var(--text-muted) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    body.light-theme .brand-title {
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+      color: var(--text-main);
+    }
+
+    .brand-subtitle {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Glowing Badge */
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 12.5px;
+      font-weight: 600;
+      border: 1px solid var(--card-border);
+      transition: var(--transition);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .pulse-dot::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: inherit;
+      animation: pulseGlow 1.5s infinite ease-in-out;
+    }
+
+    /* Theme picker swatches */
+    .theme-picker-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .theme-picker-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .theme-swatches-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 6px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--card-border);
+    }
+    body.light-theme .theme-swatches-row {
+      background: rgba(255, 255, 255, 0.6);
+    }
+    .theme-swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      padding: 0;
+      transition: var(--transition);
+      position: relative;
+      box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+    }
+    .theme-swatch:hover {
+      transform: scale(1.25);
+    }
+    .theme-swatch.active {
+      transform: scale(1.35);
+      box-shadow: 0 0 8px var(--primary);
+      border: 2px solid #ffffff !important;
+    }
+    .theme-divider {
+      width: 1px;
+      height: 16px;
+      background: var(--card-border);
+      margin: 0 4px;
+    }
+
+    /* Main Grid Split */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 32px;
+      align-items: start;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Glass Cards */
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .glass-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--card-glow);
+      pointer-events: none;
+    }
+
+    .card-headline {
+      font-size: 16.5px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+    }
+
+    .card-headline svg {
+      color: var(--primary);
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-label);
+      margin-bottom: 8px;
+    }
+
+    .form-select, .form-input-text {
+      width: 100%;
+      padding: 11px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 14.5px;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    body.light-theme select, body.light-theme .form-input-text {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .form-select:focus, .form-input-text:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .form-select option {
+      background-color: var(--bg);
+      color: var(--text-main);
+    }
+
+    /* Double inputs row */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 120px;
+      gap: 12px;
+    }
+
+    /* Switch delayed style */
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 600;
+      color: var(--text-label);
+      font-size: 13.5px;
+      padding: 8px 0;
+    }
+
+    .checkbox-container input {
+      display: none;
+    }
+
+    .custom-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--card-border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .checkbox-container:hover .custom-checkbox {
+      border-color: var(--primary);
+    }
+
+    .checkbox-container input:checked + .custom-checkbox {
+      background: var(--primary-gradient);
+      border-color: var(--primary);
+    }
+
+    .custom-checkbox::after {
+      content: '';
+      width: 5px;
+      height: 9px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) scale(0);
+      transition: var(--transition);
+      margin-bottom: 2px;
+    }
+
+    .checkbox-container input:checked + .custom-checkbox::after {
+      transform: rotate(45deg) scale(1);
+    }
+
+    /* Primary glowing action button */
+    .btn {
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .btn-glow {
+      background: var(--primary-gradient);
+      color: #fff;
+      box-shadow: 0 8px 24px -6px rgba(var(--primary-rgb), 0.35);
+    }
+
+    .btn-glow:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -4px rgba(var(--primary-rgb), 0.5);
+    }
+
+    .btn-glow:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--card-border);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: var(--text-muted);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Right Dashboard States */
+    .dashboard-workspace {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Empty state */
+    .empty-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 40px;
+      min-height: 480px;
+    }
+
+    .empty-icon-wrap {
+      width: 72px;
+      height: 72px;
+      background: var(--card-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: var(--text-muted);
+    }
+
+    .empty-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .empty-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 420px;
+      line-height: 1.6;
+    }
+
+    /* K-value big output display card */
+    .k-summary-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .k-value-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.08) 0%, rgba(var(--primary-rgb), 0.02) 100%);
+    }
+
+    .k-value-num {
+      font-family: var(--font-eng);
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--primary);
+      text-shadow: 0 0 20px rgba(var(--primary-rgb), 0.2);
+    }
+
+    .k-value-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-label);
+      margin-top: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Adjustment box */
+    .k-adjustment-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 32px;
+      border-radius: 20px;
+      border-width: 1.5px;
+      border-style: solid;
+      transition: var(--transition);
+    }
+
+    .k-adj-neutral {
+      background: rgba(148, 163, 184, 0.05);
+      border-color: rgba(148, 163, 184, 0.2);
+      color: var(--text-main);
+    }
+
+    .k-adj-positive {
+      background: var(--emerald-bg);
+      border-color: var(--emerald);
+      color: var(--emerald);
+    }
+
+    .k-adj-negative {
+      background: var(--rose-bg);
+      border-color: var(--rose);
+      color: var(--rose);
+    }
+
+    .k-adj-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
+
+    .k-adj-value {
+      font-family: var(--font-eng);
+      font-size: 32px;
+      font-weight: 800;
+      margin: 4px 0;
+    }
+
+    .k-adj-desc {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-main);
+      opacity: 0.9;
+    }
+
+    /* Delayed Selection Explanation Box */
+    .delay-explanation-card {
+      background: rgba(245, 158, 11, 0.03);
+      border: 1.5px dashed var(--amber);
+      border-radius: 16px;
+      padding: 18px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .delay-explanation-card h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--amber);
+      font-size: 14.5px;
+    }
+
+    .delay-explanation-text {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .comp-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .comp-box.selected {
+      border-color: var(--amber);
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .comp-box-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .comp-box-value {
+      font-family: var(--font-eng);
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    /* Math Formula Breakdown */
+    .math-formula-box {
+      font-family: var(--font-eng);
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      word-wrap: break-word;
+    }
+
+    body.light-theme .math-formula-box {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    /* Tables */
+    .table-container {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    body.light-theme .table-container {
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1.5px solid var(--card-border);
+      padding: 14px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-label);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    body.light-theme th {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--card-border);
+      font-size: 14px;
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr.sum-row td {
+      background: rgba(var(--primary-rgb), 0.03);
+      border-top: 2px solid var(--primary);
+      font-weight: 700;
+    }
+
+    .index-value, .ratio-value, .weight-value, .weighted-value {
+      font-family: var(--font-eng);
+      font-size: 15px;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .code-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: var(--font-eng);
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* Badge specific color schemes */
+    .badge-I { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+    .badge-C { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .badge-M { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .badge-S { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
+    .badge-F { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+    .badge-A { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+    .badge-default { background: rgba(100, 116, 139, 0.15); color: #94a3b8; }
+
+    /* Footer & Meta Actions */
+    .bottom-sheet-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    /* Print Signature Grid */
+    .print-signature-section {
+      display: none;
+    }
+
+    /* Loading Overlay Styles */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* PRINT STYLES */
+    @media print {
+      body {
+        background: #fff !important;
+        background-color: #fff !important;
+        color: #000 !important;
+        font-size: 12px !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .container {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+
+      .workspace-grid {
+        display: block !important;
+      }
+
+      .glass-card {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+      }
+
+      .k-summary-container {
+        grid-template-columns: 1fr 2fr !important;
+        gap: 16px !important;
+        margin-bottom: 20px !important;
+        border: 1px solid #000 !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
+      }
+
+      .k-value-card {
+        border-right: 1px solid #000 !important;
+        padding: 12px !important;
+      }
+
+      .k-value-num {
+        font-size: 40px !important;
+        color: #000 !important;
+        text-shadow: none !important;
+      }
+
+      .k-adjustment-card {
+        border: none !important;
+        background: transparent !important;
+        padding: 12px !important;
+        color: #000 !important;
+      }
+
+      .k-adj-desc {
+        color: #000 !important;
+      }
+
+      table {
+        border: 1px solid #000 !important;
+      }
+
+      th {
+        border-bottom: 2px solid #000 !important;
+        background: #f1f5f9 !important;
+        color: #000 !important;
+        padding: 8px 10px !important;
+      }
+
+      td {
+        border-bottom: 1px solid #000 !important;
+        padding: 8px 10px !important;
+        color: #000 !important;
+      }
+
+      tr.sum-row td {
+        border-top: 2px solid #000 !important;
+        background: #f8fafc !important;
+        color: #000 !important;
+      }
+
+      .code-badge {
+        border: 1px solid #000 !important;
+        background: transparent !important;
+        color: #000 !important;
+      }
+
+      .math-formula-box {
+        border: 1px solid #000 !important;
+        background: transparent !important;
+        color: #000 !important;
+        font-size: 14px !important;
+        padding: 10px !important;
+      }
+
+      .delay-explanation-card {
+        border: 1px dashed #000 !important;
+        background: transparent !important;
+        color: #000 !important;
+        padding: 12px !important;
+        margin-bottom: 16px !important;
+      }
+
+      .delay-explanation-card h4 {
+        color: #000 !important;
+      }
+
+      .comp-box {
+        border: 1px solid #000 !important;
+      }
+      .comp-box.selected {
+        background: #f1f5f9 !important;
+        border-width: 2px !important;
+      }
+
+      /* Print report header info */
+      .print-header-report {
+        display: block !important;
+        margin-bottom: 24px;
+        border-bottom: 3px double #000;
+        padding-bottom: 16px;
+      }
+
+      .print-report-title {
+        font-size: 18px;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 8px;
+      }
+
+      .print-report-meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        font-size: 12.5px;
+        margin-top: 12px;
+      }
+
+      /* Signoff block */
+      .print-signature-section {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-top: 60px;
+        text-align: center;
+        page-break-inside: avoid;
+      }
+
+      .signature-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .sig-line {
+        width: 200px;
+        border-bottom: 1px solid #000;
+        margin-bottom: 8px;
+        margin-top: 32px;
+      }
+    }
+
+    /* Yotathai Brand & Logo styles */
+    .yotathai-logo {
+      height: 48px;
+      width: auto;
+      border-radius: 8px;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.25));
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .yotathai-logo:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
+    }
+
+    /* Tab navigation */
+    .tab-navigation-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+      margin-top: 8px;
+    }
+    .tab-control {
+      display: flex;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      padding: 4px;
+      border-radius: 12px;
+      gap: 4px;
+      backdrop-filter: blur(10px);
+    }
+    body.light-theme .tab-control {
+      background: rgba(0, 0, 0, 0.03);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 24px;
+      font-size: 14.5px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    body.light-theme .tab-btn:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .tab-btn.active {
+      background: var(--primary-gradient);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.25);
+    }
+
+    /* Tab view display rules */
+    .tab-view {
+      display: block;
+      width: 100%;
+    }
+
+    /* Documentation Grid & Viewer Styles */
+    .docs-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+      min-height: 600px;
+    }
+    .docs-sidebar {
+      padding: 20px;
+      max-height: 750px;
+      display: flex;
+      flex-direction: column;
+    }
+    .docs-list-group {
+      overflow-y: auto;
+      flex-grow: 1;
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .docs-section-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      padding-left: 8px;
+    }
+    .doc-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      color: var(--text-main);
+      text-align: left;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+    }
+    body.light-theme .doc-list-item {
+      background: rgba(0, 0, 0, 0.01);
+    }
+    .doc-list-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: var(--primary);
+    }
+    body.light-theme .doc-list-item:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    .doc-list-item.active {
+      background: var(--accent-glowing);
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.1);
+    }
+    .doc-icon {
+      font-size: 20px;
+      margin-top: 2px;
+    }
+    .doc-details {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .doc-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .doc-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .docs-reader-card {
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      padding: 32px;
+    }
+    .docs-reader-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1.5px solid var(--card-border);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+      gap: 20px;
+    }
+    .reader-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .reader-subtitle {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .reader-actions {
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .docs-content-body {
+      overflow-y: auto;
+      max-height: 580px;
+      flex-grow: 1;
+      padding-right: 8px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-main);
+    }
+    .docs-content-body p {
+      margin-bottom: 16px;
+      text-indent: 2em;
+    }
+    /* Highlight box for rules */
+    .rule-highlight-box {
+      background: rgba(245, 158, 11, 0.05);
+      border-left: 4px solid var(--amber);
+      border-radius: 4px 12px 12px 4px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    .rule-highlight-box h4 {
+      font-size: 14.5px;
+      color: var(--amber);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .rule-highlight-box p {
+      margin-bottom: 0;
+      text-indent: 0;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+    /* Button inside reader */
+    .btn-reader-action {
+      padding: 8px 16px;
+      font-size: 12.5px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.02);
+      text-decoration: none;
+    }
+    .btn-reader-action:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--primary);
+    }
+    .btn-reader-primary {
+      background: var(--primary-gradient);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2);
+    }
+    .btn-reader-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    /* Footer Styles */
+    .app-footer {
+      margin-top: 40px;
+      padding: 24px 16px;
+      border-top: 1px solid var(--card-border);
+      text-align: center;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 12px 12px 0 0;
+    }
+    body.light-theme .app-footer {
+      background: rgba(255, 255, 255, 0.5);
+    }
+    .footer-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+    .footer-content .program-name {
+      font-weight: 600;
+    }
+    .footer-content .footer-divider {
+      opacity: 0.4;
+    }
+    .footer-content .collaboration {
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hidden Print-only Header -->
+  <div class="print-header-report" style="display: none;">
+    <div class="print-report-title">รายงานการตรวจสอบคำนวณเงินเพิ่มหรือลดค่างานก่อสร้าง (ค่า K)</div>
+    <div style="text-align: center; font-size: 12px; font-weight: 500;">ตามเงื่อนไขสัญญาแบบปรับราคาได้ มติคณะรัฐมนตรี และระเบียบสำนักงบประมาณ</div>
+    <div class="print-report-meta-grid">
+      <div><strong>สูตรคำนวณที่ใช้:</strong> <span id="print-formula-name">-</span></div>
+      <div><strong>ค่างานก่อสร้างงวดนี้:</strong> <span id="print-work-value">-</span> บาท</div>
+      <div><strong>ดัชนีราคาเริ่มต้น (Io):</strong> <span id="print-base-month">-</span></div>
+      <div><strong>ดัชนีส่งงานจริง (It):</strong> <span id="print-actual-month">-</span></div>
+      <div id="print-delay-row" style="grid-column: span 2; display: none;">
+        <strong>เงื่อนไขงานล่าช้า (ความผิดผู้รับจ้าง):</strong> เปรียบเทียบกับดัชนี ณ กำหนดสิ้นสุดสัญญา คือ <span id="print-scheduled-month">-</span>
+      </div>
+      <div><strong>พิมพ์รายงาน ณ วันที่:</strong> <span id="print-timestamp">-</span></div>
+      <div><strong>แหล่งอ้างอิงข้อมูล:</strong> กรมการค้าภายใน กระทรวงพาณิชย์ (ดึงข้อมูลแบบออนไลน์)</div>
+    </div>
+  </div>
+
+  <div class="container">
+    
+    <!-- Top Nav header -->
+    <header class="no-print">
+      <div class="brand-logo-group" style="display: flex; align-items: center; gap: 16px;">
+        <img src="./ช้างโลโก้logo-yotathai.PNG" alt="Yotathai Logo" class="yotathai-logo">
+        <div class="brand-texts">
+          <h1 class="brand-title">K-FACTOR CALCULATOR</h1>
+          <div class="brand-subtitle">ระบบดึงข้อมูลและคำนวณราคาปรับได้ตามมาตรการ ว190 • yotathai.com</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="status-badge" id="conn-badge">
+          <span class="pulse-dot" id="conn-indicator"></span>
+          <span id="conn-text">ตรวจสอบการเชื่อมต่อ...</span>
+        </div>
+        <div class="theme-picker-group">
+          <span class="theme-picker-label">ทีมสี:</span>
+          <div class="theme-swatches-row">
+            <button class="theme-swatch active" data-theme="dark-blue" style="background: #3b82f6;" onclick="changeTheme('dark-blue')" title="Classic Blue (มืด)"></button>
+            <button class="theme-swatch" data-theme="dark-green" style="background: #10b981;" onclick="changeTheme('dark-green')" title="Deep Emerald (มืด)"></button>
+            <button class="theme-swatch" data-theme="dark-purple" style="background: #a855f7;" onclick="changeTheme('dark-purple')" title="Cyberpunk Purple (มืด)"></button>
+            <button class="theme-swatch" data-theme="dark-orange" style="background: #f97316;" onclick="changeTheme('dark-orange')" title="Amber Orange (มืด)"></button>
+            <button class="theme-swatch" data-theme="dark-cyan" style="background: #06b6d4;" onclick="changeTheme('dark-cyan')" title="Teal Cyan (มืด)"></button>
+            <button class="theme-swatch" data-theme="dark-charcoal" style="background: #71717a;" onclick="changeTheme('dark-charcoal')" title="Absolute Carbon (มืด)"></button>
+            <div class="theme-divider"></div>
+            <button class="theme-swatch" data-theme="light-slate" style="background: #e2e8f0; border: 1px solid #cbd5e1;" onclick="changeTheme('light-slate')" title="Minimalist Slate (สว่าง)"></button>
+            <button class="theme-swatch" data-theme="light-emerald" style="background: #a7f3d0; border: 1px solid #6ee7b7;" onclick="changeTheme('light-emerald')" title="Emerald Mint (สว่าง)"></button>
+            <button class="theme-swatch" data-theme="light-blue" style="background: #bfdbfe; border: 1px solid #93c5fd;" onclick="changeTheme('light-blue')" title="Oceanic Blue (สว่าง)"></button>
+            <button class="theme-swatch" data-theme="light-lavender" style="background: #e9d5ff; border: 1px solid #d8b4fe;" onclick="changeTheme('light-lavender')" title="Royal Violet (สว่าง)"></button>
+            <button class="theme-swatch" data-theme="light-peach" style="background: #ffedd5; border: 1px solid #fed7aa;" onclick="changeTheme('light-peach')" title="Warm Peach (สว่าง)"></button>
+            <button class="theme-swatch" data-theme="light-rose" style="background: #fecdd3; border: 1px solid #fda4af;" onclick="changeTheme('light-rose')" title="Blush Rose (สว่าง)"></button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tab navigation -->
+    <div class="no-print tab-navigation-container">
+      <div class="tab-control">
+        <button class="tab-btn active" id="tab-btn-calculator" onclick="switchTab('calculator')">
+          <span>📊</span> คำนวณค่า K (Calculator)
+        </button>
+        <button class="tab-btn" id="tab-btn-docs" onclick="switchTab('docs')">
+          <span>📚</span> คลังเอกสาร & คู่มือ (ว190)
+        </button>
+      </div>
+    </div>
+
+    <!-- Calculator Tab View -->
+    <div id="calculator-tab-view" class="tab-view">
+      <!-- Workspace split Grid -->
+      <div class="workspace-grid">
+      
+      <!-- Left controls panel card -->
+      <aside class="glass-card no-print">
+        <h2 class="card-headline">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+          พารามิเตอร์คำนวณ
+        </h2>
+        
+        <form id="calc-form" onsubmit="event.preventDefault(); calculateK();">
+          
+          <!-- Select K Formula -->
+          <div class="form-group">
+            <label class="form-label" for="formula-select">ประเภทงานก่อสร้าง (สูตร K)</label>
+            <select id="formula-select" class="form-select" onchange="onFormulaChange()"></select>
+          </div>
+
+          <!-- Formula quick preview -->
+          <div class="form-group" style="background: rgba(255,255,255,0.01); border: 1px solid var(--card-border); padding: 12px; border-radius: 10px;">
+            <div style="font-size: 11.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">สูตรโครงสร้างแบบปรับราคาได้:</div>
+            <div id="formula-preview-eq" style="font-family:var(--font-eng); font-size:14.5px; font-weight:700; color:var(--primary); margin-top:4px;">K = ...</div>
+            <div id="formula-preview-desc" style="font-size:12px; color:var(--text-muted); margin-top:4px;">-</div>
+          </div>
+
+          <!-- Delivered Work Value -->
+          <div class="form-group">
+            <label class="form-label" for="work-value">ค่างานก่อสร้างงวดนี้ (บาท)</label>
+            <input type="number" id="work-value" class="form-input-text" placeholder="ระบุค่างาน (เช่น 1250000)" required min="0" step="any">
+          </div>
+
+          <!-- Bidding Month dropdown -->
+          <div class="form-group">
+            <label class="form-label" id="date-label-io" for="month-io">เดือนเปิดซองเสนอราคา (Io)</label>
+            <div class="form-row">
+              <select id="month-io" class="form-select"></select>
+              <select id="year-io" class="form-select"></select>
+            </div>
+          </div>
+
+          <!-- Actual delivery month dropdown -->
+          <div class="form-group">
+            <label class="form-label" id="date-label-it" for="month-it">เดือนส่งงานจ้างจริง (It)</label>
+            <div class="form-row">
+              <select id="month-it" class="form-select"></select>
+              <select id="year-it" class="form-select"></select>
+            </div>
+          </div>
+
+          <!-- ว190 relief check -->
+          <div class="form-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="w190-relief" onchange="toggleW190Labels()">
+              <span class="custom-checkbox"></span>
+              ใช้เกณฑ์เยียวยาชั่วคราว ว190 (ปี พ.ศ. 2569)
+            </label>
+          </div>
+
+          <!-- Delay contractor check -->
+          <div class="form-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="contractor-delayed" onchange="toggleDelayInputs()">
+              <span class="custom-checkbox"></span>
+              งานล่าช้าเนื่องจากความผิดของผู้รับจ้าง
+            </label>
+          </div>
+
+          <!-- Contract Scheduled Expiry Date (Delay Input) -->
+          <div class="form-group hidden" id="delay-date-wrapper">
+            <label class="form-label" id="date-label-isched" for="month-isched">เดือนครบกำหนดสัญญาเดิม (Isched)</label>
+            <div class="form-row">
+              <select id="month-isched" class="form-select"></select>
+              <select id="year-isched" class="form-select"></select>
+            </div>
+          </div>
+
+          <!-- Calculate Button -->
+          <button class="btn btn-glow" id="calc-btn" type="submit" style="margin-top: 12px;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            ประมวลผลสัญญาค่า K
+          </button>
+        </form>
+      </aside>
+
+      <!-- Right Output Panel -->
+      <main class="dashboard-workspace">
+        
+        <!-- Empty State Screen -->
+        <div class="glass-card empty-card" id="empty-state">
+          <div class="empty-icon-wrap">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          </div>
+          <h3 class="empty-title">พร้อมสำหรับประมวลผล K-Factor</h3>
+          <p class="empty-subtitle">เลือกสูตรโครงสร้าง ป้อนข้อมูลค่างาน และกำหนดระบุรอบช่วงเวลาเพื่อดึงดัชนีราคามาคำนวณแบบอัตโนมัติอย่างถูกต้อง</p>
+        </div>
+
+        <!-- Calculation Result Screen -->
+        <div class="dashboard-workspace hidden" id="results-view">
+          
+          <!-- Summary output stats -->
+          <div class="glass-card" style="padding: 0; overflow: hidden;">
+            <div class="k-summary-container">
+              <div class="k-value-card">
+                <div class="k-value-num" id="k-final-num">1.000</div>
+                <div class="k-value-label">ค่าสัมประสิทธิ์ปรับราคา (K)</div>
+              </div>
+              <div class="k-adjustment-card k-adj-neutral" id="k-adjustment-card">
+                <div class="k-adj-title" id="k-adj-type-title">ไม่มีการปรับราคา</div>
+                <div class="k-adj-value" id="k-adj-money-value">0.00 บาท</div>
+                <div class="k-adj-desc" id="k-adj-desc-text">ค่า K เบี่ยงเบนจากดัชนีเริ่มต้นไม่เกิน 4% (0.96 <= K <= 1.04)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contractor delay comparison dashboard -->
+          <div class="glass-card delay-explanation-card hidden" id="delay-breakdown-card">
+            <h4>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              การตรวจสิทธิ์เนื่องจากงานล่าช้ากว่ากำหนด
+            </h4>
+            <div class="delay-explanation-text" id="delay-explanation-desc">
+              -
+            </div>
+            <div class="comparison-grid">
+              <div class="comp-box" id="comp-box-sched">
+                <div class="comp-box-title">ณ สิ้นสุดสัญญาเดิม (Isched)</div>
+                <div class="comp-box-value" id="comp-val-sched">1.000</div>
+              </div>
+              <div style="text-align: center; color: var(--text-muted); font-size:24px; font-weight:700;">➔</div>
+              <div class="comp-box" id="comp-box-actual">
+                <div class="comp-box-title">ณ วันส่งงานงวดจริง (Iactual)</div>
+                <div class="comp-box-value" id="comp-val-actual">1.000</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step by Step Math Equation -->
+          <div class="glass-card">
+            <h3 class="card-headline">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              ขั้นตอนการคำนวณตามสูตร
+            </h3>
+            
+            <div class="math-formula-box" id="math-formula-solved">
+              K = 0.25 + ...
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ตัวแปร</th>
+                    <th>รายการวัสดุก่อสร้าง</th>
+                    <th style="text-align: right;">ฐานดัชนี (Io)</th>
+                    <th style="text-align: right;">ดัชนีส่งงาน (It)</th>
+                    <th style="text-align: right;">อัตราส่วน (It / Io)</th>
+                    <th style="text-align: right;">ตัวคูณ (Weight)</th>
+                    <th style="text-align: right;">ผลบวกสัมประสิทธิ์</th>
+                  </tr>
+                </thead>
+                <tbody id="formula-table-body">
+                  <!-- Dynamic calculation table rows -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Footer actions / Print -->
+            <div class="bottom-sheet-actions no-print">
+              <button class="btn btn-outline" onclick="window.print();" id="print-btn" style="width: auto;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                พิมพ์รายงานทางการ
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+      </div> <!-- Close workspace-grid -->
+    </div> <!-- Close calculator-tab-view -->
+
+    <!-- Docs Tab View -->
+    <div id="docs-tab-view" class="tab-view hidden no-print">
+      <div class="docs-grid">
+        <!-- Left Sidebar: Document List -->
+        <aside class="glass-card docs-sidebar">
+          <h3 class="card-headline" style="margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            สารบัญเอกสาร & คู่มือ
+          </h3>
+          
+          <div class="docs-list-group">
+            <div class="docs-section-title">📢 มาตรการเยียวยาค่า K (ว190)</div>
+            <button class="doc-list-item active" id="doc-item-w190" onclick="selectDocument('w190-pdf')">
+              <span class="doc-icon">📄</span>
+              <div class="doc-details">
+                <div class="doc-title">หนังสือเวียน ว190 (นร 0719.1/ว190)</div>
+                <div class="doc-meta">ไฟล์ PDF ราชการ • มาตรการเยียวยาชั่วคราว</div>
+              </div>
+            </button>
+            
+            <div class="docs-section-title" style="margin-top: 16px;">📘 คู่มือการคำนวณค่า K (14 บท)</div>
+            <div id="docx-list-container">
+              <!-- Dynamic docx buttons loaded from docs_content.json -->
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right Content Panel: Document Reader -->
+        <main class="glass-card docs-reader-card">
+          <div class="docs-reader-header">
+            <div>
+              <h2 id="reader-title" class="reader-title">หนังสือเวียน ว190 (นร 0719.1/ว190)</h2>
+              <div id="reader-subtitle" class="reader-subtitle">วิธีปฏิบัติการผ่อนผันวิธีการคำนวณเงินชดเชยค่างานก่อสร้าง (ค่า K) เป็นการชั่วคราว</div>
+            </div>
+            <div class="reader-actions" id="reader-actions-bar">
+              <a href="./docs/นร-ว190ค่าk.pdf" target="_blank" class="btn-reader-action btn-reader-primary">
+                <span>👁️</span> เปิดดูไฟล์ PDF
+              </a>
+              <a href="./docs/นร-ว190ค่าk.pdf" download class="btn-reader-action">
+                <span>📥</span> ดาวน์โหลด PDF (460 KB)
+              </a>
+            </div>
+          </div>
+          
+          <div class="docs-content-body" id="reader-body">
+            <div class="rule-highlight-box">
+              <h4>💡 มาตรการเยียวยาชั่วคราว ว190 (ปี พ.ศ. 2569) คืออะไร?</h4>
+              <p><strong>หนังสือด่วนที่สุด ที่ นร 0719.1/ว190 ลงวันที่ 28 พฤษภาคม 2569</strong> เป็นแนวทางปฏิบัติของสำนักงบประมาณที่คลอดออกมาตามมติคณะรัฐมนตรีเมื่อวันที่ 19 พฤษภาคม 2569 เพื่อผ่อนปรนเยียวยาผลกระทบแก่ผู้รับจ้างจากสถานการณ์ราคาน้ำมันและวัสดุก่อสร้างที่ผันผวนรุนแรงอันเนื่องมาจากความขัดแย้งในตะวันออกกลาง</p>
+            </div>
+            
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:12px; border-bottom: 1px solid var(--card-border); padding-bottom:6px;">📌 สรุปเงื่อนไขสำคัญของ ว190</h3>
+            
+            <ol style="margin-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px;">
+              <li>
+                <strong>การหักเงินชดเชยส่วนต่าง (เกณฑ์ลดหย่อนเหลือ ±2%):</strong>
+                <p style="text-indent:0; margin-top:4px;">สำหรับงวดงานที่ส่งมอบระหว่างวันที่ <strong>28 กุมภาพันธ์ 2569 ถึงวันที่ 30 กันยายน 2569</strong> ให้ปรับเปลี่ยนเกณฑ์เบี่ยงเบนจากเดิม 4% มาเป็น 2% ส่งผลให้:</p>
+                <ul style="margin-left: 20px; margin-top: 4px; list-style-type: disc;">
+                  <li>กรณีดัชนีสูงขึ้น (K เกิน 1.02): รัฐจ่ายเงินเพิ่มชดเชยโดยหักออกเพียง 2% (ใช้สูตร K - 1.02)</li>
+                  <li>กรณีดัชนีลดลง (K ต่ำกว่า 0.98): รัฐเรียกเงินคืนโดยหักส่วนต่างจาก 0.98 (ใช้สูตร 0.98 - K)</li>
+                  <li>กรณีดัชนีเปลี่ยนไม่เกิน 2% (0.98 &le; K &le; 1.02): ไม่มีการปรับราคางาน</li>
+                </ul>
+              </li>
+              <li>
+                <strong>การเปลี่ยนเดือนดัชนีราคาเริ่มต้น (Io):</strong>
+                <p style="text-indent:0; margin-top:4px;">สำหรับสัญญาที่ลงนามระหว่างวันที่ <strong>28 กุมภาพันธ์ 2569 ถึง 30 กันยายน 2569</strong> ให้เปลี่ยนไปใช้ <strong>"ดัชนีราคา ณ เดือนที่หัวหน้าหน่วยงานของรัฐให้ความเห็นชอบราคากลาง"</strong> แทนการใช้ดัชนีของเดือนเปิดซองเสนอราคาแบบเดิม เพื่อสะท้อนระดับราคาที่เหมาะสมตามความจริงในขณะอนุมัติราคา</p>
+              </li>
+              <li>
+                <strong>การเปรียบเทียบกรณีงานล่าช้ากว่าสัญญา:</strong>
+                <p style="text-indent:0; margin-top:4px;">หากผู้รับจ้างส่งงานล่าช้าเนื่องจากความผิดของผู้รับจ้าง ให้คำนวณเปรียบเทียบค่า K ระหว่างเดือนส่งงานจริง กับ เดือนสิ้นสุดสัญญาเดิม (ตามแนวทางปกติ) แต่ให้ปรับเพดานเยียวยา 2% สำหรับงวดที่ตกอยู่ในช่วงเวลาผ่อนผัน ว190</p>
+              </li>
+            </ol>
+            
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); padding: 16px; border-radius: 12px; font-size:13px; color: var(--text-muted); line-height: 1.6;">
+              <strong>ℹ️ หมายเหตุการใช้งานโปรแกรม:</strong><br>
+              ผู้ใช้สามารถเปิดสวิตช์ <em>"ใช้เกณฑ์เยียวยาชั่วคราว ว190 (ปี พ.ศ. 2569)"</em> ในแผงคำนวณด้านซ้าย เพื่อให้โปรแกรมเปลี่ยนป้ายชื่อช่องระบุวันที่ Io เป็น <strong>"เดือนที่เห็นชอบราคากลาง"</strong> และปรับเงื่อนไขหักค่างานชดเชยเป็น 2% ให้โดยอัตโนมัติเมื่อเลือกเดือนส่งงานจริงอยู่ในช่วง ก.พ. - ก.ย. 2569
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Collaboration Footer -->
+    <footer class="app-footer no-print">
+      <div class="footer-content">
+        <span class="program-name">ระบบคำนวณเงินเพิ่มหรือลดค่างานก่อสร้าง (ค่า K)</span>
+        <span class="footer-divider">|</span>
+        <span class="collaboration">โดย yotathai.com โดยความร่วมมือระหว่าง อภิสิทธิ์ มากสุวรรณ (ช่างถึก) และ AI</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Signoff block for prints -->
+  <div class="print-signature-section">
+    <div class="signature-block">
+      <div style="font-weight: 700;">คำนวณโดย</div>
+      <div class="sig-line"></div>
+      <div style="font-size: 11px; color: #555;">(............................................................)</div>
+      <div style="margin-top: 4px; font-size: 11.5px;">ผู้คำนวณ / วิศวกรผู้ควบคุมงาน</div>
+    </div>
+    <div class="signature-block">
+      <div style="font-weight: 700;">ตรวจสอบความถูกต้องโดย</div>
+      <div class="sig-line"></div>
+      <div style="font-size: 11px; color: #555;">(............................................................)</div>
+      <div style="margin-top: 4px; font-size: 11.5px;">ผู้ตรวจสอบ / ประธานคณะกรรมการตรวจรับพัสดุ</div>
+    </div>
+  </div>
+
+  <script>
+    // --- K Formulas Database ---
+    const K_FORMULAS = [
+      {
+        category: "หมวดที่ 1 งานอาคาร",
+        id: "1.1",
+        name: "งานอาคาร",
+        desc: "งานโครงสร้างอาคาร โครงสร้างคอนกรีตเสริมเหล็ก คอนกรีตบล็อก กระเบื้องมุงหลังคา ทาสี และโครงหลังคาเหล็ก",
+        formula: "K = 0.25 + 0.15 It/Io + 0.10 Ct/Co + 0.40 Mt/Mo + 0.10 St/So",
+        terms: [
+          { name: "Constant", val: 0.25 },
+          { name: "It/Io", val: 0.15, code: "I" },
+          { name: "Ct/Co", val: 0.10, code: "C" },
+          { name: "Mt/Mo", val: 0.40, code: "M" },
+          { name: "St/So", val: 0.10, code: "S" }
+        ]
+      },
+      {
+        category: "หมวดที่ 2 งานดิน",
+        id: "2.1",
+        name: "งานดิน",
+        desc: "งานดิน งานขุดเปิดดิน งานถมคันดิน งานบดขยายพื้นที่ด้วยเครื่องจักร",
+        formula: "K = 0.30 + 0.10 It/Io + 0.40 Ft/Fo + 0.20 Et/Eo",
+        terms: [
+          { name: "Constant", val: 0.30 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Ft/Fo", val: 0.40, code: "F" },
+          { name: "Et/Eo", val: 0.20, code: "E" }
+        ]
+      },
+      {
+        category: "หมวดที่ 2 งานดิน",
+        id: "2.2",
+        name: "งานหินเรียง",
+        desc: "งานบรรจุหินเรียง หินทิ้งป้องกันคอสะพาน หรือหินบล็อกเขื่อน",
+        formula: "K = 0.40 + 0.20 It/Io + 0.20 Mt/Mo + 0.20 Ft/Fo",
+        terms: [
+          { name: "Constant", val: 0.40 },
+          { name: "It/Io", val: 0.20, code: "I" },
+          { name: "Mt/Mo", val: 0.20, code: "M" },
+          { name: "Ft/Fo", val: 0.20, code: "F" }
+        ]
+      },
+      {
+        category: "หมวดที่ 2 งานดิน",
+        id: "2.3",
+        name: "งานเจาะระเบิดหิน",
+        desc: "งานขุดเจาะเจาะระเบิดหินหินแข็งหรืองานขุดเจาะตัดทางแยกภูเขา",
+        formula: "K = 0.45 + 0.15 It/Io + 0.10 Mt/Mo + 0.20 Et/Eo + 0.10 Ft/Fo",
+        terms: [
+          { name: "Constant", val: 0.45 },
+          { name: "It/Io", val: 0.15, code: "I" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "Et/Eo", val: 0.20, code: "E" },
+          { name: "Ft/Fo", val: 0.10, code: "F" }
+        ]
+      },
+      {
+        category: "หมวดที่ 3 งานทาง",
+        id: "3.1",
+        name: "งานรองพื้นทางและพื้นทาง",
+        desc: "งานรองพื้นทางชนิดลูกรัง หินคลุก และพื้นทางหินคลุกผสมยางมะตอย",
+        formula: "K = 0.30 + 0.10 It/Io + 0.10 Mt/Mo + 0.30 Et/Eo + 0.20 Ft/Fo",
+        terms: [
+          { name: "Constant", val: 0.30 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "Et/Eo", val: 0.30, code: "E" },
+          { name: "Ft/Fo", val: 0.20, code: "F" }
+        ]
+      },
+      {
+        category: "หมวดที่ 3 งานทาง",
+        id: "3.2",
+        name: "งานผิวทาง Asphaltic Concrete",
+        desc: "งานพื้นผิวจราจรลาดยางแอสฟัลต์คอนกรีตหนาปูทับหน้าทางหลวง",
+        formula: "K = 0.30 + 0.10 It/Io + 0.10 Mt/Mo + 0.10 Et/Eo + 0.10 Ft/Fo + 0.30 At/Ao",
+        terms: [
+          { name: "Constant", val: 0.30 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "Et/Eo", val: 0.10, code: "E" },
+          { name: "Ft/Fo", val: 0.10, code: "F" },
+          { name: "At/Ao", val: 0.30, code: "A" }
+        ]
+      },
+      {
+        category: "หมวดที่ 3 งานทาง",
+        id: "3.3",
+        name: "งานผิวทาง Double Surface Treatment",
+        desc: "งานผิวทางลาดยางชนิด Double หรือ Single Surface Treatment",
+        formula: "K = 0.25 + 0.10 It/Io + 0.10 Mt/Mo + 0.10 Et/Eo + 0.10 Ft/Fo + 0.35 At/Ao",
+        terms: [
+          { name: "Constant", val: 0.25 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "Et/Eo", val: 0.10, code: "E" },
+          { name: "Ft/Fo", val: 0.10, code: "F" },
+          { name: "At/Ao", val: 0.35, code: "A" }
+        ]
+      },
+      {
+        category: "หมวดที่ 3 งานทาง",
+        id: "3.4",
+        name: "งานผิวถนนคอนกรีตเสริมเหล็ก",
+        desc: "งานเทผิวถนนและทางเดินคอนกรีตเสริมเหล็ก รวมตะแกรงเหล็กและรอยต่อ",
+        formula: "K = 0.30 + 0.10 It/Io + 0.25 Ct/Co + 0.10 Mt/Mo + 0.25 St/So",
+        terms: [
+          { name: "Constant", val: 0.30 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Ct/Co", val: 0.25, code: "C" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "St/So", val: 0.25, code: "S" }
+        ]
+      },
+      {
+        category: "หมวดที่ 3 งานทาง",
+        id: "3.5",
+        name: "งานโครงสร้างคอนกรีตเสริมเหล็กและงานสะพาน",
+        desc: "งานสะพาน ท่อเหลี่ยมระบายน้ำ กำแพงกันดิน ท่อระบายน้ำกลมคสล. และบ่อพัก",
+        formula: "K = 0.30 + 0.15 It/Io + 0.15 Ct/Co + 0.20 Mt/Mo + 0.20 St/So",
+        terms: [
+          { name: "Constant", val: 0.30 },
+          { name: "It/Io", val: 0.15, code: "I" },
+          { name: "Ct/Co", val: 0.15, code: "C" },
+          { name: "Mt/Mo", val: 0.20, code: "M" },
+          { name: "St/So", val: 0.20, code: "S" }
+        ]
+      },
+      {
+        category: "หมวดที่ 3 งานทาง",
+        id: "3.6",
+        name: "งานโครงสร้างเหล็ก",
+        desc: "งานสะพานโครงเหล็ก โครงถักเหล็ก คานเหล็ก คานแปสำเร็จรูป และสะพานแบลีย์",
+        formula: "K = 0.25 + 0.10 It/Io + 0.05 Mt/Mo + 0.60 St/So",
+        terms: [
+          { name: "Constant", val: 0.25 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Mt/Mo", val: 0.05, code: "M" },
+          { name: "St/So", val: 0.60, code: "S" }
+        ]
+      },
+      {
+        category: "หมวดที่ 4 งานชลประทาน",
+        id: "4.1",
+        name: "งานขุดดินชลประทานด้วยเครื่องจักร",
+        desc: "งานขุดขยายคลอง ชลประทาน อ่างเก็บน้ำ คลองระบายน้ำด้วยรถแบคโฮและเครื่องจักรหนัก",
+        formula: "K = 0.30 + 0.10 It/Io + 0.40 Ft/Fo + 0.20 Et/Eo",
+        terms: [
+          { name: "Constant", val: 0.30 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Ft/Fo", val: 0.40, code: "F" },
+          { name: "Et/Eo", val: 0.20, code: "E" }
+        ]
+      },
+      {
+        category: "หมวดที่ 4 งานชลประทาน",
+        id: "4.2",
+        name: "งานอาคารชลประทานรวมบานเหล็ก",
+        desc: "งานคอนกรีตประตูปิดน้ำ คลองส่งน้ำที่มีบานระบายน้ำแบบกลไกและบานยก",
+        formula: "K = 0.35 + 0.20 It/Io + 0.10 Ct/Co + 0.10 Mt/Mo + 0.25 St/So",
+        terms: [
+          { name: "Constant", val: 0.35 },
+          { name: "It/Io", val: 0.20, code: "I" },
+          { name: "Ct/Co", val: 0.10, code: "C" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "St/So", val: 0.25, code: "S" }
+        ]
+      },
+      {
+        category: "หมวดที่ 4 งานชลประทาน",
+        id: "4.3",
+        name: "งานบานระบาย TRASHRACK และ STEEL LINER",
+        desc: "งานบานเหล็กระบายน้ำ โครงยก ตะแกรงเหล็กดักขยะ ท่อเหล็กส่งน้ำชลประทาน",
+        formula: "K = 0.35 + 0.20 It/Io + 0.45 Gt/Go",
+        terms: [
+          { name: "Constant", val: 0.35 },
+          { name: "It/Io", val: 0.20, code: "I" },
+          { name: "Gt/Go", val: 0.45, code: "G" }
+        ]
+      },
+      {
+        category: "หมวดที่ 4 งานชลประทาน",
+        id: "4.4",
+        name: "งานเหล็กเสริมคอนกรีต และ ANCHOR BAR",
+        desc: "งานเหล็กข้ออ้อยที่จัดทำและติดตั้งเฉพาะชิ้นงานวิศวกรรมชลประทานและ Anchor bar",
+        formula: "K = 0.25 + 0.15 It/Io + 0.60 St/So",
+        terms: [
+          { name: "Constant", val: 0.25 },
+          { name: "It/Io", val: 0.15, code: "I" },
+          { name: "St/So", val: 0.60, code: "S" }
+        ]
+      },
+      {
+        category: "หมวดที่ 4 งานชลประทาน",
+        id: "4.5",
+        name: "งานคอนกรีตไม่รวมเหล็กและคอนกรีตดาดคลอง",
+        desc: "งานคอนกรีตล้วน งานเทคอนกรีตดาดคลองส่งน้ำชลประทานชนิดไม่มีเหล็กเสริม",
+        formula: "K = 0.40 + 0.15 It/Io + 0.25 Ct/Co + 0.20 Mt/Mo",
+        terms: [
+          { name: "Constant", val: 0.40 },
+          { name: "It/Io", val: 0.15, code: "I" },
+          { name: "Ct/Co", val: 0.25, code: "C" },
+          { name: "Mt/Mo", val: 0.20, code: "M" }
+        ]
+      },
+      {
+        category: "หมวดที่ 4 งานชลประทาน",
+        id: "4.6",
+        name: "งานเจาะและอัดฉีดน้ำปูน",
+        desc: "งานขุดเจาะชั้นหินเพื่อการสำรวจฐานราก อัดฉีดน้ำปูนซีเมนต์ (Grouting)",
+        formula: "K = 0.40 + 0.20 It/Io + 0.10 Mt/Mo + 0.20 Et/Eo + 0.10 Ft/Fo",
+        terms: [
+          { name: "Constant", val: 0.40 },
+          { name: "It/Io", val: 0.20, code: "I" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "Et/Eo", val: 0.20, code: "E" },
+          { name: "Ft/Fo", val: 0.10, code: "F" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.1.1",
+        name: "งานวางท่อใยหิน AC (ผู้ว่าจ้างจัดหาท่อ)",
+        desc: "งานขุดร่องวางท่อซีเมนต์ใยหินโดยส่วนราชการผู้ว่าจ้างเป็นฝ่ายส่งมอบวัสดุท่อให้",
+        formula: "K = 0.50 + 0.25 It/Io + 0.25 Mt/Mo",
+        terms: [
+          { name: "Constant", val: 0.50 },
+          { name: "It/Io", val: 0.25, code: "I" },
+          { name: "Mt/Mo", val: 0.25, code: "M" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.1.2",
+        name: "งานวางท่อใยหิน AC (ผู้รับจ้างจัดหาท่อ)",
+        desc: "งานขุดร่อง จัดหาท่อซีเมนต์ใยหิน และอุปกรณ์ข้อต่อวางท่อระบายน้ำประปา",
+        formula: "K = 0.40 + 0.10 It/Io + 0.10 Mt/Mo + 0.40 ACt/ACo",
+        terms: [
+          { name: "Constant", val: 0.40 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "ACt/ACo", val: 0.40, code: "AC" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.1.3",
+        name: "งานวางท่อ PVC (ผู้รับจ้างจัดหาท่อ)",
+        desc: "งานขุดวางท่อน้ำประปา ท่อร้อยสายไฟฟ้าพลาสติก PVC ชนิดผู้รับจ้างจัดหาท่อและอุปกรณ์เอง",
+        formula: "K = 0.40 + 0.10 It/Io + 0.10 Mt/Mo + 0.40 PVCt/PVCo",
+        terms: [
+          { name: "Constant", val: 0.40 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "PVCt/PVCo", val: 0.40, code: "PVC" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.2.1",
+        name: "งานวางท่อเหล็กเหนียว (ผู้ว่าจ้างจัดหาท่อ)",
+        desc: "งานวางท่อส่งน้ำเหล็กเหนียวขนาดใหญ่ประปาโดยส่วนราชการผู้ว่าจ้างส่งมอบวัสดุท่อให้",
+        formula: "K = 0.40 + 0.10 It/Io + 0.15 Mt/Mo + 0.20 Et/Eo + 0.15 Ft/Fo",
+        terms: [
+          { name: "Constant", val: 0.40 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Mt/Mo", val: 0.15, code: "M" },
+          { name: "Et/Eo", val: 0.20, code: "E" },
+          { name: "Ft/Fo", val: 0.15, code: "F" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.2.2",
+        name: "งานวางท่อเหล็กเหนียว (ผู้รับจ้างจัดหาท่อ)",
+        desc: "งานจัดท่อส่งน้ำเหล็กเหนียว วงแหวนเชื่อมเหล็ก ข้อต่อสะพานรับท่อน้ำประปา",
+        formula: "K = 0.40 + 0.10 It/Io + 0.10 Mt/Mo + 0.10 Et/Eo + 0.30 GIPt/GIPo",
+        terms: [
+          { name: "Constant", val: 0.40 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "Et/Eo", val: 0.10, code: "E" },
+          { name: "GIPt/GIPo", val: 0.30, code: "GIP" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.2.3",
+        name: "งานวางท่อ PE (ผู้รับจ้างจัดหาท่อ)",
+        desc: "งานจัดหาท่อพลาสติกโพลีเอทิลีนหนาแน่นสูง (HDPE) พร้อมอุปกรณ์วางท่อ",
+        formula: "K = 0.50 + 0.10 It/Io + 0.10 Mt/Mo + 0.30 PEt/PEo",
+        terms: [
+          { name: "Constant", val: 0.50 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "PEt/PEo", val: 0.30, code: "PE" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.3",
+        name: "งานปรับปรุงระบบอุโมงค์ส่งน้ำ",
+        desc: "งานปรับปรุงระบบอุโมงค์ส่งน้ำประปาเหล็กกลมใต้ดินและ Secondary Lining",
+        formula: "K = 0.40 + 0.10 It/Io + 0.15 Et/Eo + 0.35 GIPt/GIPo",
+        terms: [
+          { name: "Constant", val: 0.40 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Et/Eo", val: 0.15, code: "E" },
+          { name: "GIPt/GIPo", val: 0.35, code: "GIP" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.4",
+        name: "งานวางท่อ PVC หุ้มด้วยคอนกรีต",
+        desc: "งานวางท่อร้อยสายไฟฟ้าพลาสติก PVC เทหุ้มป้องป้องสั่นสะเทือนด้วยคอนกรีตเสริมเหล็ก",
+        formula: "K = 0.30 + 0.10 It/Io + 0.20 Ct/Co + 0.05 Mt/Mo + 0.05 St/So + 0.30 PVCt/PVCo",
+        terms: [
+          { name: "Constant", val: 0.30 },
+          { name: "It/Io", val: 0.10, code: "I" },
+          { name: "Ct/Co", val: 0.20, code: "C" },
+          { name: "Mt/Mo", val: 0.05, code: "M" },
+          { name: "St/So", val: 0.05, code: "S" },
+          { name: "PVCt/PVCo", val: 0.30, code: "PVC" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.5",
+        name: "งานวางท่อ PVC กลบทราย",
+        desc: "งานวางท่อร้อยสายไฟฟ้าพลาสติก PVC กลบทรายปรับระเบียงดินและขุดลอกกลบดินกลับ",
+        formula: "K = 0.25 + 0.05 It/Io + 0.05 Mt/Mo + 0.65 PVCt/PVCo",
+        terms: [
+          { name: "Constant", val: 0.25 },
+          { name: "It/Io", val: 0.05, code: "I" },
+          { name: "Mt/Mo", val: 0.05, code: "M" },
+          { name: "PVCt/PVCo", val: 0.65, code: "PVC" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.6",
+        name: "งานวางท่อเหล็กอาบสังกะสี",
+        desc: "งานท่อเหล็กอาบสังกะสี (GIP) เดินท่อประปาภายในอาคารหรือท่อน้ำจ่ายนอกอาคาร",
+        formula: "K = 0.25 + 0.25 It/Io + 0.50 GIPt/GIPo",
+        terms: [
+          { name: "Constant", val: 0.25 },
+          { name: "It/Io", val: 0.25, code: "I" },
+          { name: "GIPt/GIPo", val: 0.50, code: "GIP" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.7.1",
+        name: "งานติดตั้งเสา โครงเหล็กสายส่งเสาไฟ",
+        desc: "งานติดตั้งเสาเหล็ก โครงสร้างเสาไฟแรงสูง และสายส่งไฟฟ้าพร้อมอุปกรณ์พัสดุไฟฟ้า",
+        formula: "K = 0.60 + 0.25 It/Io + 0.15 Ft/Fo",
+        terms: [
+          { name: "Constant", val: 0.60 },
+          { name: "It/Io", val: 0.25, code: "I" },
+          { name: "Ft/Fo", val: 0.15, code: "F" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.7.2",
+        name: "งานฐานรากเสาไฟฟ้าแรงสูง",
+        desc: "งานหล่อฐานคอนกรีตค้ำยันเสาไฟฟ้าแรงสูง (TOWER FOUNDATION) และติดตั้ง Boundary Post",
+        formula: "K = 0.35 + 0.20 It/Io + 0.20 Ct/Co + 0.10 St/So + 0.15 Ft/Fo",
+        terms: [
+          { name: "Constant", val: 0.35 },
+          { name: "It/Io", val: 0.20, code: "I" },
+          { name: "Ct/Co", val: 0.20, code: "C" },
+          { name: "St/So", val: 0.10, code: "S" },
+          { name: "Ft/Fo", val: 0.15, code: "F" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.7.3",
+        name: "งานฐานรากสถานีไฟฟ้าย่อย",
+        desc: "งานฐานรากเสาคอนกรีตและค้ำยันอุปกรณ์ควบคุมกระแสไฟฟ้าสถานีไฟฟ้าย่อย",
+        formula: "K = 0.50 + 0.20 It/Io + 0.15 Ct/Co + 0.15 St/So",
+        terms: [
+          { name: "Constant", val: 0.50 },
+          { name: "It/Io", val: 0.20, code: "I" },
+          { name: "Ct/Co", val: 0.15, code: "C" },
+          { name: "St/So", val: 0.15, code: "S" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.8.1",
+        name: "งานเสาเข็มคอนกรีตอัดแรง",
+        desc: "งานจัดทำเสาเข็มคอนกรีตเสริมเหล็กอัดแรงและตอกปูพรมฐานราก",
+        formula: "K = 0.35 + 0.15 It/Io + 0.20 Ct/Co + 0.30 St/So",
+        terms: [
+          { name: "Constant", val: 0.35 },
+          { name: "It/Io", val: 0.15, code: "I" },
+          { name: "Ct/Co", val: 0.20, code: "C" },
+          { name: "St/So", val: 0.30, code: "S" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.9.1",
+        name: "งานสายส่งไฟฟ้าแรงสูง (ผู้ว่าจ้างจัดหาของ)",
+        desc: "งานเดินสายไฟแรงดัน 69-115 KV โดยหน่วยงานผู้ว่าจ้างจัดหาเสาและอุปกรณ์ให้",
+        formula: "K = 0.80 + 0.05 It/Io + 0.10 Mt/Mo + 0.05 Ft/Fo",
+        terms: [
+          { name: "Constant", val: 0.80 },
+          { name: "It/Io", val: 0.05, code: "I" },
+          { name: "Mt/Mo", val: 0.10, code: "M" },
+          { name: "Ft/Fo", val: 0.05, code: "F" }
+        ]
+      },
+      {
+        category: "หมวดที่ 5 งานระบบสาธารณูปโภค",
+        id: "5.9.2",
+        name: "งานสายส่งไฟฟ้าแรงสูง (ผู้รับจ้างจัดหาของ)",
+        desc: "งานเดินสายไฟแรงดัน 69-115 KV โดยผู้รับจ้างจัดหาเสาเข็ม เหล็ก และพัสดุสายส่งทั้งหมด",
+        formula: "K = 0.45 + 0.05 It/Io + 0.20 Mt/Mo + 0.05 Ft/Fo + 0.25 Wt/Wo",
+        terms: [
+          { name: "Constant", val: 0.45 },
+          { name: "It/Io", val: 0.05, code: "I" },
+          { name: "Mt/Mo", val: 0.20, code: "M" },
+          { name: "Ft/Fo", val: 0.05, code: "F" },
+          { name: "Wt/Wo", val: 0.25, code: "W" }
+        ]
+      }
+    ];
+
+    const COMMODITY_NAMES = {
+      I: "ดัชนีราคาผู้บริโภคของประเทศ",
+      C: "ดัชนีราคาซีเมนต์",
+      M: "ดัชนีราคาสินค้าวัสดุก่อสร้าง (ไม่รวมเหล็กและซีเมนต์)",
+      S: "ดัชนีราคาเหล็ก",
+      F: "ดัชนีราคาน้ำมันดีเซลหมุนเร็ว",
+      A: "ดัชนีราคาแอสฟัลท์",
+      E: "ดัชนีราคาเครื่องจักรกลและบริภัณฑ์",
+      W: "ดัชนีราคาสายไฟฟ้า",
+      G: "ดัชนีราคาเหล็กแผ่นเรียบ",
+      AC: "ดัชนีราคาท่อซีเมนต์ใยหิน",
+      PVC: "ดัชนีราคาท่อ PVC",
+      GIP: "ดัชนีราคาท่อเหล็กอาบสังกะสี",
+      PE: "ดัชนีราคาท่อ HYDENSITY POLYETHYLENE"
+    };
+
+    const TH_MONTHS = [
+      "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+      "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+    ];
+
+    let cachedPeriods = null;
+    let monthlyDataCache = {};
+    let activeCalculation = null;
+
+    // --- Bootstrapper ---
+    document.addEventListener("DOMContentLoaded", async () => {
+      initTheme();
+      initFormulaDropdown();
+      populateDefaultDateSelectors();
+      await checkNetworkAndLoadTPSOConfig();
+    });
+
+    // Change application color theme
+    function changeTheme(themeName) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('tpso-theme', themeName);
+      
+      if (themeName.startsWith('light-')) {
+        document.body.classList.add('light-theme');
+      } else {
+        document.body.classList.remove('light-theme');
+      }
+
+      document.querySelectorAll('.theme-swatch').forEach(swatch => {
+        if (swatch.getAttribute('data-theme') === themeName) {
+          swatch.classList.add('active');
+        } else {
+          swatch.classList.remove('active');
+        }
+      });
+    }
+
+    function initTheme() {
+      const savedTheme = localStorage.getItem('tpso-theme') || 'dark-blue';
+      changeTheme(savedTheme);
+    }
+
+    // Populate official K formula list grouped by category
+    function initFormulaDropdown() {
+      const select = document.getElementById("formula-select");
+      select.innerHTML = "";
+
+      // Group K_FORMULAS by category
+      const grouped = {};
+      K_FORMULAS.forEach(f => {
+        if (!grouped[f.category]) grouped[f.category] = [];
+        grouped[f.category].push(f);
+      });
+
+      for (const catName in grouped) {
+        const optGroup = document.createElement("optgroup");
+        optGroup.label = catName;
+        grouped[catName].forEach(f => {
+          const opt = document.createElement("option");
+          opt.value = f.id;
+          opt.innerText = `สูตรที่ ${f.id}: ${f.name}`;
+          optGroup.appendChild(opt);
+        });
+        select.appendChild(optGroup);
+      }
+
+      // Trigger first preview on load
+      onFormulaChange();
+    }
+
+    // Preview algebraic representation on formula selection change
+    function onFormulaChange() {
+      const select = document.getElementById("formula-select");
+      const fId = select.value;
+      const formulaObj = K_FORMULAS.find(f => f.id === fId);
+
+      if (formulaObj) {
+        document.getElementById("formula-preview-eq").innerText = formulaObj.formula;
+        document.getElementById("formula-preview-desc").innerText = formulaObj.desc;
+      }
+    }
+
+    // Date selectors defaults
+    function populateDefaultDateSelectors() {
+      ["month-io", "month-it", "month-isched"].forEach(selId => {
+        const select = document.getElementById(selId);
+        select.innerHTML = "";
+        TH_MONTHS.forEach((mName, i) => {
+          const opt = document.createElement("option");
+          opt.value = i + 1;
+          opt.innerText = mName;
+          select.appendChild(opt);
+        });
+      });
+
+      ["year-io", "year-it", "year-isched"].forEach(selId => {
+        const select = document.getElementById(selId);
+        select.innerHTML = "";
+        const defaultStart = 2545;
+        const defaultEnd = 2575;
+        for (let y = defaultStart; y <= defaultEnd; y++) {
+          const opt = document.createElement("option");
+          opt.value = y;
+          opt.innerText = y;
+          select.appendChild(opt);
+        }
+      });
+
+      // Default values
+      document.getElementById("month-io").value = 1;
+      document.getElementById("month-it").value = 1;
+      document.getElementById("month-isched").value = 1;
+      document.getElementById("year-io").value = 2568;
+      document.getElementById("year-it").value = 2568;
+      document.getElementById("year-isched").value = 2568;
+    }
+
+    // Smart API Fetching helper
+    async function apiFetch(endpoint, options = {}) {
+      const isWebServer = window.location.protocol.startsWith('http');
+      
+      if (isWebServer) {
+        try {
+          const relativeUrl = endpoint === 'MasterData' ? '/api/master-data' : '/api/month';
+          const res = await fetch(relativeUrl, options);
+          if (res.ok) {
+            return await res.json();
+          }
+          console.warn(`Local proxy returned status ${res.status}, falling back to public CORS proxy`);
+        } catch (e) {
+          console.warn('Local proxy call failed, falling back to public CORS proxy:', e);
+        }
+      }
+
+      const targetUrl = endpoint === 'MasterData' 
+        ? 'https://index-api.tpso.go.th/OpenApi/K/Month/MasterData'
+        : 'https://index-api.tpso.go.th/OpenApi/K/Month';
+
+      // First fallback: corsproxy.io
+      try {
+        const proxyUrl = "https://corsproxy.io/?url=" + encodeURIComponent(targetUrl);
+        const res = await fetch(proxyUrl, options);
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        console.warn("corsproxy.io failed:", e);
+      }
+
+      // Second fallback: direct fetch (if CORS is disabled in browser or allowed)
+      try {
+        const res = await fetch(targetUrl, options);
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        console.error("Direct fetch failed:", e);
+      }
+
+      throw new Error("Failed to fetch data from TPSO API through all channels.");
+    }
+
+    // Connect to TPSO and load available periods
+    async function checkNetworkAndLoadTPSOConfig() {
+      const badge = document.getElementById("conn-badge");
+      const indicator = document.getElementById("conn-indicator");
+      const text = document.getElementById("conn-text");
+
+      try {
+        const data = await apiFetch('MasterData');
+        const config = data[0];
+        cachedPeriods = config.dataAvailablePeriods[0];
+
+        const startY = cachedPeriods.startYear;
+        const endY = cachedPeriods.endYear;
+        
+        ["year-io", "year-it", "year-isched"].forEach(selId => {
+          const select = document.getElementById(selId);
+          select.innerHTML = "";
+          for (let y = startY; y <= endY; y++) {
+            const opt = document.createElement("option");
+            opt.value = y;
+            opt.innerText = y;
+            select.appendChild(opt);
+          }
+        });
+
+        // Set default values based on TPSO data availability
+        document.getElementById("month-io").value = cachedPeriods.endPeriod;
+        document.getElementById("year-io").value = cachedPeriods.endYear;
+        document.getElementById("month-it").value = cachedPeriods.endPeriod;
+        document.getElementById("year-it").value = cachedPeriods.endYear;
+        document.getElementById("month-isched").value = cachedPeriods.endPeriod;
+        document.getElementById("year-isched").value = cachedPeriods.endYear;
+
+        indicator.style.background = "var(--emerald)";
+        indicator.style.boxShadow = "0 0 8px var(--emerald)";
+        badge.style.background = "var(--emerald-bg)";
+        badge.style.borderColor = "var(--emerald)";
+        text.innerText = `คลังข้อมูลออนไลน์ • ล่าสุด: ${TH_MONTHS[cachedPeriods.endPeriod - 1]} ${cachedPeriods.endYear}`;
+      } catch (error) {
+        console.error("Master config fetch failed:", error);
+        indicator.style.background = "var(--rose)";
+        indicator.style.boxShadow = "0 0 8px var(--rose)";
+        badge.style.background = "var(--rose-bg)";
+        badge.style.borderColor = "var(--rose)";
+        text.innerText = "ไม่สามารถเชื่อมต่อคลังข้อมูลดัชนีได้ (กรุณาตรวจสอบอินเทอร์เน็ต)";
+      }
+    }
+
+    // Toggle Scheduled expiration inputs when delay checkbox is modified
+    function toggleDelayInputs() {
+      const chk = document.getElementById("contractor-delayed").checked;
+      const el = document.getElementById("delay-date-wrapper");
+      if (chk) {
+        el.classList.remove("hidden");
+      } else {
+        el.classList.add("hidden");
+      }
+    }
+
+    // Toggle label names based on W190 relief checkbox state
+    function toggleW190Labels() {
+      const chk = document.getElementById("w190-relief").checked;
+      const labelIo = document.getElementById("date-label-io");
+      if (chk) {
+        labelIo.innerText = "เดือนที่เห็นชอบราคากลาง (Io)";
+      } else {
+        labelIo.innerText = "เดือนเปิดซองเสนอราคา (Io)";
+      }
+    }
+
+    // Batch fetch helper
+    async function fetchMonthsBatch(months) {
+      const unique = [];
+      const seen = new Set();
+      
+      months.forEach(m => {
+        const key = `${m.year}-${m.month}`;
+        if (!monthlyDataCache[key] && !seen.has(key)) {
+          seen.add(key);
+          unique.push(m);
+        }
+      });
+
+      if (unique.length === 0) return;
+
+      const fetchPromises = unique.map(async ({ year, month }) => {
+        const list = await apiFetch('Month', {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            yearBase: 2530,
+            year: year,
+            month: month,
+            type: "K",
+            commodities: []
+          })
+        });
+        
+        monthlyDataCache[`${year}-${month}`] = list;
+      });
+
+      await Promise.all(fetchPromises);
+    }
+
+    // Calculate K-factor values incorporating Bureau of Budget rules
+    async function calculateK() {
+      const calcBtn = document.getElementById("calc-btn");
+      const fId = document.getElementById("formula-select").value;
+      const formulaObj = K_FORMULAS.find(f => f.id === fId);
+      
+      const workValue = parseFloat(document.getElementById("work-value").value) || 0.0;
+      
+      const monthIo = parseInt(document.getElementById("month-io").value);
+      const yearIo = parseInt(document.getElementById("year-io").value);
+      
+      const monthIt = parseInt(document.getElementById("month-it").value);
+      const yearIt = parseInt(document.getElementById("year-it").value);
+      
+      const isDelayed = document.getElementById("contractor-delayed").checked;
+      
+      const monthIsched = parseInt(document.getElementById("month-isched").value);
+      const yearIsched = parseInt(document.getElementById("year-isched").value);
+
+      const monthsToQuery = [
+        { month: monthIo, year: yearIo },
+        { month: monthIt, year: yearIt }
+      ];
+
+      if (isDelayed) {
+        monthsToQuery.push({ month: monthIsched, year: yearIsched });
+      }
+
+      calcBtn.disabled = true;
+      calcBtn.innerHTML = `
+        <svg style="animation: spin 1s linear infinite;" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        กำลังประมวลผลดัชนี...
+      `;
+
+      try {
+        // Query live TPSO month data
+        await fetchMonthsBatch(monthsToQuery);
+
+        const dataIo = monthlyDataCache[`${yearIo}-${monthIo}`] || [];
+        const dataIt = monthlyDataCache[`${yearIt}-${monthIt}`] || [];
+        const dataIsched = isDelayed ? (monthlyDataCache[`${yearIsched}-${monthIsched}`] || []) : [];
+
+        // Validate index availability
+        const activeCodes = formulaObj.terms.filter(t => t.code).map(t => t.code);
+        const checkAvailability = (list, mText) => {
+          activeCodes.forEach(code => {
+            const item = list.find(i => i.commodityCode === code);
+            if (!item || typeof item.index !== 'number') {
+              throw new Error(`ดัชนีรหัส ${code} (${COMMODITY_NAMES[code] || code}) ไม่มีในคลังข้อมูลของเดือน ${mText}`);
+            }
+          });
+        };
+
+        checkAvailability(dataIo, `${TH_MONTHS[monthIo-1]} ${yearIo}`);
+        checkAvailability(dataIt, `${TH_MONTHS[monthIt-1]} ${yearIt}`);
+        if (isDelayed) {
+          checkAvailability(dataIsched, `${TH_MONTHS[monthIsched-1]} ${yearIsched}`);
+        }
+
+        // Map list to easy lookup dictionary
+        const getLookup = list => {
+          const dict = {};
+          list.forEach(i => { dict[i.commodityCode] = i.index; });
+          return dict;
+        };
+
+        const ioDict = getLookup(dataIo);
+        const itDict = getLookup(dataIt);
+        const ischedDict = isDelayed ? getLookup(dataIsched) : null;
+
+        // Perform calculation function helper
+        const evaluateK = (targetDict) => {
+          let k = formulaObj.terms[0].val; // Constant
+          let details = [];
+          details.push({
+            variable: "Constant",
+            desc: "ค่าคงที่ตามแบบสัญญา",
+            io: "-",
+            it: "-",
+            ratio: "-",
+            weight: formulaObj.terms[0].val.toFixed(3),
+            weightedVal: formulaObj.terms[0].val.toFixed(3),
+            isConstant: true
+          });
+
+          // Ensure constant is truncated cleanly of any binary floating point representation issues
+          k = Math.floor((k + 0.0000001) * 1000) / 1000;
+
+          for (let i = 1; i < formulaObj.terms.length; i++) {
+            const term = formulaObj.terms[i];
+            const code = term.code;
+            const weight = term.val;
+            
+            const ioVal = ioDict[code];
+            const itVal = targetDict[code];
+            
+            // Truncate ratio strictly to 3 decimal places without rounding!
+            let ratio = itVal / ioVal;
+            ratio = Math.floor((ratio + 0.0000001) * 1000) / 1000;
+            
+            let weightedVal = weight * ratio;
+            weightedVal = Math.floor((weightedVal + 0.0000001) * 1000) / 1000;
+            
+            k = k + weightedVal;
+            k = Math.floor((k + 0.0000001) * 1000) / 1000;
+
+            details.push({
+              variable: `${code}t / ${code}o`,
+              desc: COMMODITY_NAMES[code] || code,
+              io: ioVal.toFixed(1),
+              it: itVal.toFixed(1),
+              ratio: ratio.toFixed(3),
+              weight: weight.toFixed(3),
+              weightedVal: weightedVal.toFixed(3),
+              isConstant: false
+            });
+          }
+          return { k: k, details: details };
+        };
+
+        // Standard actual K calculation
+        const resultActual = evaluateK(itDict);
+        let finalK = resultActual.k;
+        let chosenMonthText = `${TH_MONTHS[monthIt-1]} ${yearIt}`;
+        let chosenDetails = resultActual.details;
+        let delayChosen = "actual";
+        let delayExplanation = "";
+        let resultSched = null;
+
+        if (isDelayed) {
+          resultSched = evaluateK(ischedDict);
+          const kSched = resultSched.k;
+          const kAct = resultActual.k;
+
+          // Late delivery comparison logic (ว190)
+          // If both positive/increase: use min. If both negative/decrease: use max. Else use worse case.
+          if (kAct > 1 && kSched > 1) {
+            if (kSched < kAct) {
+              finalK = kSched;
+              delayChosen = "scheduled";
+              chosenDetails = resultSched.details;
+              chosenMonthText = `${TH_MONTHS[monthIsched-1]} ${yearIsched}`;
+              delayExplanation = `เนื่องจากส่งงานล่าช้ากว่ากำหนด และดัชนีราคาปรับตัวสูงขึ้น (K > 1) ทั้งคู่ ตามระเบียบ จึงให้ใช้ค่า K ณ รอบเดือนครบกำหนดสัญญาเดิม (${TH_MONTHS[monthIsched-1]} ${yearIsched}) ซึ่งมีค่าต่ำกว่าคือ ${kSched.toFixed(3)} เพื่อไม่ให้ผู้รับจ้างได้ประโยชน์จากการล่าช้า`;
+            } else {
+              finalK = kAct;
+              delayChosen = "actual";
+              delayExplanation = `เนื่องจากส่งงานล่าช้ากว่ากำหนด และดัชนีราคาปรับตัวสูงขึ้น (K > 1) ทั้งคู่ แต่ค่า K ของเดือนที่ส่งมอบงานจริง (${kAct.toFixed(3)}) มีค่าน้อยกว่า จึงเลือกใช้ค่า K ของเดือนที่ส่งงานจริงเพื่อผลประโยชน์ทางราชการ`;
+            }
+          } else if (kAct < 1 && kSched < 1) {
+            if (kSched > kAct) {
+              finalK = kSched;
+              delayChosen = "scheduled";
+              chosenDetails = resultSched.details;
+              chosenMonthText = `${TH_MONTHS[monthIsched-1]} ${yearIsched}`;
+              delayExplanation = `เนื่องจากส่งงานล่าช้ากว่ากำหนด และดัชนีราคาปรับลดลง (K < 1) ทั้งคู่ ตามระเบียบ จึงให้ใช้ค่า K ณ รอบเดือนครบกำหนดสัญญาเดิม (${TH_MONTHS[monthIsched-1]} ${yearIsched}) ซึ่งมีค่ามากกว่า (ทำให้เรียกเงินคืนทางราชการน้อยกว่า) คือ K = ${kSched.toFixed(3)}`;
+            } else {
+              finalK = kAct;
+              delayChosen = "actual";
+              delayExplanation = `เนื่องจากส่งงานล่าช้ากว่ากำหนด และดัชนีราคาปรับลดลง (K < 1) ทั้งคู่ แต่ค่า K ของเดือนที่ส่งมอบงานจริง (${kAct.toFixed(3)}) มีค่ามากกว่า (ทำให้เรียกเงินคืนทางราชการน้อยกว่า) จึงเลือกใช้ค่า K ณ เดือนส่งมอบงานจริง`;
+            }
+          } else {
+            // Mixed case: one positive, one negative. We choose the one < 1 (the smaller K, creating a refund/deduction)
+            if (kSched < kAct) {
+              finalK = kSched;
+              delayChosen = "scheduled";
+              chosenDetails = resultSched.details;
+              chosenMonthText = `${TH_MONTHS[monthIsched-1]} ${yearIsched}`;
+              delayExplanation = `เนื่องจากทิศทางดัชนีราคาสวนทางกัน (เดือนสิ้นสุดสัญญา K < 1, เดือนส่งงานจริง K > 1) เพื่อไม่ให้ผู้รับจ้างได้รับชดเชยราคาเพิ่มและเรียกเงินคืนทดแทน จึงเลือกใช้ค่า K ณ เดือนสิ้นสุดสัญญาเดิม (${kSched.toFixed(3)})`;
+            } else {
+              finalK = kAct;
+              delayChosen = "actual";
+              delayExplanation = `เนื่องจากทิศทางดัชนีราคาสวนทางกัน (เดือนส่งงานจริง K < 1, เดือนสิ้นสุดสัญญา K > 1) เพื่อเรียกเงินคืนทดแทนจึงเลือกใช้ค่า K ณ เดือนส่งมอบงานจริง (${kAct.toFixed(3)})`;
+            }
+          }
+        }
+
+        // Calculate K Adjustment threshold (4% standard or 2% under W190 relief)
+        const useW190Relief = document.getElementById("w190-relief").checked;
+        const isDeliveryInW190Period = (yearIt === 2569 && monthIt >= 2 && monthIt <= 9);
+        const use2PercentThreshold = useW190Relief && isDeliveryInW190Period;
+
+        const upperThreshold = use2PercentThreshold ? 1.02 : 1.04;
+        const lowerThreshold = use2PercentThreshold ? 0.98 : 0.96;
+        const thresholdPercentText = use2PercentThreshold ? "2%" : "4%";
+
+        let diffK = 0.0;
+        let adjMoney = 0.0;
+        let adjType = "neutral";
+        let adjTitleText = "ไม่มีการปรับราคา";
+        let adjDescText = "";
+
+        if (finalK > upperThreshold) {
+          diffK = finalK - upperThreshold;
+          diffK = Math.round(diffK * 1000) / 1000;
+          adjMoney = workValue * diffK;
+          adjType = "positive";
+          adjTitleText = "ราชการจ่ายเงินเพิ่มชดเชย";
+          adjDescText = use2PercentThreshold 
+            ? `ค่า K เกินกว่าเกณฑ์เยียวยา ว190 (เกินกว่า 2% ของดัชนีราคากลางเริ่มต้น)`
+            : `ค่า K เกินกว่า 4% ของดัชนีอ้างอิงเริ่มต้น (ผู้รับจ้างได้รับชดเชยเพิ่มเติม)`;
+        } else if (finalK < lowerThreshold) {
+          diffK = lowerThreshold - finalK;
+          diffK = Math.round(diffK * 1000) / 1000;
+          adjMoney = workValue * diffK;
+          adjType = "negative";
+          adjTitleText = "หักคืนค่างานก่อสร้าง";
+          adjDescText = use2PercentThreshold 
+            ? `ค่า K ต่ำกว่าเกณฑ์เยียวยา ว190 (ต่ำกว่า 2% ของดัชนีราคากลางเริ่มต้น)`
+            : `ค่า K ต่ำกว่าดัชนีเริ่มต้นเกิน 4% (หักคืนเงินงบประมาณเข้าหลวง)`;
+        } else {
+          adjType = "neutral";
+          adjTitleText = "ค่างานไม่มีการปรับราคา";
+          adjDescText = use2PercentThreshold
+            ? `ค่า K อยู่ในเกณฑ์ปกติของมาตรการ ว190 (แปรเปลี่ยนไม่เกิน 2% ของดัชนีเริ่มต้น)`
+            : `ค่า K อยู่ในเกณฑ์เบี่ยงเบนปกติ 4% (${finalK.toFixed(3)} อยู่ระหว่าง 0.96 ถึง 1.04)`;
+        }
+
+        // Update UI states
+        document.getElementById("k-final-num").innerText = finalK.toFixed(3);
+        document.getElementById("k-adj-type-title").innerText = adjTitleText;
+        document.getElementById("k-adj-money-value").innerText = `${adjMoney.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท`;
+        document.getElementById("k-adj-desc-text").innerText = adjDescText;
+
+        const adjCard = document.getElementById("k-adjustment-card");
+        adjCard.className = "k-adjustment-card";
+        if (adjType === "positive") adjCard.classList.add("k-adj-positive");
+        else if (adjType === "negative") adjCard.classList.add("k-adj-negative");
+        else adjCard.classList.add("k-adj-neutral");
+
+        // Render Delay comparison cards if delayed
+        const delayCard = document.getElementById("delay-breakdown-card");
+        if (isDelayed) {
+          delayCard.classList.remove("hidden");
+          document.getElementById("delay-explanation-desc").innerText = delayExplanation;
+          document.getElementById("comp-val-sched").innerText = resultSched.k.toFixed(3);
+          document.getElementById("comp-val-actual").innerText = resultActual.k.toFixed(3);
+          
+          document.getElementById("comp-box-sched").className = "comp-box" + (delayChosen === "scheduled" ? " selected" : "");
+          document.getElementById("comp-box-actual").className = "comp-box" + (delayChosen === "actual" ? " selected" : "");
+        } else {
+          delayCard.classList.add("hidden");
+        }
+
+        // Render step by step calculation solved math formula
+        let formulaSolvedText = `K = ${formulaObj.terms[0].val.toFixed(3)}`;
+        chosenDetails.forEach(d => {
+          if (!d.isConstant) {
+            formulaSolvedText += ` + (${d.weight} x ${d.ratio})`;
+          }
+        });
+        formulaSolvedText += ` = ${finalK.toFixed(3)}`;
+        document.getElementById("math-formula-solved").innerText = formulaSolvedText;
+
+        // Render variables table
+        const tbody = document.getElementById("formula-table-body");
+        tbody.innerHTML = "";
+        chosenDetails.forEach((d, idx) => {
+          const badgeClass = d.isConstant ? "badge-default" : `badge-${d.variable.split('t')[0]}`;
+          tbody.innerHTML += `
+            <tr>
+              <td><span class="code-badge ${badgeClass}">${d.isConstant ? "-" : d.variable.split('t')[0]}</span></td>
+              <td><strong>${d.isConstant ? "ค่าคงที่ตามสัญญา" : d.desc}</strong></td>
+              <td class="index-value">${d.io}</td>
+              <td class="index-value">${d.it}</td>
+              <td class="ratio-value" style="color: var(--text-muted);">${d.ratio}</td>
+              <td class="weight-value" style="color: var(--primary); font-weight:700;">${d.weight}</td>
+              <td class="weighted-value">${d.weightedVal}</td>
+            </tr>
+          `;
+        });
+        // Append sum row
+        tbody.innerHTML += `
+          <tr class="sum-row">
+            <td colspan="2">ผลรวมสัมประสิทธิ์ ค่า K</td>
+            <td colspan="4"></td>
+            <td class="weighted-value" style="font-size: 16px; color: var(--primary);">${finalK.toFixed(3)}</td>
+          </tr>
+        `;
+
+        // Update Print Header Details
+        document.getElementById("print-formula-name").innerText = `สูตรที่ ${formulaObj.id}: ${formulaObj.name}`;
+        document.getElementById("print-work-value").innerText = workValue.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        
+        const baseLabel = useW190Relief ? "เดือนที่เห็นชอบราคากลาง" : "เดือนเปิดซองเสนอราคา";
+        document.getElementById("print-base-month").innerText = `${TH_MONTHS[monthIo-1]} ${yearIo} (${baseLabel})`;
+        
+        const actualLabel = isDelayed ? "งวดที่ส่งงานจริง" : "คำนวณปกติ";
+        const w190Label = use2PercentThreshold ? "ใช้เกณฑ์เยียวยา ว190 (2%)" : "";
+        const actualMonthText = `${TH_MONTHS[monthIt-1]} ${yearIt} (${[actualLabel, w190Label].filter(Boolean).join(", ")})`;
+        document.getElementById("print-actual-month").innerText = actualMonthText;
+        
+        const printDelayRow = document.getElementById("print-delay-row");
+        if (isDelayed) {
+          printDelayRow.style.display = "block";
+          document.getElementById("print-scheduled-month").innerText = `${TH_MONTHS[monthIsched-1]} ${yearIsched}`;
+        } else {
+          printDelayRow.style.display = "none";
+        }
+        const now = new Date();
+        document.getElementById("print-timestamp").innerText = now.toLocaleString("th-TH", { timeZone: "Asia/Bangkok" });
+
+        // Show dashboard views
+        document.getElementById("empty-state").classList.add("hidden");
+        document.getElementById("results-view").classList.remove("hidden");
+      } catch (error) {
+        console.error("K calculation failed:", error);
+        alert(`เกิดข้อผิดพลาดในการคำนวณ: ${error.message}`);
+      } finally {
+        calcBtn.disabled = false;
+        calcBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          ประมวลผลสัญญาค่า K
+        `;
+      }
+    }
+
+    // --- Tab Switch & Doc Reader JS ---
+    function switchTab(tabName) {
+      if (tabName === 'calculator') {
+        document.getElementById('calculator-tab-view').classList.remove('hidden');
+        document.getElementById('docs-tab-view').classList.add('hidden');
+        document.getElementById('tab-btn-calculator').classList.add('active');
+        document.getElementById('tab-btn-docs').classList.remove('active');
+      } else {
+        document.getElementById('calculator-tab-view').classList.add('hidden');
+        document.getElementById('docs-tab-view').classList.remove('hidden');
+        document.getElementById('tab-btn-calculator').classList.remove('active');
+        document.getElementById('tab-btn-docs').classList.add('active');
+        loadDocuments();
+      }
+    }
+
+    let loadedDocs = [];
+    async function loadDocuments() {
+      const container = document.getElementById('docx-list-container');
+      if (loadedDocs.length > 0) return; // already loaded
+      
+      container.innerHTML = `
+        <div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 13px;">
+          <svg style="animation: spin 1s linear infinite; margin-bottom: 8px;" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          กำลังดาวน์โหลดคลังคู่มือคำนวณค่า K...
+        </div>
+      `;
+      
+      try {
+        const response = await fetch('./docs/docs_content.json');
+        if (!response.ok) throw new Error("Failed to load documents index");
+        loadedDocs = await response.json();
+        
+        container.innerHTML = "";
+        loadedDocs.forEach((doc, idx) => {
+          container.innerHTML += `
+            <button class="doc-list-item" id="doc-item-${idx}" onclick="selectDocument(${idx})">
+              <span class="doc-icon">📘</span>
+              <div class="doc-details">
+                <div class="doc-title">${doc.title}</div>
+                <div class="doc-meta">บทความคำนวณ • ไฟล์ Word (.docx)</div>
+              </div>
+            </button>
+          `;
+        });
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `
+          <div style="padding: 20px; text-align: center; color: var(--rose); font-size: 13px;">
+            ⚠️ ไม่สามารถดาวน์โหลดคู่มือได้
+            <button class="btn btn-outline" style="padding: 6px 12px; margin-top: 8px; font-size:12px;" onclick="loadDocuments()">ลองใหม่</button>
+          </div>
+        `;
+      }
+    }
+
+    function selectDocument(docId) {
+      // Remove active class from all sidebar buttons
+      const items = document.querySelectorAll('.doc-list-item');
+      items.forEach(item => item.classList.remove('active'));
+      
+      const titleEl = document.getElementById('reader-title');
+      const subtitleEl = document.getElementById('reader-subtitle');
+      const actionsEl = document.getElementById('reader-actions-bar');
+      const bodyEl = document.getElementById('reader-body');
+      
+      if (docId === 'w190-pdf') {
+        document.getElementById('doc-item-w190').classList.add('active');
+        
+        titleEl.innerText = "หนังสือเวียน ว190 (นร 0719.1/ว190)";
+        subtitleEl.innerText = "วิธีปฏิบัติการผ่อนผันวิธีการคำนวณเงินชดเชยค่างานก่อสร้าง (ค่า K) เป็นการชั่วคราว";
+        
+        actionsEl.innerHTML = `
+          <a href="./docs/นร-ว190ค่าk.pdf" target="_blank" class="btn-reader-action btn-reader-primary">
+            <span>👁️</span> เปิดดูไฟล์ PDF
+          </a>
+          <a href="./docs/นร-ว190ค่าk.pdf" download class="btn-reader-action">
+            <span>📥</span> ดาวน์โหลด PDF (460 KB)
+          </a>
+        `;
+        
+        bodyEl.innerHTML = `
+          <div class="rule-highlight-box">
+            <h4>💡 มาตรการเยียวยาชั่วคราว ว190 (ปี พ.ศ. 2569) คืออะไร?</h4>
+            <p><strong>หนังสือด่วนที่สุด ที่ นร 0719.1/ว190 ลงวันที่ 28 พฤษภาคม 2569</strong> เป็นแนวทางปฏิบัติของสำนักงบประมาณที่คลอดออกมาตามมติคณะรัฐมนตรีเมื่อวันที่ 19 พฤษภาคม 2569 เพื่อผ่อนปรนเยียวยาผลกระทบแก่ผู้รับจ้างจากสถานการณ์ราคาน้ำมันและวัสดุก่อสร้างที่ผันผวนรุนแรงอันเนื่องมาจากความขัดแย้งในตะวันออกกลาง</p>
+          </div>
+          
+          <h3 style="font-size:16px; font-weight:700; margin-bottom:12px; border-bottom: 1px solid var(--card-border); padding-bottom:6px;">📌 สรุปเงื่อนไขสำคัญของ ว190</h3>
+          
+          <ol style="margin-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px;">
+            <li>
+              <strong>การหักเงินชดเชยส่วนต่าง (เกณฑ์ลดหย่อนเหลือ ±2%):</strong>
+              <p style="text-indent:0; margin-top:4px;">สำหรับงวดงานที่ส่งมอบระหว่างวันที่ <strong>28 กุมภาพันธ์ 2569 ถึงวันที่ 30 กันยายน 2569</strong> ให้ปรับเปลี่ยนเกณฑ์เบี่ยงเบนจากเดิม 4% มาเป็น 2% ส่งผลให้:</p>
+              <ul style="margin-left: 20px; margin-top: 4px; list-style-type: disc;">
+                <li>กรณีดัชนีสูงขึ้น (K เกิน 1.02): รัฐจ่ายเงินเพิ่มชดเชยโดยหักออกเพียง 2% (ใช้สูตร K - 1.02)</li>
+                <li>กรณีดัชนีลดลง (K ต่ำกว่า 0.98): รัฐเรียกเงินคืนโดยหักส่วนต่างจาก 0.98 (ใช้สูตร 0.98 - K)</li>
+                <li>กรณีดัชนีเปลี่ยนไม่เกิน 2% (0.98 &le; K &le; 1.02): ไม่มีการปรับราคางาน</li>
+              </ul>
+            </li>
+            <li>
+              <strong>การเปลี่ยนเดือนดัชนีราคาเริ่มต้น (Io):</strong>
+              <p style="text-indent:0; margin-top:4px;">สำหรับสัญญาที่ลงนามระหว่างวันที่ <strong>28 กุมภาพันธ์ 2569 ถึง 30 กันยายน 2569</strong> ให้เปลี่ยนไปใช้ <strong>"ดัชนีราคา ณ เดือนที่หัวหน้าหน่วยงานของรัฐให้ความเห็นชอบราคากลาง"</strong> แทนการใช้ดัชนีของเดือนเปิดซองเสนอราคาแบบเดิม เพื่อสะท้อนระดับราคาที่เหมาะสมตามความจริงในขณะอนุมัติราคา</p>
+            </li>
+            <li>
+              <strong>การเปรียบเทียบกรณีงานล่าช้ากว่าสัญญา:</strong>
+              <p style="text-indent:0; margin-top:4px;">หากผู้รับจ้างส่งงานล่าช้าเนื่องจากความผิดของผู้รับจ้าง ให้คำนวณเปรียบเทียบค่า K ระหว่างเดือนส่งงานจริง กับ เดือนสิ้นสุดสัญญาเดิม (ตามแนวทางปกติ) แต่ให้ปรับเพดานเยียวยา 2% สำหรับงวดที่ตกอยู่ในช่วงเวลาผ่อนผัน ว190</p>
+            </li>
+          </ol>
+          
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); padding: 16px; border-radius: 12px; font-size:13px; color: var(--text-muted); line-height: 1.6;">
+            <strong>ℹ️ หมายเหตุการใช้งานโปรแกรม:</strong><br>
+            ผู้ใช้สามารถเปิดสวิตช์ <em>"ใช้เกณฑ์เยียวยาชั่วคราว ว190 (ปี พ.ศ. 2569)"</em> ในแผงคำนวณด้านซ้าย เพื่อให้โปรแกรมเปลี่ยนป้ายชื่อช่องระบุวันที่ Io เป็น <strong>"เดือนที่เห็นชอบราคากลาง"</strong> และปรับเงื่อนไขหักค่างานชดเชยเป็น 2% ให้โดยอัตโนมัติเมื่อเลือกเดือนส่งงานจริงอยู่ในช่วง ก.พ. - ก.ย. 2569
+          </div>
+        `;
+      } else {
+        // Render DOCX chapter
+        const docIdx = parseInt(docId);
+        const doc = loadedDocs[docIdx];
+        if (!doc) return;
+        
+        document.getElementById(`doc-item-${docIdx}`).classList.add('active');
+        
+        titleEl.innerText = doc.filename.replace(".docx", "");
+        subtitleEl.innerText = `คู่มือฉบับเต็มและเอกสารตัวอย่าง • นำเสนอในรูปแบบข้อความบนเว็บ`;
+        
+        actionsEl.innerHTML = `
+          <a href="./docs/${encodeURIComponent(doc.filename)}" download class="btn-reader-action btn-reader-primary">
+            <span>📥</span> ดาวน์โหลดไฟล์ Word (.docx)
+          </a>
+        `;
+        
+        let bodyHtml = "";
+        
+        doc.paragraphs.forEach(p => {
+          const trimmed = p.trim();
+          if (!trimmed) return;
+          
+          if (trimmed.startsWith("บทที่") || trimmed.startsWith("สารบัญ") || trimmed.startsWith("คำนำ") || (trimmed.length < 60 && /^[0-9กขค].*/.test(trimmed) && !trimmed.endsWith("บาท") && !trimmed.endsWith("."))) {
+            bodyHtml += `<h3 style="font-size:16.5px; font-weight:700; color:var(--primary); margin-top:24px; margin-bottom:12px; border-bottom: 1.5px solid var(--card-border); padding-bottom:6px;">${trimmed}</h3>`;
+          } else if (trimmed.startsWith("หมายเหตุ:") || trimmed.startsWith("ข้อสังเกต:")) {
+            bodyHtml += `
+              <div style="background: rgba(245,158,11,0.02); border-left:3px solid var(--amber); padding:12px 16px; border-radius: 0 8px 8px 0; font-size:13.5px; margin: 16px 0; color:var(--text-main);">
+                ${trimmed}
+              </div>
+            `;
+          } else {
+            bodyHtml += `<p>${trimmed}</p>`;
+          }
+        });
+        
+        bodyEl.innerHTML = bodyHtml || `<p style="color:var(--text-muted); font-style:italic; text-align:center;">ไม่พบข้อความในเอกสารนี้</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
