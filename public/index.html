@@ -1181,22 +1181,13 @@
 
       <!-- Mode selection -->
       <div class="mode-selector">
-        <button class="mode-tab" id="mode-single" onclick="setSearchMode('single')">รายเดือน</button>
         <button class="mode-tab active" id="mode-range" onclick="setSearchMode('range')">ช่วงเวลาหลายเดือน</button>
         <button class="mode-tab" id="mode-year" onclick="setSearchMode('year')">ดัชนีรายปี (12 เดือน)</button>
+        <button class="mode-tab" id="mode-custom" onclick="setSearchMode('custom')">เลือกแยกเดือนอิสระ (เริ่มต้น 4 เดือน)</button>
       </div>
 
       <!-- Date selector parameters -->
       <div class="input-row">
-        <!-- Single month block -->
-        <div class="input-group" id="group-single-date" style="display:none;">
-          <label>ดัชนีประจำเดือน</label>
-          <div class="select-pair">
-            <select id="single-month" class="form-select"></select>
-            <select id="single-year" class="form-select"></select>
-          </div>
-        </div>
-
         <!-- Range block: Start date -->
         <div class="input-group" id="group-range-start">
           <label>สืบค้นตั้งแต่เดือน</label>
@@ -1219,6 +1210,19 @@
         <div class="input-group" id="group-year-date" style="display:none;">
           <label>สืบค้นทั้งปีของ พ.ศ.</label>
           <select id="year-only" class="form-select"></select>
+        </div>
+
+        <!-- Custom dates block -->
+        <div class="input-group" id="group-custom-dates" style="display:none; grid-column: span 2; flex-direction: column; gap:10px;">
+          <label><i class="fa-solid fa-calendar-days"></i> ระบุเดือนที่ต้องการสืบค้นแบบอิสระ (เพิ่ม/ลดแถวได้ตามต้องการ)</label>
+          <div id="custom-dates-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;">
+            <!-- Render rows dynamically -->
+          </div>
+          <div>
+            <button type="button" class="btn btn-outline" style="padding: 6px 12px; font-size:12px; width:auto;" onclick="addCustomDateRow()">
+              <i class="fa-solid fa-plus"></i> เพิ่มช่องเลือกเดือน
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1339,7 +1343,7 @@
     const TH_MONTHS = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
     const TH_MONTHS_SHORT = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
     
-    let searchMode = 'range'; // 'single', 'range', 'year'
+    let searchMode = 'range'; // 'range', 'year', 'custom'
     let commodities = [];     // Master list loaded from TPSO
     let monthlyCache = {};    // Memory caching of fetched indices: {"year-month": [api_data]}
     let availableRange = null;// TPSO API range object
@@ -1397,7 +1401,7 @@
       searchMode = mode;
       
       // Update UI active state
-      ['single', 'range', 'year'].forEach(m => {
+      ['range', 'year', 'custom'].forEach(m => {
         const btn = document.getElementById(`mode-${m}`);
         if (m === mode) {
           btn.classList.add('active');
@@ -1407,26 +1411,26 @@
       });
 
       // Show/Hide input blocks
-      const singleBlock = document.getElementById('group-single-date');
       const rangeStartBlock = document.getElementById('group-range-start');
       const rangeEndBlock = document.getElementById('group-range-end');
       const yearBlock = document.getElementById('group-year-date');
+      const customBlock = document.getElementById('group-custom-dates');
 
-      if (mode === 'single') {
-        singleBlock.style.display = 'flex';
-        rangeStartBlock.style.display = 'none';
-        rangeEndBlock.style.display = 'none';
-        yearBlock.style.display = 'none';
-      } else if (mode === 'range') {
-        singleBlock.style.display = 'none';
+      if (mode === 'range') {
         rangeStartBlock.style.display = 'flex';
         rangeEndBlock.style.display = 'flex';
         yearBlock.style.display = 'none';
+        customBlock.style.display = 'none';
       } else if (mode === 'year') {
-        singleBlock.style.display = 'none';
         rangeStartBlock.style.display = 'none';
         rangeEndBlock.style.display = 'none';
         yearBlock.style.display = 'flex';
+        customBlock.style.display = 'none';
+      } else if (mode === 'custom') {
+        rangeStartBlock.style.display = 'none';
+        rangeEndBlock.style.display = 'none';
+        yearBlock.style.display = 'none';
+        customBlock.style.display = 'flex';
       }
     }
 
@@ -1451,6 +1455,9 @@
         
         // Default range check: show last 12 months as default
         setDefaultInterval(availableRange);
+
+        // Pre-populate 4 custom date row selectors
+        initializeCustomDateRows();
         
         // Update connection status
         setConnectionStatus(true);
@@ -1479,12 +1486,10 @@
     function populateDateSelectors(range) {
       const startYearSel = document.getElementById('start-year');
       const endYearSel = document.getElementById('end-year');
-      const singleYearSel = document.getElementById('single-year');
       const yearOnlySel = document.getElementById('year-only');
 
       const startMonthSel = document.getElementById('start-month');
       const endMonthSel = document.getElementById('end-month');
-      const singleMonthSel = document.getElementById('single-month');
 
       // Helper to clear and fill selector options
       const fillYears = (sel) => {
@@ -1508,15 +1513,12 @@
       };
 
       // Fill all selectors
-      [startYearSel, endYearSel, singleYearSel, yearOnlySel].forEach(fillYears);
-      [startMonthSel, endMonthSel, singleMonthSel].forEach(fillMonths);
+      [startYearSel, endYearSel, yearOnlySel].forEach(fillYears);
+      [startMonthSel, endMonthSel].forEach(fillMonths);
     }
 
     // Default dates setup
     function setDefaultInterval(range) {
-      // Set to latest period
-      document.getElementById('single-year').value = range.endYear;
-      document.getElementById('single-month').value = range.endPeriod;
       document.getElementById('year-only').value = range.endYear;
 
       // Start range: 12 months ago
@@ -1537,6 +1539,83 @@
       document.getElementById('start-month').value = startMonth;
       document.getElementById('end-year').value = range.endYear;
       document.getElementById('end-month').value = range.endPeriod;
+    }
+
+    // Initialize 4 custom date rows
+    function initializeCustomDateRows() {
+      const list = document.getElementById('custom-dates-list');
+      list.innerHTML = '';
+      
+      let curYear = availableRange.endYear;
+      let curMonth = availableRange.endPeriod;
+      
+      for (let i = 0; i < 4; i++) {
+        addCustomDateRow(curMonth, curYear);
+        curMonth--;
+        if (curMonth <= 0) {
+          curMonth = 12;
+          curYear--;
+        }
+        if (curYear < availableRange.startYear) {
+          break;
+        }
+      }
+    }
+
+    // Add a single custom date selector row
+    function addCustomDateRow(m = null, y = null) {
+      if (!availableRange) return;
+      const list = document.getElementById('custom-dates-list');
+      
+      const row = document.createElement('div');
+      row.className = 'custom-date-row';
+      row.style.cssText = 'display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.2); border:1px solid var(--card-border); padding:6px 10px; border-radius:10px;';
+      
+      // Create month selector
+      const mSel = document.createElement('select');
+      mSel.className = 'form-select custom-month';
+      mSel.style.cssText = 'padding:6px; font-size:12.5px; border:none; background:transparent; cursor:pointer; width:100%; color:var(--text-main); font-family:var(--font-thai); outline:none;';
+      for (let i = 1; i <= 12; i++) {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.innerText = TH_MONTHS[i - 1];
+        mSel.appendChild(opt);
+      }
+      
+      // Create year selector
+      const ySel = document.createElement('select');
+      ySel.className = 'form-select custom-year';
+      ySel.style.cssText = 'padding:6px; font-size:12.5px; border:none; background:transparent; cursor:pointer; width:100%; color:var(--text-main); font-family:var(--font-thai); outline:none;';
+      for (let i = availableRange.startYear; i <= availableRange.endYear; i++) {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.innerText = `พ.ศ. ${i}`;
+        ySel.appendChild(opt);
+      }
+      
+      // Set values if provided
+      if (m !== null) mSel.value = m;
+      if (y !== null) ySel.value = y;
+      
+      // Create delete button
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'ctrl-link';
+      delBtn.style.cssText = 'color:var(--rose); padding:4px; font-size:13px; background:none; border:none; cursor:pointer;';
+      delBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+      delBtn.onclick = () => {
+        if (list.children.length > 1) {
+          row.remove();
+        } else {
+          alert("ต้องมีตัวเลือกอย่างน้อย 1 เดือน");
+        }
+      };
+      
+      row.appendChild(mSel);
+      row.appendChild(ySel);
+      row.appendChild(delBtn);
+      
+      list.appendChild(row);
     }
 
     // Render checkbox grid of construction commodities
@@ -1641,11 +1720,7 @@
     function getSelectedPeriods() {
       const list = [];
       
-      if (searchMode === 'single') {
-        const m = parseInt(document.getElementById('single-month').value);
-        const y = parseInt(document.getElementById('single-year').value);
-        list.push({ year: y, month: m });
-      } else if (searchMode === 'range') {
+      if (searchMode === 'range') {
         const sm = parseInt(document.getElementById('start-month').value);
         const sy = parseInt(document.getElementById('start-year').value);
         const em = parseInt(document.getElementById('end-month').value);
@@ -1666,6 +1741,21 @@
         for (let m = 1; m <= 12; m++) {
           list.push({ year: y, month: m });
         }
+      } else if (searchMode === 'custom') {
+        const rows = document.querySelectorAll('.custom-date-row');
+        rows.forEach(row => {
+          const m = parseInt(row.querySelector('.custom-month').value);
+          const y = parseInt(row.querySelector('.custom-year').value);
+          // Prevent duplicates
+          if (!list.some(item => item.year === y && item.month === m)) {
+            list.push({ year: y, month: m });
+          }
+        });
+        
+        // Sort chronologically
+        list.sort((a, b) => {
+          return a.year !== b.year ? a.year - b.year : a.month - b.month;
+        });
       }
       return list;
     }
@@ -1683,12 +1773,7 @@
       let modeText = "ช่วงเวลารายเดือน";
       let rangeText = "";
       
-      if (searchMode === 'single') {
-        modeText = "เดือนเดี่ยวเฉพาะกิจ";
-        const m = parseInt(document.getElementById('single-month').value);
-        const y = document.getElementById('single-year').value;
-        rangeText = `${TH_MONTHS[m-1]} พ.ศ. ${y}`;
-      } else if (searchMode === 'range') {
+      if (searchMode === 'range') {
         modeText = "ช่วงเวลารายเดือนต่อเนื่อง";
         const sm = parseInt(document.getElementById('start-month').value);
         const sy = document.getElementById('start-year').value;
@@ -1699,6 +1784,10 @@
         modeText = "ข้อมูลรายปี 12 เดือนเต็ม";
         const y = document.getElementById('year-only').value;
         rangeText = `ตลอดปี พ.ศ. ${y}`;
+      } else if (searchMode === 'custom') {
+        modeText = "ระบุเดือนแยกอิสระ (Custom Months)";
+        const textParts = currentFetchedPeriods.map(p => `${TH_MONTHS_SHORT[p.month-1]} ${p.year.toString().slice(-2)}`);
+        rangeText = textParts.join(', ');
       }
 
       document.getElementById('print-mode-text').innerText = modeText;
