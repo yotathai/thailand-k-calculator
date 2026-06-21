@@ -1568,8 +1568,8 @@
         const item = document.createElement('label');
         item.className = 'check-item';
         
-        // Select all by default except very rare custom pipes
-        const checked = ['AC', 'GIP', 'PVC', 'PE'].includes(c.code) ? '' : 'checked';
+        // Select all by default
+        const checked = 'checked';
         
         item.innerHTML = `
           <input type="checkbox" value="${c.code}" data-code="${c.code}" ${checked}>
