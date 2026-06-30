@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายงานสรุปผลการพิจารณาคำนวณเงินชดเชยค่างานก่อสร้าง (ค่า K) ฉบับสมบูรณ์</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <div class="title-badge"><i class="fas fa-file-invoice-dollar"></i> เอกสารนำเสนอผู้บริหาร (ปลัด)</div>
+            <h1>รายงานผลการคำนวณเงินชดเชยค่า K</h1>
+            <p class="subtitle">โครงการก่อสร้างถนนลาดยางแอสฟัลท์ติกคอนกรีต สายทาง บ้านนาปงพัฒนา หมู่ที่ 11</p>
+            
+            <div class="download-section" style="margin-top: 1.5rem;">
+                <a href="รายงานการคำนวณค่าK_ฉบับสมบูรณ์.docx" class="btn-download" download>
+                    <i class="fas fa-file-word"></i> ดาวน์โหลดรายงานฉบับสมบูรณ์ (Word)
+                </a>
+            </div>
+        </header>
+
+        <section class="card">
+            <h2 class="card-title"><i class="fas fa-info-circle"></i> ข้อมูลพื้นฐานโครงการ</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">ผู้รับจ้าง</div>
+                    <div class="info-value">บริษัท แทร็คโก้ จำกัด (สาขาน่าน)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">สัญญาจ้างเลขที่</div>
+                    <div class="info-value">4/2569 (25 พ.ย. 68)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">วันส่งมอบงานจริง</div>
+                    <div class="info-value">18 มีนาคม 2569</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">สถานะการส่งงาน</div>
+                    <div class="info-value" style="color: var(--accent-color);">ส่งงานทันเวลา (ไม่มีค่าปรับ)</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="card-title"><i class="fas fa-balance-scale"></i> ส่วนที่ 1: การปรับฐานราคากลางให้ตรงกับสัญญา (ว 651)</h2>
+            <p style="margin-bottom: 1.5rem;">ผู้รับจ้างประมูลงานได้ <strong>9,846,000.00 บาท</strong> (ต่ำกว่าราคากลาง 500 บาท) จึงมีสัดส่วนการปรับลดค่างาน (Adjustment Factor) = <strong>0.99994922</strong> และมีการคัดแยกรายการที่ห้ามคิดค่า K ออกตามตารางด้านล่าง</p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ลำดับ</th>
+                            <th>รายการ</th>
+                            <th class="text-right">ค่างานตามสัญญาใหม่ (บาท)</th>
+                            <th class="text-center">สิทธิ์คิดค่า K</th>
+                            <th class="text-center">สูตรที่ใช้</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>งานถางป่าและขุดตอ ขนาดเบา</td>
+                            <td class="text-right">29,242.68</td>
+                            <td class="text-center"><span class="status-yes">ได้</span></td>
+                            <td class="text-center">K.2.1</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>งานขุดรื้อคันทางเดิมแล้วบดทับลูกรัง</td>
+                            <td class="text-right">185,983.48</td>
+                            <td class="text-center"><span class="status-yes">ได้</span></td>
+                            <td class="text-center">K.2.1</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>งานพื้นทางหินคลุก</td>
+                            <td class="text-right">2,837,626.52</td>
+                            <td class="text-center"><span class="status-yes">ได้</span></td>
+                            <td class="text-center">K.2.1</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>งานลาดแอสฟัลต์ไพรม์โค้ต</td>
+                            <td class="text-right">590,200.92</td>
+                            <td class="text-center"><span class="status-yes">ได้</span></td>
+                            <td class="text-center">K.3.1</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>งานชั้นผิวทางแอสฟัลต์คอนกรีต</td>
+                            <td class="text-right">5,387,779.68</td>
+                            <td class="text-center"><span class="status-yes">ได้</span></td>
+                            <td class="text-center">K.3.3</td>
+                        </tr>
+                        <tr style="background-color: #fef2f2;">
+                            <td>6</td>
+                            <td>THERMOPLASTIC PAINT (ตีเส้นจราจร)</td>
+                            <td class="text-right">235,132.03</td>
+                            <td class="text-center"><span class="status-no">ไม่ได้</span></td>
+                            <td class="text-center">-</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>งานท่อกลม คสล. ขนาด 0.30 ม.</td>
+                            <td class="text-right">17,550.58</td>
+                            <td class="text-center"><span class="status-yes">ได้</span></td>
+                            <td class="text-center">K.3.5</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>งานท่อกลม คสล. ขนาด 1.00 ม.</td>
+                            <td class="text-right">112,620.40</td>
+                            <td class="text-center"><span class="status-yes">ได้</span></td>
+                            <td class="text-center">K.3.5</td>
+                        </tr>
+                        <tr>
+                            <td>9-11</td>
+                            <td>คอนกรีต, เหล็กเสริม, ลวดผูกเหล็ก</td>
+                            <td class="text-right">8,109.82</td>
+                            <td class="text-center"><span class="status-yes">ได้</span></td>
+                            <td class="text-center">K.3.5</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>งานตัดดิน</td>
+                            <td class="text-right">1,120.13</td>
+                            <td class="text-center"><span class="status-yes">ได้</span></td>
+                            <td class="text-center">K.2.1</td>
+                        </tr>
+                        <tr style="background-color: #fef2f2;">
+                            <td>13</td>
+                            <td>ราวกั้นอันตราย (W-BEAM)</td>
+                            <td class="text-right">440,633.77</td>
+                            <td class="text-center"><span class="status-no">ไม่ได้</span></td>
+                            <td class="text-center">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="background: #eff6ff; padding: 1rem; border-radius: 8px; margin-top: 1rem; color: #1e3a8a; border-left: 4px solid #3b82f6;">
+                <strong><i class="fas fa-calculator"></i> สรุปฐานค่างาน:</strong> หักรายการลำดับที่ 6 และ 13 ออก จะเหลือ "ค่างานสุทธิที่นำมาคิดเงินชดเชยค่า K ได้จริง" เท่ากับ <strong>9,170,234.20 บาท</strong>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i> ส่วนที่ 2: ดัชนีราคาวัสดุก่อสร้างเปรียบเทียบ (ใช้ทศนิยม 3 ตำแหน่ง)</h2>
+            <p style="margin-bottom: 1.5rem;">ใช้เดือนฐานคือ <strong>พฤศจิกายน 2568</strong> (เดือนเปิดซอง) และเดือนส่งมอบงานคือ <strong>มีนาคม 2569</strong></p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ดัชนี</th>
+                            <th>รายการวัสดุก่อสร้าง</th>
+                            <th class="text-center">พ.ย. 68</th>
+                            <th class="text-center">มี.ค. 69</th>
+                            <th class="text-center">อัตราส่วน (t/o)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>I</strong></td>
+                            <td>ดัชนีราคาผู้บริโภคทั่วไป</td>
+                            <td class="text-center">277.2</td>
+                            <td class="text-center">277.6</td>
+                            <td class="text-center">1.001</td>
+                        </tr>
+                        <tr style="background-color: #fffbeb;">
+                            <td><strong>A</strong></td>
+                            <td><strong>ดัชนีราคาแอสฟัลท์</strong></td>
+                            <td class="text-center">563.8</td>
+                            <td class="text-center"><strong style="color: #d97706; font-size: 1.1em;">716.2</strong></td>
+                            <td class="text-center"><strong style="color: #d97706;">1.270</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>C</strong></td>
+                            <td>ดัชนีราคาซีเมนต์</td>
+                            <td class="text-center">212.0</td>
+                            <td class="text-center">211.0</td>
+                            <td class="text-center">0.995</td>
+                        </tr>
+                        <tr>
+                            <td><strong>M</strong></td>
+                            <td>ดัชนีราคาวัสดุก่อสร้าง (อื่นๆ)</td>
+                            <td class="text-center">320.3</td>
+                            <td class="text-center">329.5</td>
+                            <td class="text-center">1.028</td>
+                        </tr>
+                        <tr>
+                            <td><strong>S</strong></td>
+                            <td>ดัชนีราคาเหล็ก</td>
+                            <td class="text-center">252.2</td>
+                            <td class="text-center">260.5</td>
+                            <td class="text-center">1.032</td>
+                        </tr>
+                        <tr>
+                            <td><strong>E</strong></td>
+                            <td>ดัชนีราคาเครื่องจักรกลฯ</td>
+                            <td class="text-center">416.2</td>
+                            <td class="text-center">426.1</td>
+                            <td class="text-center">1.023</td>
+                        </tr>
+                        <tr>
+                            <td><strong>F</strong></td>
+                            <td>ดัชนีราคาน้ำมันดีเซล</td>
+                            <td class="text-center">529.1</td>
+                            <td class="text-center">549.1</td>
+                            <td class="text-center">1.037</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;"><em>* หมายเหตุ: ตามมติ ครม. การคำนวณทั้งหมดใช้การตัดเศษทศนิยมทิ้งเหลือ 3 ตำแหน่ง (Truncate) โดยไม่มีการปัดเศษขึ้น</em></p>
+        </section>
+
+        <section class="card">
+            <h2 class="card-title"><i class="fas fa-coins"></i> ส่วนที่ 3: บทสรุปชี้ขาดเงินชดเชย (เปรียบเทียบ ว 190)</h2>
+            <p style="margin-bottom: 1.5rem;">จากการเข้าสูตรคำนวณ พบว่าราคายางมะตอย (แอสฟัลท์) ที่พุ่งสูงขึ้นอย่างรุนแรง ส่งผลให้หมวดงานที่มีการใช้ยางมะตอยมีค่า K สูงถึง <strong>1.116</strong></p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>หมวดงานก่อสร้าง</th>
+                            <th class="text-center">ค่า K</th>
+                            <th class="text-right">ค่างานสุทธิ (บาท)</th>
+                            <th class="text-right">เงินเพิ่ม (เกณฑ์ 4%)</th>
+                            <th class="text-right" style="background-color: #047857;">เงินเพิ่ม (ว 190 หัก 2%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>งานดิน (K.2.1)</td>
+                            <td class="text-center">1.016</td>
+                            <td class="text-right">3,053,972.81</td>
+                            <td class="text-right">0.00</td>
+                            <td class="text-right">0.00</td>
+                        </tr>
+                        <tr>
+                            <td>งาน Prime Coat (K.3.1)</td>
+                            <td class="text-center">1.116</td>
+                            <td class="text-right">590,200.92</td>
+                            <td class="text-right">44,855.27</td>
+                            <td class="text-right"><strong>56,659.29</strong></td>
+                        </tr>
+                        <tr>
+                            <td>งานผิวทาง AC (K.3.3)</td>
+                            <td class="text-center">1.116</td>
+                            <td class="text-right">5,387,779.68</td>
+                            <td class="text-right">409,471.26</td>
+                            <td class="text-right"><strong>517,226.85</strong></td>
+                        </tr>
+                        <tr>
+                            <td>งานท่อระบายน้ำ (K.3.5)</td>
+                            <td class="text-center">1.008</td>
+                            <td class="text-right">138,280.80</td>
+                            <td class="text-right">0.00</td>
+                            <td class="text-right">0.00</td>
+                        </tr>
+                        <tr style="background-color: #f1f5f9; font-weight: bold; font-size: 1.1em;">
+                            <td colspan="3" class="text-right">ยอดรวมเงินชดเชยสุทธิ</td>
+                            <td class="text-right">454,326.53</td>
+                            <td class="text-right" style="color: var(--accent-color);">573,886.14</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box">
+                <div class="highlight-title">สรุปยอดเงินชดเชยสุทธิที่ต้องเบิกจ่าย (หัก 2% ตาม ว 190)</div>
+                <div class="highlight-value">฿ 573,886.14</div>
+                <div style="font-size: 1.1rem; margin-top: 0.5rem; opacity: 0.9;">(ห้าแสนเจ็ดหมื่นสามพันแปดร้อยแปดสิบหกบาทสิบสี่สตางค์)</div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem; color: var(--primary-color);">ความเห็นและข้อวินิจฉัยเพื่อการอนุมัติ:</h3>
+                <ul class="summary-list">
+                    <li><strong>ความถูกต้องตามระเบียบ:</strong> การคำนวณดำเนินการถูกต้องตามหนังสือ ว 651, ว 190 และมติ ครม. เรื่องการตัดทศนิยม 3 ตำแหน่ง ทุกประการ</li>
+                    <li><strong>สิทธิการรับเงิน:</strong> ผู้รับจ้างเป็นฝ่ายมีสิทธิ์รับเงินชดเชย เนื่องจากดัชนียางแอสฟัลท์เพิ่มสูงขึ้น</li>
+                    <li><strong>การดำเนินการ:</strong> สามารถนำเอกสาร Word นี้ไปใช้เป็นหลักฐานประกอบการเบิกจ่ายได้ทันที เพื่อป้องกันข้อท้วงติงจาก สตง.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <footer style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">
+            <p>ระบบรายงานอัจฉริยะ &copy; 2026 | จัดทำขึ้นเพื่อประกอบการพิจารณาเบิกจ่ายเงินค่า K</p>
+        </footer>
+
+    </div>
+</body>
+</html>
