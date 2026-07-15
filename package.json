@@ -1,0 +1,21 @@
+{
+  "name": "yotathai-k",
+  "version": "1.0.0",
+  "description": "Thailand Escalation Factor (K) Dashboard & Calculator using TPSO OpenApi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "tpso",
+    "k-factor",
+    "escalation-factor",
+    "thailand"
+  ],
+  "author": "Antigravity Pair Programmer",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
