@@ -492,7 +492,7 @@
     /* Search Mode Selector (Radios/Tabs) */
     .mode-selector {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--card-border);
@@ -553,7 +553,7 @@
     }
 
     .form-select {
-      background: var(--slate-800);
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 10px;
       color: var(--text-main);
@@ -1619,10 +1619,10 @@
       currentFetchedPeriods = activePeriods;
 
       try {
-        // Collect periods to fetch from TPSO
-        const fetchPromises = activePeriods.map(async ({ year, month }) => {
+        // Fetch sequentially to prevent API rate-limiting when searching multiple months (like 1-year mode)
+        for (const { year, month } of activePeriods) {
           const cacheKey = `${year}-${month}`;
-          if (monthlyCache[cacheKey]) return; // Skip cache hits
+          if (monthlyCache[cacheKey]) continue; // Skip cache hits
 
           // Execute POST request to TPSO month endpoint proxy
           let res;
@@ -1674,9 +1674,7 @@
           } else {
             monthlyCache[cacheKey] = monthData;
           }
-        });
-
-        await Promise.all(fetchPromises);
+        }
         
         // Sort UI rows chronologically if in custom mode
         sortCustomDateRowsUI();
