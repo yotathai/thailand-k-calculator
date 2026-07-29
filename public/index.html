@@ -1255,168 +1255,153 @@
   </style>
 </head>
 <body>
-  <!-- ประกาศบนสุด (แจ้งข่าวเร่งด่วน/โปรโมต) — จัดการที่ ads.yotathai.com สคริปต์แทรกแถบเองเป็นลูกแรกของ body
-       ฝังตรงในหน้า (ไม่ใช้ src="/...") เพราะ app.yotathai.com มาวุ่นวายอยู่ที่ path ย่อย /k
-       พาธแบบ absolute จาก root โดเมนจะหลุดออกไปนอกช่วง /k แล้ว 404 (เจอบั๊กนี้ที่ /mat มาก่อนแล้ว 29 ก.ค. 2569) -->
+  <!-- ข่าววิ่งบนสุด (แจ้งข่าว/โปรโมต) — จัดการที่ ads.yotathai.com สคริปต์แทรกแถบเองเป็นลูกแรกของ body
+       ฝังตรงในหน้า (ไม่ใช้ src="/...") เพราะ app.yotathai.com เสิร์ฟแอปนี้ผ่าน path ย่อย
+       พาธแบบ absolute จาก root โดเมนจะหลุดออกนอกช่วง path แล้ว 404 (เจอบั๊กนี้ที่ /mat มาแล้ว 29 ก.ค. 2569) -->
   <script type="module">
-  // ============================================================
-  // แถบประกาศบนสุด (announcement bar) — ระบบกลางของเครือ (yotathai-ads)
-  // อ่านจาก Firestore `announcements` — สาธารณะอ่านได้ ไม่ต้องแบก Firebase SDK
-  // แสดงได้หลายอัน สลับหมุนเวียนทุก ROTATE_MS (ระดับสำคัญสุดมาก่อน)
-  // ปิดแล้วจำไว้ (ตามชุด id ทั้งหมดที่กำลังหมุน — ชุดเปลี่ยนถึงเด้งใหม่)
-  // ============================================================
-  const PROJECT = 'yotathai-board';
-  const API_KEY = 'AIzaSyBxIILMfoC1y8CgizrJN8yLMF40bwoRLxM';
-  const FS = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents`;
-  const SITE = 'app';
-  const DISMISS_KEY = 'yt-announce-dismissed';
-  const ROTATE_MS = 5000;
+// ============================================================
+// แถบข่าววิ่งบนสุด (announcement ticker) — ระบบกลางของเครือ (yotathai-ads)
+// อ่านจาก Firestore `announcements` — สาธารณะอ่านได้ ไม่ต้องแบก Firebase SDK
+// ทุกประกาศเรียงต่อกันเป็นสายเดียว วิ่งต่อเนื่องวนไม่รู้จบ (ไม่สลับ ไม่สุ่ม)
+// แต่ละข่าวเป็นไฮเปอร์ลิงก์ของตัวเอง — คุณช่างถึกสั่ง 29 ก.ค. 2569
+// ปิดแล้วจำไว้ (ตามชุด id ทั้งหมด — ชุดเปลี่ยนถึงเด้งใหม่)
+// ============================================================
 
-  const STYLE = {
-    normal: { bg: '#fff4ec', fg: '#9c3e0a', pill: '#ffe3cf' },
-    featured: { bg: '#e8630a', fg: '#ffffff', pill: 'rgba(255,255,255,0.22)' },
-    urgent: { bg: '#a32d2d', fg: '#ffffff', pill: 'rgba(255,255,255,0.22)' },
+const PROJECT = 'yotathai-board';
+const API_KEY = 'AIzaSyBxIILMfoC1y8CgizrJN8yLMF40bwoRLxM';
+const FS = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents`;
+const SITE = 'app';
+const DISMISS_KEY = 'yt-announce-dismissed';
+
+const STYLE = {
+  normal: { bg: '#fff4ec', fg: '#9c3e0a', pill: '#ffe3cf' },
+  featured: { bg: '#e8630a', fg: '#ffffff', pill: 'rgba(255,255,255,0.22)' },
+  urgent: { bg: '#a32d2d', fg: '#ffffff', pill: 'rgba(255,255,255,0.22)' },
+};
+const RANK = { normal: 1, featured: 2, urgent: 3 };
+
+const sv = (f, k) => f?.[k]?.stringValue ?? '';
+const arr = (f, k) => (f?.[k]?.arrayValue?.values || []).map((v) => v.stringValue || '');
+const tv = (f, k) => f?.[k]?.timestampValue || null;
+const nv = (f, k) => {
+  const v = f?.[k];
+  if (v?.integerValue != null) return Number(v.integerValue);
+  if (v?.doubleValue != null) return v.doubleValue;
+  return 0;
+};
+
+async function fetchAnnouncements() {
+  const res = await fetch(`${FS}/announcements?pageSize=100&key=${API_KEY}`);
+  if (!res.ok) throw new Error(`โหลดประกาศไม่สำเร็จ ${res.status}`);
+  const data = await res.json();
+  const now = Date.now();
+  const all = (data.documents || []).map((d) => {
+    const f = d.fields || {};
+    return {
+      id: d.name.split('/').pop(),
+      emoji: sv(f, 'emoji'),
+      text: sv(f, 'text'),
+      linkUrl: sv(f, 'linkUrl'),
+      level: sv(f, 'level') || 'normal',
+      sites: arr(f, 'sites'),
+      active: f.active?.booleanValue !== false,
+      dismissible: f.dismissible?.booleanValue !== false,
+      order: nv(f, 'order'),
+      startAt: tv(f, 'startAt'),
+      endAt: tv(f, 'endAt'),
+    };
+  }).filter((a) => a.active && a.text
+    && (!a.sites.length || a.sites.includes(SITE))
+    && (!a.startAt || Date.parse(a.startAt) <= now)
+    && (!a.endAt || Date.parse(a.endAt) >= now));
+
+  // เรียงตามลำดับที่ทีมงานจัดในหน้าแอดมิน (order น้อยก่อน) · เสมอกันค่อยดูระดับสำคัญ
+  all.sort((x, y) => (x.order - y.order) || (RANK[y.level] || 0) - (RANK[x.level] || 0));
+  return all;
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function render(items) {
+  if (!items.length) return;
+  const signature = items.map((a) => a.id).join(',');
+  try {
+    if (localStorage.getItem(DISMISS_KEY) === signature) return; // เคยปิดชุดนี้แล้ว
+  } catch { /* localStorage ใช้ไม่ได้ = แสดงตามปกติ */ }
+
+  const canDismiss = items.every((a) => a.dismissible);
+  const s = STYLE[items[0].level] || STYLE.normal; // สีตามอันสำคัญสุด (เรียงแล้ว)
+
+  const bar = document.createElement('div');
+  bar.setAttribute('role', 'region');
+  bar.setAttribute('aria-label', 'ประกาศจากโยธาไทย');
+  bar.className = 'yt-announce-hue';
+  bar.style.cssText = `min-height:40px;display:flex;align-items:center;padding:6px 0;
+    ${canDismiss ? 'padding-right:36px;' : ''}font-size:13px;line-height:1.4;position:relative;
+    overflow:hidden;transition:background .3s ease;background:${s.bg};color:${s.fg}`;
+  document.body.insertBefore(bar, document.body.firstChild);
+
+  if (!document.getElementById('yt-announce-marquee-style')) {
+    const style = document.createElement('style');
+    style.id = 'yt-announce-marquee-style';
+    style.textContent = `
+      @keyframes yt-announce-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+      .yt-announce-track { animation: yt-announce-marquee linear infinite; }
+      .yt-announce-track:hover { animation-play-state: paused; }
+      /* วนสีทั้งพื้นหลังและตัวหนังสือไปพร้อมกัน (hue-rotate รักษาคอนทราสต์เดิมไว้ อ่านออกเสมอ) */
+      @keyframes yt-announce-hue { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
+      .yt-announce-hue { animation: yt-announce-hue 10s linear infinite; }
+      @media (prefers-reduced-motion: reduce) {
+        .yt-announce-track { animation: none; }
+        .yt-announce-hue { animation: none; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // ข่าว 1 ชิ้น — มีลิงก์ = ทั้งชิ้นเป็น <a> คลิกได้จริง (ขีดเส้นใต้ให้รู้ว่ากดได้)
+  const itemHtml = (a) => {
+    const inner = (a.emoji ? `<span aria-hidden style="font-size:15px;margin-right:6px">${a.emoji}</span>` : '')
+      + `<span style="font-weight:500">${escapeHtml(a.text)}</span>`;
+    const base = 'display:inline-flex;align-items:center;padding-right:72px;white-space:nowrap';
+    return a.linkUrl
+      ? `<a href="${a.linkUrl}" ${a.linkUrl.startsWith('/') ? '' : 'target="_blank" rel="noopener noreferrer"'}
+           style="${base};color:${s.fg};text-decoration:underline;text-underline-offset:3px;
+                  text-decoration-thickness:1px">${inner}</a>`
+      : `<span style="${base};color:${s.fg}">${inner}</span>`;
   };
-  const RANK = { normal: 1, featured: 2, urgent: 3 };
 
-  const sv = (f, k) => f?.[k]?.stringValue ?? '';
-  const arr = (f, k) => (f?.[k]?.arrayValue?.values || []).map((v) => v.stringValue || '');
-  const tv = (f, k) => f?.[k]?.timestampValue || null;
+  // ความเร็ววิ่งตามความยาวรวมทุกข่าว
+  const totalChars = items.reduce((n, a) => n + a.text.length + 8, 0);
+  const dur = Math.max(12, Math.min(120, totalChars * 0.3));
 
-  async function fetchAnnouncements() {
-    const res = await fetch(`${FS}/announcements?pageSize=100&key=${API_KEY}`);
-    if (!res.ok) throw new Error(`โหลดประกาศไม่สำเร็จ ${res.status}`);
-    const data = await res.json();
-    const now = Date.now();
-    const all = (data.documents || []).map((d) => {
-      const f = d.fields || {};
-      return {
-        id: d.name.split('/').pop(),
-        emoji: sv(f, 'emoji'),
-        text: sv(f, 'text'),
-        linkUrl: sv(f, 'linkUrl'),
-        linkLabel: sv(f, 'linkLabel') || 'ดูรายละเอียด',
-        level: sv(f, 'level') || 'normal',
-        sites: arr(f, 'sites'),
-        active: f.active?.booleanValue !== false,
-        dismissible: f.dismissible?.booleanValue !== false,
-        startAt: tv(f, 'startAt'),
-        endAt: tv(f, 'endAt'),
-      };
-    }).filter((a) => a.active && a.text
-      && (!a.sites.length || a.sites.includes(SITE))
-      && (!a.startAt || Date.parse(a.startAt) <= now)
-      && (!a.endAt || Date.parse(a.endAt) >= now));
+  const seq = items.map(itemHtml).join('');
+  const close = canDismiss
+    ? `<button aria-label="ปิดประกาศ" style="position:absolute;right:12px;top:50%;
+         transform:translateY(-50%);background:transparent;border:none;color:${s.fg};
+         opacity:.7;cursor:pointer;font-size:18px;line-height:1;padding:4px;z-index:1">×</button>`
+    : '';
 
-    all.sort((x, y) => (RANK[y.level] || 0) - (RANK[x.level] || 0));
-    return all;
-  }
+  // ทำซ้ำสายข่าว 2 ชุดต่อกัน แล้วเลื่อน -50% = วนไร้รอยต่อ
+  bar.innerHTML =
+    `<div style="flex:1;min-width:0;overflow:hidden">
+       <div class="yt-announce-track" style="display:flex;width:max-content;white-space:nowrap;
+            animation-duration:${dur}s">
+         <span style="display:inline-flex">${seq}</span>
+         <span aria-hidden="true" style="display:inline-flex">${seq}</span>
+       </div>
+     </div>` + close;
 
-  function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  }
+  const btn = bar.querySelector('[aria-label="ปิดประกาศ"]');
+  if (btn) btn.addEventListener('click', () => {
+    try { localStorage.setItem(DISMISS_KEY, signature); } catch { /* ไม่จำก็ไม่เป็นไร */ }
+    bar.remove();
+  });
+}
 
-  function render(items) {
-    if (!items.length) return;
-    const signature = items.map((a) => a.id).join(',');
-    try {
-      if (localStorage.getItem(DISMISS_KEY) === signature) return; // เคยปิดชุดนี้แล้ว
-    } catch { /* localStorage ใช้ไม่ได้ = แสดงตามปกติ */ }
-
-    const canDismiss = items.every((a) => a.dismissible);
-    const bar = document.createElement('div');
-    bar.setAttribute('role', 'region');
-    bar.setAttribute('aria-label', 'ประกาศจากโยธาไทย');
-    bar.className = 'yt-announce-hue';
-    bar.style.cssText = `min-height:40px;display:flex;align-items:center;justify-content:flex-start;
-      gap:10px;padding:6px 44px;font-size:13px;line-height:1.4;position:relative;
-      transition:background .3s ease`;
-    document.body.insertBefore(bar, document.body.firstChild);
-
-    if (!document.getElementById('yt-announce-marquee-style')) {
-      const style = document.createElement('style');
-      style.id = 'yt-announce-marquee-style';
-      style.textContent = `
-        @keyframes yt-announce-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .yt-announce-track { animation: yt-announce-marquee linear infinite; }
-        .yt-announce-track:hover { animation-play-state: paused; }
-        /* วนสีทั้งพื้นหลังและตัวหนังสือไปพร้อมกัน (hue-rotate รักษาคอนทราสต์เดิมไว้ อ่านออกเสมอ) */
-        @keyframes yt-announce-hue { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
-        .yt-announce-hue { animation: yt-announce-hue 10s linear infinite; }
-        @media (prefers-reduced-motion: reduce) {
-          .yt-announce-track { animation: none; }
-          .yt-announce-hue { animation: none; }
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    let idx = 0;
-    function paint() {
-      const a = items[idx];
-      const s = STYLE[a.level] || STYLE.normal;
-      bar.style.background = s.bg;
-      bar.style.color = s.fg;
-
-      const dots = items.length > 1
-        ? `<span style="display:inline-flex;gap:5px;margin-left:4px;flex:none;position:relative;z-index:1">${items.map((_, i) =>
-            `<button data-i="${i}" aria-label="ประกาศที่ ${i + 1} จาก ${items.length}"
-               style="width:6px;height:6px;border-radius:999px;border:none;padding:0;
-                      cursor:pointer;background:${s.fg};opacity:${i === idx ? 0.95 : 0.35}"></button>`
-          ).join('')}</span>`
-        : '';
-      const link = a.linkUrl
-        ? `<a href="${a.linkUrl}" ${a.linkUrl.startsWith('/') ? '' : 'target="_blank" rel="noopener noreferrer"'}
-             style="color:${s.fg};background:${s.pill};padding:3px 12px;border-radius:20px;
-                    font-weight:600;text-decoration:none;white-space:nowrap;flex:none;position:relative;z-index:1">
-             ${a.linkLabel} →</a>`
-        : '';
-      const close = canDismiss
-        ? `<button aria-label="ปิดประกาศ" style="position:absolute;right:12px;top:50%;
-             transform:translateY(-50%);background:transparent;border:none;color:${s.fg};
-             opacity:.7;cursor:pointer;font-size:18px;line-height:1;padding:4px;z-index:1">×</button>`
-        : '';
-
-      // ความเร็วอักษรวิ่ง — ยิ่งข้อความยาวยิ่งใช้เวลาวิ่งนานขึ้น (อ่านทันเสมอ)
-      const dur = Math.max(8, Math.min(30, a.text.length * 0.22));
-      const safeText = escapeHtml(a.text);
-
-      // คลิกได้ทั้งแถบ — เลเยอร์โปร่งใสทับทั้งกล่อง (z-index:0) ส่วนปุ่มจุด/ปุ่มปิด/ปุ่มลิงก์
-      // z-index:1 ยังกดแยกได้ปกติ ไม่โดนเลเยอร์นี้แย่ง — มีเฉพาะประกาศที่ใส่ลิงก์ไว้เท่านั้น
-      const overlay = a.linkUrl
-        ? `<a href="${a.linkUrl}" ${a.linkUrl.startsWith('/') ? '' : 'target="_blank" rel="noopener noreferrer"'}
-             aria-label="${safeText}" style="position:absolute;inset:0;z-index:0"></a>`
-        : '';
-
-      bar.innerHTML = overlay +
-        (a.emoji ? `<span aria-hidden style="font-size:15px;flex:none;position:relative">${a.emoji}</span>` : '') +
-        `<div style="flex:1;min-width:0;overflow:hidden;position:relative">
-           <div class="yt-announce-track" style="display:flex;width:max-content;white-space:nowrap;
-                font-weight:500;animation-duration:${dur}s">
-             <span style="padding-right:64px">${safeText}</span>
-             <span aria-hidden style="padding-right:64px">${safeText}</span>
-           </div>
-         </div>` + link + dots + close;
-
-      bar.querySelectorAll('[data-i]').forEach((btn) => {
-        btn.addEventListener('click', () => { idx = Number(btn.dataset.i); paint(); });
-      });
-      const btn = bar.querySelector('[aria-label="ปิดประกาศ"]');
-      if (btn) btn.addEventListener('click', () => {
-        try { localStorage.setItem(DISMISS_KEY, signature); } catch { /* ไม่จำก็ไม่เป็นไร */ }
-        bar.remove();
-        if (timer) clearInterval(timer);
-      });
-    }
-
-    let timer = null;
-    paint();
-    if (items.length > 1) {
-      timer = setInterval(() => { idx = (idx + 1) % items.length; paint(); }, ROTATE_MS);
-    }
-  }
-
-  fetchAnnouncements().then(render).catch(() => { /* ประกาศโหลดไม่ได้ ไม่ควรทำให้หน้าเว็บพัง */ });
+fetchAnnouncements().then(render).catch(() => { /* ประกาศโหลดไม่ได้ ไม่ควรทำให้หน้าเว็บพัง */ });
   </script>
 
   <div class="app-container">
