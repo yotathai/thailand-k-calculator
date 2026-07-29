@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>K-INDEX: เครื่องมือสืบค้น พิมพ์ และดาวน์โหลดดัชนีราคางานก่อสร้าง (ค่า K)</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9834398557895165"
+     crossorigin="anonymous"></script>
   
   <script>
     // Immediately apply saved theme (default to light-slate and migrate old dark-blue users)
@@ -1016,9 +1018,406 @@
         flex-grow: 1;
       }
     }
+
+    /* ============================================
+       RESPONSIVE — Tablet (≤ 1024px)
+    ============================================ */
+    @media (max-width: 1024px) {
+      body {
+        padding: 16px;
+      }
+
+      .app-container {
+        gap: 16px;
+      }
+
+      .checkbox-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+    }
+
+    /* ============================================
+       RESPONSIVE — Mobile (≤ 767px)
+    ============================================ */
+    @media (max-width: 767px) {
+      body {
+        padding: 10px 8px;
+      }
+
+      .app-container {
+        gap: 12px;
+      }
+
+      /* ---- Header ---- */
+      .app-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 16px;
+        border-radius: 16px;
+      }
+
+      .brand-section {
+        gap: 10px;
+        width: 100%;
+      }
+
+      .brand-logo {
+        height: 36px;
+      }
+
+      .brand-info h1 {
+        font-size: 14px;
+        letter-spacing: -0.3px;
+        line-height: 1.3;
+      }
+
+      .brand-info p {
+        font-size: 10.5px;
+        margin-top: 1px;
+      }
+
+      .header-actions {
+        width: 100%;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .status-badge {
+        font-size: 10.5px;
+        padding: 5px 10px;
+        flex: 1;
+      }
+
+      /* Theme circles: hide labels, compress gap */
+      .theme-circles-container {
+        padding: 5px 8px;
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+
+      .theme-label-hint {
+        font-size: 9.5px;
+      }
+
+      .theme-circle {
+        width: 16px;
+        height: 16px;
+      }
+
+      /* ---- Control Panel ---- */
+      .glass-card {
+        padding: 16px;
+        border-radius: 16px;
+      }
+
+      .panel-title {
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+
+      /* Mode selector: 2x2 grid */
+      .mode-selector {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+
+      .mode-tab {
+        font-size: 12px;
+        padding: 9px 6px;
+        line-height: 1.3;
+        text-align: center;
+      }
+
+      /* Input rows: single column */
+      .input-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .select-pair {
+        grid-template-columns: 2fr 1fr;
+      }
+
+      .form-select {
+        font-size: 13px;
+        padding: 9px 10px;
+      }
+
+      /* Checkbox grid: single column on mobile */
+      .checkbox-grid {
+        grid-template-columns: 1fr 1fr;
+        max-height: 180px;
+      }
+
+      .check-item {
+        font-size: 11.5px;
+      }
+
+      /* Action buttons: full width stacked */
+      .actions-row {
+        flex-direction: column;
+        gap: 8px;
+        padding-top: 12px;
+      }
+
+      .btn {
+        width: 100%;
+        min-width: unset;
+        flex: unset;
+        font-size: 13px;
+        padding: 12px 16px;
+        border-radius: 12px;
+      }
+
+      /* ---- Chart ---- */
+      .chart-container {
+        height: 220px;
+      }
+
+      /* ---- Table ---- */
+      .table-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .search-wrapper {
+        width: 100%;
+        max-width: 100%;
+        min-width: unset;
+      }
+
+      .index-table {
+        font-size: 11.5px;
+      }
+
+      .index-table th,
+      .index-table td {
+        padding: 9px 10px;
+      }
+
+      /* Sticky first column on mobile table */
+      .index-table th:first-child,
+      .index-table td:first-child {
+        position: sticky;
+        left: 0;
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 2;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+      }
+
+      /* ---- Toast ---- */
+      .toast-msg {
+        bottom: 16px;
+        font-size: 12px;
+        padding: 10px 18px;
+        width: calc(100% - 32px);
+        max-width: 360px;
+      }
+
+      /* ---- Footer ---- */
+      .app-footer {
+        font-size: 11px;
+        padding: 12px;
+      }
+
+      .footer-divider {
+        display: none;
+      }
+    }
+
+    /* ============================================
+       RESPONSIVE — Small phones (≤ 380px)
+    ============================================ */
+    @media (max-width: 380px) {
+      .theme-circles-container {
+        justify-content: flex-start;
+      }
+
+      .brand-info h1 {
+        font-size: 13px;
+      }
+
+      .mode-tab {
+        font-size: 11px;
+        padding: 8px 4px;
+      }
+
+      .checkbox-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- ประกาศบนสุด (แจ้งข่าวเร่งด่วน/โปรโมต) — จัดการที่ ads.yotathai.com สคริปต์แทรกแถบเองเป็นลูกแรกของ body
+       ฝังตรงในหน้า (ไม่ใช้ src="/...") เพราะ app.yotathai.com มาวุ่นวายอยู่ที่ path ย่อย /k
+       พาธแบบ absolute จาก root โดเมนจะหลุดออกไปนอกช่วง /k แล้ว 404 (เจอบั๊กนี้ที่ /mat มาก่อนแล้ว 29 ก.ค. 2569) -->
+  <script type="module">
+  // ============================================================
+  // แถบประกาศบนสุด (announcement bar) — ระบบกลางของเครือ (yotathai-ads)
+  // อ่านจาก Firestore `announcements` — สาธารณะอ่านได้ ไม่ต้องแบก Firebase SDK
+  // แสดงได้หลายอัน สลับหมุนเวียนทุก ROTATE_MS (ระดับสำคัญสุดมาก่อน)
+  // ปิดแล้วจำไว้ (ตามชุด id ทั้งหมดที่กำลังหมุน — ชุดเปลี่ยนถึงเด้งใหม่)
+  // ============================================================
+  const PROJECT = 'yotathai-board';
+  const API_KEY = 'AIzaSyBxIILMfoC1y8CgizrJN8yLMF40bwoRLxM';
+  const FS = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents`;
+  const SITE = 'app';
+  const DISMISS_KEY = 'yt-announce-dismissed';
+  const ROTATE_MS = 5000;
+
+  const STYLE = {
+    normal: { bg: '#fff4ec', fg: '#9c3e0a', pill: '#ffe3cf' },
+    featured: { bg: '#e8630a', fg: '#ffffff', pill: 'rgba(255,255,255,0.22)' },
+    urgent: { bg: '#a32d2d', fg: '#ffffff', pill: 'rgba(255,255,255,0.22)' },
+  };
+  const RANK = { normal: 1, featured: 2, urgent: 3 };
+
+  const sv = (f, k) => f?.[k]?.stringValue ?? '';
+  const arr = (f, k) => (f?.[k]?.arrayValue?.values || []).map((v) => v.stringValue || '');
+  const tv = (f, k) => f?.[k]?.timestampValue || null;
+
+  async function fetchAnnouncements() {
+    const res = await fetch(`${FS}/announcements?pageSize=100&key=${API_KEY}`);
+    if (!res.ok) throw new Error(`โหลดประกาศไม่สำเร็จ ${res.status}`);
+    const data = await res.json();
+    const now = Date.now();
+    const all = (data.documents || []).map((d) => {
+      const f = d.fields || {};
+      return {
+        id: d.name.split('/').pop(),
+        emoji: sv(f, 'emoji'),
+        text: sv(f, 'text'),
+        linkUrl: sv(f, 'linkUrl'),
+        linkLabel: sv(f, 'linkLabel') || 'ดูรายละเอียด',
+        level: sv(f, 'level') || 'normal',
+        sites: arr(f, 'sites'),
+        active: f.active?.booleanValue !== false,
+        dismissible: f.dismissible?.booleanValue !== false,
+        startAt: tv(f, 'startAt'),
+        endAt: tv(f, 'endAt'),
+      };
+    }).filter((a) => a.active && a.text
+      && (!a.sites.length || a.sites.includes(SITE))
+      && (!a.startAt || Date.parse(a.startAt) <= now)
+      && (!a.endAt || Date.parse(a.endAt) >= now));
+
+    all.sort((x, y) => (RANK[y.level] || 0) - (RANK[x.level] || 0));
+    return all;
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  function render(items) {
+    if (!items.length) return;
+    const signature = items.map((a) => a.id).join(',');
+    try {
+      if (localStorage.getItem(DISMISS_KEY) === signature) return; // เคยปิดชุดนี้แล้ว
+    } catch { /* localStorage ใช้ไม่ได้ = แสดงตามปกติ */ }
+
+    const canDismiss = items.every((a) => a.dismissible);
+    const bar = document.createElement('div');
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'ประกาศจากโยธาไทย');
+    bar.className = 'yt-announce-hue';
+    bar.style.cssText = `min-height:40px;display:flex;align-items:center;justify-content:flex-start;
+      gap:10px;padding:6px 44px;font-size:13px;line-height:1.4;position:relative;
+      transition:background .3s ease`;
+    document.body.insertBefore(bar, document.body.firstChild);
+
+    if (!document.getElementById('yt-announce-marquee-style')) {
+      const style = document.createElement('style');
+      style.id = 'yt-announce-marquee-style';
+      style.textContent = `
+        @keyframes yt-announce-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .yt-announce-track { animation: yt-announce-marquee linear infinite; }
+        .yt-announce-track:hover { animation-play-state: paused; }
+        /* วนสีทั้งพื้นหลังและตัวหนังสือไปพร้อมกัน (hue-rotate รักษาคอนทราสต์เดิมไว้ อ่านออกเสมอ) */
+        @keyframes yt-announce-hue { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
+        .yt-announce-hue { animation: yt-announce-hue 10s linear infinite; }
+        @media (prefers-reduced-motion: reduce) {
+          .yt-announce-track { animation: none; }
+          .yt-announce-hue { animation: none; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    let idx = 0;
+    function paint() {
+      const a = items[idx];
+      const s = STYLE[a.level] || STYLE.normal;
+      bar.style.background = s.bg;
+      bar.style.color = s.fg;
+
+      const dots = items.length > 1
+        ? `<span style="display:inline-flex;gap:5px;margin-left:4px;flex:none;position:relative;z-index:1">${items.map((_, i) =>
+            `<button data-i="${i}" aria-label="ประกาศที่ ${i + 1} จาก ${items.length}"
+               style="width:6px;height:6px;border-radius:999px;border:none;padding:0;
+                      cursor:pointer;background:${s.fg};opacity:${i === idx ? 0.95 : 0.35}"></button>`
+          ).join('')}</span>`
+        : '';
+      const link = a.linkUrl
+        ? `<a href="${a.linkUrl}" ${a.linkUrl.startsWith('/') ? '' : 'target="_blank" rel="noopener noreferrer"'}
+             style="color:${s.fg};background:${s.pill};padding:3px 12px;border-radius:20px;
+                    font-weight:600;text-decoration:none;white-space:nowrap;flex:none;position:relative;z-index:1">
+             ${a.linkLabel} →</a>`
+        : '';
+      const close = canDismiss
+        ? `<button aria-label="ปิดประกาศ" style="position:absolute;right:12px;top:50%;
+             transform:translateY(-50%);background:transparent;border:none;color:${s.fg};
+             opacity:.7;cursor:pointer;font-size:18px;line-height:1;padding:4px;z-index:1">×</button>`
+        : '';
+
+      // ความเร็วอักษรวิ่ง — ยิ่งข้อความยาวยิ่งใช้เวลาวิ่งนานขึ้น (อ่านทันเสมอ)
+      const dur = Math.max(8, Math.min(30, a.text.length * 0.22));
+      const safeText = escapeHtml(a.text);
+
+      // คลิกได้ทั้งแถบ — เลเยอร์โปร่งใสทับทั้งกล่อง (z-index:0) ส่วนปุ่มจุด/ปุ่มปิด/ปุ่มลิงก์
+      // z-index:1 ยังกดแยกได้ปกติ ไม่โดนเลเยอร์นี้แย่ง — มีเฉพาะประกาศที่ใส่ลิงก์ไว้เท่านั้น
+      const overlay = a.linkUrl
+        ? `<a href="${a.linkUrl}" ${a.linkUrl.startsWith('/') ? '' : 'target="_blank" rel="noopener noreferrer"'}
+             aria-label="${safeText}" style="position:absolute;inset:0;z-index:0"></a>`
+        : '';
+
+      bar.innerHTML = overlay +
+        (a.emoji ? `<span aria-hidden style="font-size:15px;flex:none;position:relative">${a.emoji}</span>` : '') +
+        `<div style="flex:1;min-width:0;overflow:hidden;position:relative">
+           <div class="yt-announce-track" style="display:flex;width:max-content;white-space:nowrap;
+                font-weight:500;animation-duration:${dur}s">
+             <span style="padding-right:64px">${safeText}</span>
+             <span aria-hidden style="padding-right:64px">${safeText}</span>
+           </div>
+         </div>` + link + dots + close;
+
+      bar.querySelectorAll('[data-i]').forEach((btn) => {
+        btn.addEventListener('click', () => { idx = Number(btn.dataset.i); paint(); });
+      });
+      const btn = bar.querySelector('[aria-label="ปิดประกาศ"]');
+      if (btn) btn.addEventListener('click', () => {
+        try { localStorage.setItem(DISMISS_KEY, signature); } catch { /* ไม่จำก็ไม่เป็นไร */ }
+        bar.remove();
+        if (timer) clearInterval(timer);
+      });
+    }
+
+    let timer = null;
+    paint();
+    if (items.length > 1) {
+      timer = setInterval(() => { idx = (idx + 1) % items.length; paint(); }, ROTATE_MS);
+    }
+  }
+
+  fetchAnnouncements().then(render).catch(() => { /* ประกาศโหลดไม่ได้ ไม่ควรทำให้หน้าเว็บพัง */ });
+  </script>
 
   <div class="app-container">
 
@@ -1074,7 +1473,7 @@
         <button class="mode-tab active" id="mode-single" onclick="setSearchMode('single')">เดือนเดียว</button>
         <button class="mode-tab" id="mode-range" onclick="setSearchMode('range')">ช่วงเวลาหลายเดือน</button>
         <button class="mode-tab" id="mode-year" onclick="setSearchMode('year')">ดัชนีรายปี (12 เดือน)</button>
-        <button class="mode-tab" id="mode-custom" onclick="setSearchMode('custom')">เลือกแยกเดือนอิสระ (เริ่มต้น 4 เดือน)</button>
+        <button class="mode-tab" id="mode-custom" onclick="setSearchMode('custom')">เลือกเดือนอิสระ</button>
       </div>
 
       <!-- Date selector parameters -->
@@ -1228,6 +1627,8 @@
   </div>
 
   <script>
+    const API_BASE = window.location.pathname.startsWith('/k') ? '/k/api/tpso' : '/api/tpso';
+
     // Global Constants and State Variables
     const TH_MONTHS = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
     const TH_MONTHS_SHORT = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
@@ -1331,7 +1732,7 @@
         let masterData;
         try {
           // Attempt to fetch from proxy server endpoint
-          const response = await fetch('/api/master-data');
+          const response = await fetch(`${API_BASE}/OpenApi/K/Month/MasterData`);
           if (response.ok) {
             masterData = await response.json();
           }
@@ -1628,7 +2029,7 @@
           let res;
           let monthData;
           try {
-            res = await fetch('/api/month', {
+            res = await fetch(`${API_BASE}/OpenApi/K/Month`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({

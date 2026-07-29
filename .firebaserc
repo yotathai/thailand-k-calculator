@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "yotathai-portal-app"
+  },
+  "targets": {
+    "yotathai-portal-app": {
+      "hosting": {
+        "k-factor": [
+          "yotathai-k"
+        ]
+      }
+    }
+  }
+}
