@@ -1324,6 +1324,10 @@ function escapeHtml(s) {
   return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+// กัน XSS ผ่าน linkUrl — อนุญาตเฉพาะ http(s):// หรือ path ในเว็บ (ขึ้นต้น /) บล็อก javascript:/data: ฯลฯ
+// คืนค่าว่างถ้าไม่ปลอดภัย = ตกไปแสดงเป็นข้อความเฉยๆ ไม่ใช่ลิงก์ (พบโดยทีม yotathai-operate 29 ก.ค. 2569)
+const safeUrl = (u) => (/^(https?:\/\/|\/)/i.test(u) ? escapeHtml(u) : '');
+
 function render(items) {
   if (!items.length) return;
   const signature = items.map((a) => a.id).join(',');
@@ -1357,6 +1361,11 @@ function render(items) {
         .yt-announce-track { animation: none; }
         .yt-announce-hue { animation: none; }
       }
+      /* ห้ามติดไปกับเอกสารที่ผู้ใช้พิมพ์ (ราคากลาง/หนังสือราชการ ฯลฯ) — กันเองตรงนี้
+         เว็บลูกไม่ต้องแก้ CSS พิมพ์ของตัวเองเลย (พบโดยทีม yotathai-operate 29 ก.ค. 2569) */
+      @media print {
+        .yt-announce-hue { display: none !important; }
+      }
     `;
     document.head.appendChild(style);
   }
@@ -1366,8 +1375,9 @@ function render(items) {
     const inner = (a.emoji ? `<span aria-hidden style="font-size:15px;margin-right:6px">${a.emoji}</span>` : '')
       + `<span style="font-weight:500">${escapeHtml(a.text)}</span>`;
     const base = 'display:inline-flex;align-items:center;padding-right:72px;white-space:nowrap';
-    return a.linkUrl
-      ? `<a href="${a.linkUrl}" ${a.linkUrl.startsWith('/') ? '' : 'target="_blank" rel="noopener noreferrer"'}
+    const href = a.linkUrl ? safeUrl(a.linkUrl) : '';
+    return href
+      ? `<a href="${href}" ${href.startsWith('/') ? '' : 'target="_blank" rel="noopener noreferrer"'}
            style="${base};color:${s.fg};text-decoration:underline;text-underline-offset:3px;
                   text-decoration-thickness:1px">${inner}</a>`
       : `<span style="${base};color:${s.fg}">${inner}</span>`;
