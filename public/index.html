@@ -1252,6 +1252,21 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* ============================================
+       GOOGLE AUTO ADS — GRID SAFETY NET
+       Auto Ads แทรก <div class="google-auto-placed">/<ins class="adsbygoogle">
+       เข้าไปเป็นลูกของ grid container โดยตรง ถ้าไม่กันไว้ ลูกจริงทุกตัว
+       (เช่น .mode-selector, .select-pair, .input-row, .checkbox-grid ฯลฯ)
+       จะถูกเบียดเลื่อนคอลัมน์ตามช่องที่ถูกแทรกเข้ามา — บังคับให้กินเต็ม
+       แถวแทนแทรกกลางคอลัมน์เดิม (ห้าม display:none เพราะผิดนโยบาย AdSense)
+    ============================================ */
+    .google-auto-placed,
+    ins.adsbygoogle {
+      grid-column: 1 / -1 !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
   </style>
 </head>
 <body>
