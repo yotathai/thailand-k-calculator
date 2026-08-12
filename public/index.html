@@ -1267,6 +1267,14 @@
       min-width: 0 !important;
       max-width: 100% !important;
     }
+
+    /* เกราะชั้น 2 — .select-pair คอลัมน์ไม่เท่ากัน (2fr/1fr เดือน/ปี) ลำดับมีความหมาย
+       ตรึงด้วยชนิด element (select) แทนตำแหน่ง DOM เพราะ Google แทรกเป็น <div>
+       ไม่ใช่ <select> จึงไม่มีทางไปแทรกอยู่ระหว่างสอง selector นี้ได้เลย
+       .theme-grid / .mode-selector / .checkbox-grid ไม่ต้องตรึง เพราะทุกคอลัมน์
+       เท่ากันหมด (1fr ซ้ำ) สลับตำแหน่งไม่กระทบความกว้าง */
+    .select-pair > select:first-of-type { grid-column: 1; grid-row: 1; }
+    .select-pair > select:last-of-type  { grid-column: 2; grid-row: 1; }
   </style>
 </head>
 <body>
